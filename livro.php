@@ -1,74 +1,73 @@
 <?php
-    session_start();
+session_start();
 
+include_once('php/config.php');
+
+// Insert
+if (isset($_POST['submit'])) {
     include_once('php/config.php');
 
-    // Insert
-    if(isset($_POST['submit'])){
-        include_once('php/config.php');
+    $nomeLivro = $_POST['nome-livro'];
+    $autor = $_POST['autor'];
+    $editora = $_POST['editora'];
+    $lancamento = $_POST['lancamento'];
+    $quantidade = $_POST['quantidade'];
 
-        $nomeLivro = $_POST['nome-livro'];
-        $autor = $_POST['autor'];
-        $editora = $_POST['editora'];
-        $lancamento = $_POST['lancamento'];
-        $quantidade = $_POST['quantidade'];
+    $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
+    $resultado = $conexao->query($sqllivro);
 
-        $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
-        $resultado = $conexao -> query($sqllivro);
-        
-        if(mysqli_num_rows($resultado) == 1){
-            echo "<script> window.alert('Livro já cadastrado.')</script>";
-        }
-        else{
-            $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nomeLivro', '$autor', '$editora', '$lancamento', '$quantidade')");
-        }
+    if (mysqli_num_rows($resultado) == 1) {
+        echo "<script> window.alert('Livro já cadastrado.')</script>";
+    } else {
+        $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nomeLivro', '$autor', '$editora', '$lancamento', '$quantidade')");
     }
+}
 
-    // Teste da seção
-    if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
-        unset($_SESSION['email']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['email'];
+// Teste da seção
+if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
+    unset($_SESSION['email']);
+    unset($_SESSION['senha']);
+    header('Location: index.php');
+}
+$logado = $_SESSION['email'];
 
-    // Pesquisa
-    if(!empty($_GET['search'])){
-        $data = $_GET['search'];
- 
-        $sql = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' or autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
-     }
-     else{
-        $sql = "SELECT * FROM livros ORDER BY CodLivro ASC";
-     }
- 
-    $result = $conexao -> query($sql); 
+// Pesquisa
+if (!empty($_GET['search'])) {
+    $data = $_GET['search'];
 
-    // Número de registros por página
-    $registrosPorPagina = 5;
-    $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-    $offset = ($paginaAtual - 1) * $registrosPorPagina;
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $sql = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' or autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
+} else {
+    $sql = "SELECT * FROM livros ORDER BY CodLivro ASC";
+}
 
-    // Select com os parâmetros
-    $result = $conexao -> query($sql);
-    $totalRegistros = $result -> num_rows;
-    $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
-    if(!empty($search)){
-        $sqlsearch = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' OR autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
-        $result = $conexao -> query($sqlsearch);
-    } 
-    else{
-        $sql = "SELECT * FROM livros ORDER BY CodLivro ASC LIMIT $registrosPorPagina OFFSET $offset";
-        $result = $conexao -> query($sql);
-    }
+$result = $conexao->query($sql);
 
-    // Conexão tabela editoras
-    $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
-    $resultEditora_conect = $conexao -> query($sqlEditoras_conect);
+// Número de registros por página
+$registrosPorPagina = 5;
+$paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+$offset = ($paginaAtual - 1) * $registrosPorPagina;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Select com os parâmetros
+$result = $conexao->query($sql);
+$totalRegistros = $result->num_rows;
+$totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+if (!empty($search)) {
+    $sqlsearch = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' OR autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
+    $result = $conexao->query($sqlsearch);
+} else {
+    $sql = "SELECT * FROM livros ORDER BY CodLivro ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $result = $conexao->query($sql);
+}
+
+// Conexão tabela editoras
+$sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
+$resultEditora_conect = $conexao->query($sqlEditoras_conect);
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,194 +81,198 @@
     <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
-        search.addEventListener("keydown", function(event){
-            if(event.key === "Enter"){
+        search.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
                 searchData();
             }
         })
-        function searchData(){
+
+        function searchData() {
             window.location = "user.php?search=" = search.value
         }
     </script>
     <title>WDA Livraria</title>
 </head>
+
 <body>
-<!-- header -->
-<header>
-    <nav class="menubar">
-        <div class="logo">
-            <a class="title-link" href="inicio.php">WDA Livraria</a>
-        </div>
-        <div class="links">
-            <a href="inicio.php">Dashboard</a>
-            <a href="user.php">Usuários</a>
-            <a href="livro.php" class="selected">Livros</a>
-            <a href="editora.php">Editoras</a>
-            <a href="aluguel.php">Aluguéis</a>
-        </div>
-        <a href="php/sair.php"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
-    </nav>
-</header>
-<div class="corpo">
-    <main>
-        <!-- Modal -->
-        <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
-            <div class="conteudo-modal">
-                <div class="top_modal">
-                    <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Livro</h1>
-                    <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
-                </div>
-                <form action="livro.php" method="POST" class="row g-3 needs-validation" novalidate>
-                    <div class="col">
-                        <div class="row-md-3">
-                            <label for="input1" class="form-label text-black bold">Nome</label>
-                            <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row-md-3">
-                            <label for="input2" class="form-label text-black">Autor</label>
-                            <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row-md-3">
-                            <label for="input3" class="form-label text-black">Editora</label>
-                            <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
-                                <option value="" selected disabled>Selecione:</option>
-                                <?php
-                                while($editora_data = mysqli_fetch_assoc($resultEditora_conect)){
-                                    echo "<option value='{$editora_data['CodEditora']}'>{$editora_data['nome']}</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="row-md-3">
-                            <label for="input4" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row-md-3">
-                            <label for="input5" class="form-label text-black">Quantidade</label>
-                            <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        <br>
-                        <div class="col-12" style="text-align: center;">
-                            <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
-                        </div>
-                    </div>
-                </form>
+    <!-- header -->
+    <header>
+        <nav class="menubar">
+            <div class="logo">
+                <a class="title-link" href="inicio.php">WDA Livraria</a>
             </div>
-        </div>
-        <!-- Modal edit -->
-        <div id="edit-modal" class="modal">
-            <div class="conteudo-modal">
-                <div class="top_modal">
-                    <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
-                    <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
-                </div>
-                <form action=".saves/save-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
-                    <div class="input_row">
-                        <input type="hidden" name="id" id="campo1">
-                        <div class="row-md-3">
-                            <label for="campo2" class="form-label text-black bold">Nome</label>
-                            <input name="nome-livro" type="text" class="form-control" id="campo2" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo3" class="form-label text-black">Autor</label>
-                            <input name="autor" type="text" class="form-control" id="campo3" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
-                            </div>
-                        </div>
-                        
-                        <div class="row-md-3">
-                        <label for="campo6" class="form-label text-black">Quantidade</label>
-                        <input name="quantidade" type="number" class="form-control" id="campo6" required autocomplete="off">
-                        <div class="invalid-feedback">
-                        • Campo obrigatório •
-                        </div>
+            <div class="links">
+                <a href="inicio.php">Dashboard</a>
+                <a href="user.php">Usuários</a>
+                <a href="livro.php" class="selected">Livros</a>
+                <a href="editora.php">Editoras</a>
+                <a href="aluguel.php">Aluguéis</a>
+            </div>
+            <a href="php/sair.php"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
+        </nav>
+    </header>
+    <div class="corpo">
+        <main>
+            <!-- Modal -->
+            <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
+                <div class="conteudo-modal">
+                    <div class="top_modal">
+                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Livro</h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    </div>
-                    <div class="input_row">
-                    <div class="row-md-3">
-                            <label for="campo4" class="form-label text-black">Editora</label>
-                            <input type="hidden" name="teste" id="campo4">
-                            <select title="fodase" name="editora" class="form-select needs-validation is-invalid" required>
-                                
-                                <option value="" selected disabled>Selecione:</option>
-                                <?php
-                                    $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
-                                    $resultEditora_conect = $conexao -> query($sqlEditoras_conect);
-                                    
-                                    while($editora_data = mysqli_fetch_assoc($resultEditora_conect)){
-                                        $selected = ($editora_data['nome'] === $_POST['teste']) ? 'selected' : '';
-                                        echo "<option value='{$editora_data['CodEditora']}' $selected>{$editora_data['nome']}</option>";
+                    <form action="livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                        <div class="col">
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black bold">Nome</label>
+                                <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">Autor</label>
+                                <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Editora</label>
+                                <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
+                                    <option value="" selected disabled>Selecione:</option>
+                                    <?php
+                                    while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
+                                        echo "<option value='{$editora_data['CodEditora']}'>{$editora_data['nome']}</option>";
                                     }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo5" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="date" class="form-control date" id="campo5" required autocomplete="off">
-                            <div class="invalid-feedback">
-                            • Campo obrigatório •
+                                    ?>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="row-md-3">
+                                <label for="input4" class="form-label text-black">Lançamento</label>
+                                <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row-md-3">
+                                <label for="input5" class="form-label text-black">Quantidade</label>
+                                <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <br>
+                            <div class="col-12" style="text-align: center;">
+                                <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal edit -->
+            <div id="edit-modal" class="modal">
+                <div class="conteudo-modal">
+                    <div class="top_modal">
+                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
                     </div>
-                    <div class="col-12" style="text-align: center;">
-                        <button class="btn btn-success" type="submit" name="update">Confirmar</button>
+                    <form action=".saves/save-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                        <div class="input_row">
+                            <input type="hidden" name="id" id="campo1">
+                            <div class="row-md-3">
+                                <label for="campo2" class="form-label text-black bold">Nome</label>
+                                <input name="nome-livro" type="text" class="form-control" id="campo2" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="campo3" class="form-label text-black">Autor</label>
+                                <input name="autor" type="text" class="form-control" id="campo3" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+
+                            <div class="row-md-3">
+                                <label for="campo6" class="form-label text-black">Quantidade</label>
+                                <input name="quantidade" type="number" class="form-control" id="campo6" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input_row">
+                            <div class="row-md-3">
+                                <label for="campo4" class="form-label text-black">Editora</label>
+                                <!-- <input type="hidden" name="teste" id="campo4"> -->
+                                <select title="fodase" name="editora" class="form-select needs-validation is-invalid" required>
+                                    <?php
+                                    $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
+                                    $resultado = $conexao->query($sqllivro);
+                                    $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
+                                        $resultEditora_conect = $conexao->query($sqlEditoras_conect);
+                                    while ($livro_data = mysqli_fetch_assoc($resultado)) {
+                                        
+                                        while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
+                                            $selected = ($editora_data['CodEditora'] == $livro_data['editora']) ? 'selected' : '';
+                                            echo "<option value='{$editora_data['CodEditora']}' $selected>{$editora_data['nome']}</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="campo5" class="form-label text-black">Lançamento</label>
+                                <input name="lancamento" type="date" class="form-control date" id="campo5" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" style="text-align: center;">
+                            <button class="btn btn-success" type="submit" name="update">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Script da validação -->
+            <script>
+                (function() {
+                    'use strict'
+                    var forms = document.querySelectorAll('.needs-validation')
+                    Array.prototype.slice.call(forms)
+                        .forEach(function(form) {
+                            form.addEventListener('submit', function(event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
+                                form.classList.add('was-validated')
+                            }, false)
+                        })
+                })()
+            </script>
+            <!-- GRID -->
+            <div class="grid-header">
+                <div class="wrapper">
+                    <span class="titulo-pg">Livros</span>
+                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO +</div>
+                </div>
+                <form class="searchbox sbx-custom" id="search-livro">
+                    <div role="search" class="sbx-custom__wrapper">
+                        <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
+                        <button type="submit" class="sbx-custom__submit" onclick="searchData()">
+                            <img src="img/search.png" alt="">
+                        </button>
                     </div>
                 </form>
             </div>
-        </div>
-        <!-- Script da validação -->
-        <script>
-            (function () {
-            'use strict'
-            var forms = document.querySelectorAll('.needs-validation')
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-                })
-            })()
-        </script>
-        <!-- GRID -->
-        <div class="grid-header">
-            <div class="wrapper">
-                <span class="titulo-pg">Livros</span>
-                <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO +</div>
-            </div>
-            <form class="searchbox sbx-custom" id="search-livro">
-            <div role="search" class="sbx-custom__wrapper">
-                <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                <button type="submit" class="sbx-custom__submit" onclick="searchData()">
-                    <img src="img/search.png" alt="">
-                </button>
-            </div>
-            </form>
-        </div>
-        <?php
+            <?php
             // Montagem da grid (foda)
             $dados = "<table class='container-grid'>
             <thead>
@@ -286,128 +289,129 @@
             </thead><tbody>";
             echo $dados;
             $identifier = -1;
-            while($livro_data = mysqli_fetch_assoc($result)){
+            while ($livro_data = mysqli_fetch_assoc($result)) {
                 $identifier++;
                 $lanca = date("d/m/Y", strtotime($livro_data['lancamento']));
                 $nome_livro = $livro_data['nome'];
                 $id = $livro_data['CodLivro'];
                 // Conexão tabela alugueis
                 $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
-                $sqlAluguelResult = $conexao -> query($sqlAluguelConect);
-                $livro_data['alugados'] = $sqlAluguelResult -> num_rows;
+                $sqlAluguelResult = $conexao->query($sqlAluguelConect);
+                $livro_data['alugados'] = $sqlAluguelResult->num_rows;
                 $aluguel_quant = $livro_data['alugados'];
                 mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE CodLivro = '$id' ");
                 echo "
                 <tr>
-                <td class='itens'>".$livro_data['CodLivro']."</td>"
-                ."<td class='itens'>".$livro_data['nome']."</td>"
-                ."<td class='itens'>".$livro_data['autor']."</td>"
-                ."<td class='itens'>".$livro_data['editora']."</td>"
-                ."<td class='itens'>".$lanca."</td>"
-                ."<td class='itens'>".$livro_data['quantidade']."</td>"
-                ."<td class='itens'>".$livro_data['alugados']."</td>"
-                ."<td class='itens'>
-                    <img src='img/pencil.png' data-id='$identifier' class='edit' onclick="."abrirModal('edit-modal')"." alt='PencilEdit' title='Editar'>
+                <td class='itens'>" . $livro_data['CodLivro'] . "</td>"
+                    . "<td class='itens'>" . $livro_data['nome'] . "</td>"
+                    . "<td class='itens'>" . $livro_data['autor'] . "</td>"
+                    . "<td class='itens'>" . $livro_data['editora'] . "</td>"
+                    . "<td class='itens'>" . $lanca . "</td>"
+                    . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
+                    . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
+                    . "<td class='itens'>
+                    <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
                     &nbsp;&nbsp;
-                    <img src='img/bin.png' data-id='$livro_data[CodLivro]' class='exclu' onclick="."abrirModal('exclu-modal')"." alt='Bin' title='Deletar'>
+                    <img src='img/bin.png' data-id='$livro_data[CodLivro]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                 </td>
                 </tr>";
             }
             echo "</tbody></table><br>";
-        ?>
-        <!-- Área da paginação -->
-        <div class="pagination <?php if (!empty($search)){ echo 'd-none'; }?>">
-            <!-- Guia da paginação -->
-            <ul class="pagination">
-                <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                    <a class="page-link" href="livro.php?pagina=1" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php
-                // Exibir link da página anterior, se existir
-                if($paginaAtual > 4) {
-                    echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=1'>1</a></li>";
-                }
-                // Exibir páginas anteriores à página atual
-                if($paginaAtual == $totalPaginas){
-                    for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                        echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+            ?>
+            <!-- Área da paginação -->
+            <div class="pagination <?php if (!empty($search)) {
+                                        echo 'd-none';
+                                    } ?>">
+                <!-- Guia da paginação -->
+                <ul class="pagination">
+                    <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
+                        <a class="page-link" href="livro.php?pagina=1" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <?php
+                    // Exibir link da página anterior, se existir
+                    if ($paginaAtual > 4) {
+                        echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=1'>1</a></li>";
                     }
-                }
-                else{
-                    for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                        echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                    // Exibir páginas anteriores à página atual
+                    if ($paginaAtual == $totalPaginas) {
+                        for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
+                            echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                        }
+                    } else {
+                        for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
+                            echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                        }
                     }
-                }
-                // Exibir página atual
-                echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-                // Exibir páginas posteriores à página atual
-                if($paginaAtual == 1){
-                    for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                        echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                    // Exibir página atual
+                    echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
+                    // Exibir páginas posteriores à página atual
+                    if ($paginaAtual == 1) {
+                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
+                            echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                        }
+                    } else {
+                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
+                            echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                        }
                     }
-                }
-                else{
-                    for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                        echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
-                    }
-                }
-                ?>
-                <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                    <a class="page-link" href="livro.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </main>
-</div>
-<!-- scripts -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Faz a solicitação AJAX para obter os dados do banco de dados
-        $.ajax({
-            url: 'php/getdataBook.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-            // Os dados são retornados como um array JSON
-            console.log(data)
-            $('.edit').click(function() {
-                var recordId = $(this).data('id'); 
-                x = recordId
+                    ?>
+                    <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
+                        <a class="page-link" href="livro.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Faz a solicitação AJAX para obter os dados do banco de dados
+            $.ajax({
+                url: 'php/getdataBook.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Os dados são retornados como um array JSON
+                    console.log(data)
+                    $('.edit').click(function() {
+                        var recordId = $(this).data('id');
+                        x = recordId
 
-                var coluna1 = data[x].CodLivro;
-                var coluna2 = data[x].nome;
-                var coluna3 = data[x].autor;
-                var coluna4 = data[x].editora; 
-                var coluna5 = data[x].lancamento;
-                var coluna6 = data[x].quantidade;
-                
-                $('#campo1').val(coluna1);  
-                $('#campo2').val(coluna2); 
-                $('#campo3').val(coluna3); 
-                $('#campo4').val(coluna4); 
-                $('#campo5').val(coluna5);
-                $('#campo6').val(coluna6);
-            }) 
-            $('.exclu').click(function(){
-                var btnID = $(this).data('id')
+                        var coluna1 = data[x].CodLivro;
+                        var coluna2 = data[x].nome;
+                        var coluna3 = data[x].autor;
+                        var coluna4 = data[x].editora;
+                        var coluna5 = data[x].lancamento;
+                        var coluna6 = data[x].quantidade;
 
-                $('.confirm_exclu').click(function(){
-                    window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
-                })
-            })
-            // Aqui você pode manipular os dados como quiser,
-            // por exemplo, exibir na página ou realizar outras operações.
-            },
-            error: function(xhr, status, error) {
-            console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
-            }
+                        $('#campo1').val(coluna1);
+                        $('#campo2').val(coluna2);
+                        $('#campo3').val(coluna3);
+                        $('#campo4').val(coluna4);
+                        $('#campo5').val(coluna5);
+                        $('#campo6').val(coluna6);
+                    })
+                    $('.exclu').click(function() {
+                        var btnID = $(this).data('id')
+
+                        $('.confirm_exclu').click(function() {
+                            window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
+                        })
+                    })
+                    // Aqui você pode manipular os dados como quiser,
+                    // por exemplo, exibir na página ou realizar outras operações.
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
