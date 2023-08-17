@@ -2,7 +2,7 @@
    include_once('config.php');
 
    // Editoras
-   $sqlEdit = "SELECT * FROM usuarios";
+   $sqlEdit = "SELECT * FROM editoras";
    $resultEdit = $conexao -> query($sqlEdit);
 
    if($resultEdit -> num_rows > 0){

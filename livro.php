@@ -77,7 +77,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
-    <link rel="shortcut icon" href="img/logo.svg?<?php echo rand(1, 1000); ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
@@ -102,13 +102,28 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
             </div>
             <div class="links">
-                <a href="inicio.php">Dashboard</a>
-                <a href="user.php">Usuários</a>
-                <a href="livro.php" class="selected">Livros</a>
-                <a href="editora.php">Editoras</a>
-                <a href="aluguel.php">Aluguéis</a>
+                <div class="link">
+                    <img src="img/dashboard.png" alt="" class="links_icons">
+                    <a href="inicio.php">Dashboard</a>
+                </div>
+                <div class="link">
+                    <img src="img/usuarios.png" alt="" class="links_icons">
+                    <a href="user.php">Usuários</a>
+                </div>
+                <div class="link">
+                    <img src="img/livros.png" alt="" class="links_icons">
+                    <a href="livro.php" class="selected">Livros</a>
+                </div>
+                <div class="link">
+                    <img src="img/editoras.png" alt="" class="links_icons">
+                    <a href="editora.php">Editoras</a>
+                </div>
+                <div class="link">
+                    <img src="img/alugueis.png" alt="" class="links_icons">
+                    <a href="aluguel.php">Aluguéis</a>
+                </div>
             </div>
-            <a href="php/sair.php"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
+            <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
         </nav>
     </header>
     <div class="corpo">
@@ -144,7 +159,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                     <option value="" selected disabled>Selecione:</option>
                                     <?php
                                     while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                        echo "<option value='{$editora_data['CodEditora']}'>{$editora_data['nome']}</option>";
+                                        echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
                                     }
                                     ?>
                                 </select>
@@ -215,14 +230,11 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                     $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
                                     $resultado = $conexao->query($sqllivro);
                                     $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
-                                        $resultEditora_conect = $conexao->query($sqlEditoras_conect);
-                                    while ($livro_data = mysqli_fetch_assoc($resultado)) {
-                                        
+                                    $resultEditora_conect = $conexao->query($sqlEditoras_conect);
+
                                         while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                            $selected = ($editora_data['CodEditora'] == $livro_data['editora']) ? 'selected' : '';
-                                            echo "<option value='{$editora_data['CodEditora']}' $selected>{$editora_data['nome']}</option>";
+                                            echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
                                         }
-                                    }
                                     ?>
                                 </select>
                             </div>
@@ -238,6 +250,23 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                             <button class="btn btn-success" type="submit" name="update">Confirmar</button>
                         </div>
                     </form>
+                </div>
+            </div>
+            <!-- Modal exclu -->
+            <div id="exclu-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
+                <div class="conteudo-modal">
+                    <div class="top_modal">
+                        <h1 class="text-balck titulo_modal">Excluir Livro</h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('exclu-modal')">
+                    </div>
+                    <div class="iconDel">
+                        <img src="img/aviso.png" alt="">
+                    </div>
+                    <p>Tem certeza que deseja excluir o livro selecionado?</p>
+                    <div class="col-12" style="text-align: center;">
+                        <button class="btn btn-success" type="reset" onclick="fecharModal('exclu-modal')">Cancelar</button>
+                        <button class="btn btn-danger confirm_exclu" type="submit" name="delete" id="excluir">Excluir</button>
+                    </div>
                 </div>
             </div>
             <!-- Script da validação -->
@@ -400,7 +429,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         var btnID = $(this).data('id')
 
                         $('.confirm_exclu').click(function() {
-                            window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
+                            window.location.href = ".delete/delet-livro.php" + "?id=" + btnID;
                         })
                     })
                     // Aqui você pode manipular os dados como quiser,

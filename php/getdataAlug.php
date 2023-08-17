@@ -2,7 +2,7 @@
    include_once('config.php');
 
    // Aluguéis
-   $sqlAlug = "SELECT * FROM usuarios";
+   $sqlAlug = "SELECT * FROM alugueis";
    $resultAlug = $conexao -> query($sqlAlug);
 
    if($resultAlug -> num_rows > 0){

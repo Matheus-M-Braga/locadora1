@@ -98,6 +98,7 @@ header {
 
 a.selected {
     color: #ffb700;
+    font-weight: bold;
 }
 
 #sair-btn {
@@ -252,6 +253,7 @@ main::-webkit-scrollbar-thumb {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    padding-bottom: 15px;
 }
 
 .form-control {
