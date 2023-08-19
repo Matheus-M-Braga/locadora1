@@ -82,6 +82,7 @@ $resultuser_conect = $conexao->query($sqluser_conect);
     <header>
         <nav class="menubar">
             <div class="logo">
+                <img src="img/favicon.ico" alt="">
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
             </div>
             <div class="links">
