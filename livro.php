@@ -59,7 +59,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
         search.addEventListener("keydown", function(event) {
@@ -80,6 +79,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <header>
         <nav class="menubar">
             <div class="logo">
+                <img src="img/favicon.ico" alt="">
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
             </div>
             <div class="links">
@@ -103,6 +103,16 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     <img src="img/alugueis.png" alt="" class="links_icons">
                     <a href="aluguel.php">Aluguéis</a>
                 </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()">Menu</button>
+                <ul class="dropdown-content" id="dropdownContent">
+                    <li><a href="inicio.php">Dashboard</a></li>
+                    <li><a href="user.php">Usuários</a></li>
+                    <li><a href="livro.php" class="selected">Livros</a></li>
+                    <li><a href="editora.php">Edtioras</a></li>
+                    <li><a href="aluguel.php">Aluguéis</a></li>
+                </ul>
             </div>
             <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
         </nav>
@@ -376,6 +386,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
         </main>
     </div>
     <!-- scripts -->
+    <script src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {

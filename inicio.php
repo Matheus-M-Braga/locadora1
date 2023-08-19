@@ -107,6 +107,7 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
     <header>
         <nav class="menubar">
             <div class="logo">
+                <img src="img/favicon.ico" alt="">
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
             </div>
             <div class="links">
@@ -131,6 +132,16 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                     <a href="aluguel.php">Aluguéis</a>
                 </div>
             </div>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()">Menu</button>
+                <ul class="dropdown-content" id="dropdownContent">
+                    <li><a href="#" class="selected">Dashboard</a></li>
+                    <li><a href="user.php">Usuários</a></li>
+                    <li><a href="livro.php">Livros</a></li>
+                    <li><a href="editora.php">Edtioras</a></li>
+                    <li><a href="aluguel.php">Aluguéis</a></li>
+                </ul>
+            </div>
             <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
         </nav>
     </header>
@@ -146,7 +157,7 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                     <div>
                     </div>
                 </div>
-                <div id="grafico2" class="container bg-light" style="width: 31%;">
+                <div id="grafico2" class="container bg-light">
                     <div style="text-align:center;">
                         <h2>Livros Disponíveis</h2>
                     </div>
@@ -214,7 +225,7 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
             options: {
                 plugins: {
                     legend: {
-                        display: false 
+                        display: false
                     }
                 },
                 scales: {

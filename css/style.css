@@ -130,6 +130,52 @@ a.selected {
     transition: 300ms ease;
     color: #DAA520;
 }
+.dropdown {
+    display: none;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown button{
+    display: none;
+    padding: 5px 30px;
+    background-color: #162426;
+    color: #DAA520;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    outline: 0;
+    appearance: none;
+}
+
+.dropdown button:hover{
+    background-color: #20373a;
+    transition: 500ms ease;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    list-style-type: none;
+    background-color: #162426;
+    min-width: 105px;
+    margin-top: 1px;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 5px;
+    text-align: center;
+}
+.dropdown-content li{
+    margin-bottom: 12px;
+}
+.dropdown-content a{
+    color: #DAA520;
+    text-decoration: none;
+}
+.dropdown-content a:hover{
+    text-decoration: underline;
+}
 
 /* geral */
 .corpo {
@@ -282,22 +328,26 @@ main::-webkit-scrollbar-thumb {
 }
 
 /* exclu modal */
-#exclu-modal, #devol-modal {
+#exclu-modal,
+#devol-modal {
     text-align: center;
 }
 
-#exclu-modal p, #devol-modal p{
+#exclu-modal p,
+#devol-modal p {
     font-size: 1.2em;
     margin-top: 15px;
 }
 
-#exclu-modal .col-12, #devol-modal .col-12 {
+#exclu-modal .col-12,
+#devol-modal .col-12 {
     display: flex;
     justify-content: space-between;
     text-align: center;
 }
 
-#exclu-modal .col-12 button, #devol-modal .col-12 button {
+#exclu-modal .col-12 button,
+#devol-modal .col-12 button {
     width: 50%;
 }
 
@@ -385,6 +435,10 @@ main::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.graficos #grafico2 {
+    width: 31%;
 }
 
 .container.bg-light {

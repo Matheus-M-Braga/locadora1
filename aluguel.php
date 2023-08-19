@@ -61,7 +61,6 @@ $resultuser_conect = $conexao->query($sqluser_conect);
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
         search.addEventListener("keydown", function(event) {
@@ -106,6 +105,16 @@ $resultuser_conect = $conexao->query($sqluser_conect);
                     <img src="img/alugueis.png" alt="" class="links_icons">
                     <a href="aluguel.php" class="selected">Aluguéis</a>
                 </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()">Menu</button>
+                <ul class="dropdown-content" id="dropdownContent">
+                    <li><a href="inicio.php">Dashboard</a></li>
+                    <li><a href="user.php">Usuários</a></li>
+                    <li><a href="livro.php">Livros</a></li>
+                    <li><a href="editora.php">Edtioras</a></li>
+                    <li><a href="aluguel.php" class="selected">Aluguéis</a></li>
+                </ul>
             </div>
             <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
         </nav>
@@ -324,6 +333,7 @@ $resultuser_conect = $conexao->query($sqluser_conect);
         </main>
     </div>
     <!-- scripts -->
+    <script src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
