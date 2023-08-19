@@ -6,6 +6,7 @@
     --cor1: rgb(65, 69, 94);
     --cor2: maroon;
     --cor3: rgb(197 155 12);
+    --cor4: rgb(22, 36, 38);
 }
 
 * {
@@ -46,7 +47,7 @@ header {
     align-items: center;
     height: 100%;
     padding: 10px 15px;
-    background-color: rgb(24, 24, 24);
+    background-color: rgb(8, 16, 18);
 }
 
 .logo {
@@ -188,15 +189,17 @@ main::-webkit-scrollbar-thumb {
 }
 
 .novobtn {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
     text-align: center;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-    background-color: goldenrod;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid goldenrod;
+    background-color: #264347;
     border-radius: 5px;
     width: 120px;
     cursor: pointer;
-    color: white;
-    font-weight: bolder;
+    color: #DAA520;
+    font-weight: 200;
     font-family: Verdana;
     font-size: 16px;
     font-weight: bold;
@@ -205,7 +208,8 @@ main::-webkit-scrollbar-thumb {
 }
 
 .novobtn:hover {
-    background-color: rgba(218, 165, 32, 0.798);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.8);
+    transition: 200ms ease-out;
 }
 
 /* Modal */
@@ -276,22 +280,22 @@ main::-webkit-scrollbar-thumb {
 }
 
 /* exclu modal */
-#exclu-modal {
+#exclu-modal, #devol-modal {
     text-align: center;
 }
 
-#exclu-modal p {
+#exclu-modal p, #devol-modal p{
     font-size: 1.2em;
     margin-top: 15px;
 }
 
-#exclu-modal .col-12 {
+#exclu-modal .col-12, #devol-modal .col-12 {
     display: flex;
     justify-content: space-between;
     text-align: center;
 }
 
-#exclu-modal .col-12 button {
+#exclu-modal .col-12 button, #devol-modal .col-12 button {
     width: 50%;
 }
 
@@ -444,6 +448,7 @@ table {
 
 .container-grid {
     width: 100%;
+    margin-bottom: 25px;
     border: 1px solid gray;
     border-radius: 5px;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);

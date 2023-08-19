@@ -3,30 +3,11 @@ session_start();
 
 include_once('./php/config.php');
 
-// Insert
-if (isset($_POST['submit'])) {
-    include_once('./php/config.php');
-
-    $nomeUsuario = $_POST['nome-user'];
-    $cidade = $_POST['cidade'];
-    $endereco = $_POST['endereco'];
-    $email = $_POST['email'];
-
-    $sqluser = "SELECT * FROM usuarios WHERE Nome = '$nomeUsuario'";
-    $resultado = $conexao->query($sqluser);
-
-    if (mysqli_num_rows($resultado) == 1) {
-        echo "<script>window.alert('Usuário já cadastrado.')</script>";
-    } else {
-        $result = mysqli_query($conexao, "INSERT INTO usuarios(Nome, Cidade, Endereco, Email) VALUES ('$nomeUsuario', '$cidade', '$endereco', '$email')");
-    }
-}
-
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
-    header('Location: index.php');
+    echo "<script> window.location.href = 'index.php' </script>";
 }
 $logado = $_SESSION['email'];
 
@@ -72,6 +53,7 @@ if (!empty($search)) {
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
@@ -129,7 +111,7 @@ if (!empty($search)) {
                         <h1 class="text-balck titulo_modal">Cadastro do Usuário</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    <form action="user.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".create/create-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="input_row">
                                 <div class="row-md-3">
@@ -177,7 +159,7 @@ if (!empty($search)) {
                         <h1 class="text-balck titulo_modal">Editar Usuário</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
                     </div>
-                    <form action=".saves/save-user.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".update/update-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="input_row">
                                 <input type="hidden" id="campo1" name="id">
@@ -260,7 +242,7 @@ if (!empty($search)) {
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Usuários</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO +</div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-user">
                     <div role="search" class="sbx-custom__wrapper">
@@ -302,7 +284,7 @@ if (!empty($search)) {
                 </td>
                 </tr>";
             }
-            echo "</tbody></table><br>";
+            echo "</tbody></table>";
             ?>
             <!-- Área da paginação -->
             <div class="pagination <?php if (!empty($search)) {

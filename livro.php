@@ -3,31 +3,11 @@ session_start();
 
 include_once('php/config.php');
 
-// Insert
-if (isset($_POST['submit'])) {
-    include_once('php/config.php');
-
-    $nomeLivro = $_POST['nome-livro'];
-    $autor = $_POST['autor'];
-    $editora = $_POST['editora'];
-    $lancamento = $_POST['lancamento'];
-    $quantidade = $_POST['quantidade'];
-
-    $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
-    $resultado = $conexao->query($sqllivro);
-
-    if (mysqli_num_rows($resultado) == 1) {
-        echo "<script> window.alert('Livro já cadastrado.')</script>";
-    } else {
-        $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nomeLivro', '$autor', '$editora', '$lancamento', '$quantidade')");
-    }
-}
-
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
-    header('Location: index.php');
+    echo "<script> window.location.href = 'index.php' </script>";
 }
 $logado = $_SESSION['email'];
 
@@ -72,12 +52,13 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/f4c3c17e91.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
@@ -135,52 +116,51 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Livro</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    <form action="livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".create/create-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="row-md-3">
-                                <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                            <div class="input_row">
+                                <div class="row-md-3">
+                                    <label for="input1" class="form-label text-black bold">Nome</label>
+                                    <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        • Campo obrigatório •
+                                    </div>
+                                </div>
+                                <div class="row-md-3">
+                                    <label for="input2" class="form-label text-black">Autor</label>
+                                    <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        • Campo obrigatório •
+                                    </div>
+                                </div>
+                                <div class="row-md-3">
+                                    <label for="input5" class="form-label text-black">Quantidade</label>
+                                    <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        • Campo obrigatório •
+                                    </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">Autor</label>
-                                <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                            <div class="input_row">
+                                <div class="row-md-3">
+                                    <label for="input3" class="form-label text-black">Editora</label>
+                                    <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
+                                        <option value="" selected disabled>Selecione:</option>
+                                        <?php
+                                        while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
+                                            echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="row-md-3">
+                                    <label for="input4" class="form-label text-black">Lançamento</label>
+                                    <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        • Campo obrigatório •
+                                    </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Editora</label>
-                                <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
-                                    <option value="" selected disabled>Selecione:</option>
-                                    <?php
-                                    while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                        echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="row-md-3">
-                                <label for="input4" class="form-label text-black">Lançamento</label>
-                                <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Campo obrigatório •
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row-md-3">
-                                <label for="input5" class="form-label text-black">Quantidade</label>
-                                <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Campo obrigatório •
-                                </div>
-                            </div>
-                            <br>
                             <div class="col-12" style="text-align: center;">
                                 <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
                             </div>
@@ -195,7 +175,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
                     </div>
-                    <form action=".saves/save-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".update/update-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="input_row">
                             <input type="hidden" name="id" id="campo1">
                             <div class="row-md-3">
@@ -232,9 +212,9 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                     $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
                                     $resultEditora_conect = $conexao->query($sqlEditoras_conect);
 
-                                        while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                            echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
-                                        }
+                                    while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
+                                        echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -290,7 +270,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Livros</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO +</div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-livro">
                     <div role="search" class="sbx-custom__wrapper">
@@ -345,7 +325,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 </td>
                 </tr>";
             }
-            echo "</tbody></table><br>";
+            echo "</tbody></table>";
             ?>
             <!-- Área da paginação -->
             <div class="pagination <?php if (!empty($search)) {

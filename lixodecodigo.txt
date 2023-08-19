@@ -1,0 +1,45 @@
+** LÓGICA FODIDA DO DELETE USUÁRIO COM VERIFICAÇÃO DE LINHA **
+
+ // Verificar se possui aluguel
+    // foreach($sqlAluguel_conect_result as $linha[]){
+    //     //echo var_dump($linha).'<br>';
+    // }
+    // if($sqlAluguel_conect_result -> num_rows > 1){
+    //     if($linha[0]['data_devolucao'] != 0 && $linha[1]['data_devolucao'] == 0){
+    //         echo "<script> alert('Usuário não pode ser deletado, pois possui aluguel ativo.'); </script>";
+    //         // header('Refresh:0; url=../user.php', false, 303);
+    //     }
+    //     else if($linha[0]['data_devolucao'] == 0 && $linha[1]['data_devolucao'] == 0){
+    //         echo "<script> alert('Usuário não pode ser deletado, pois possui aluguel ativo.'); </script>";
+    //         // header('Refresh:0; url=../user.php', false, 303);
+    //     }
+    //     else if($linha[0]['data_devolucao'] == 0 && $linha[1]['data_devolucao'] != 0){
+    //         echo "<script> alert('Usuário não pode ser deletado, pois possui aluguel ativo.'); </script>";
+    //         // header('Refresh:0; url=../user.php', false, 303);
+    //     }
+    //     else{
+    //         if($result -> num_rows > 0){
+    //             $sqlDelete = "DELETE FROM usuarios WHERE CodUsuario = $codUsuario";
+    //             $resultDelete= $conexao -> query($sqlDelete);
+    //         }
+    //         $sqlReset = "ALTER TABLE livros AUTO_INCREMENT = 1;";
+    //         $resultReset = $conexao -> query($sqlReset);
+    //         // header('Location: ../user.php');
+    //     }
+    // }
+    // else{
+    //     if($nomeUsuario === $nomeUserAluguel && $data_devolucao == 0){
+    //         echo "<script> alert('Usuário não pode ser deletado, pois possui aluguel ativo.'); </script>";
+    //         // header('Refresh:0; url=../user.php', false, 303);
+    //     }
+    //     else{
+    //         if($result -> num_rows > 0){
+    //         $sqlDelete = "DELETE FROM usuarios WHERE CodUsuario = $codUsuario";
+    //         $resultDelete= $conexao -> query($sqlDelete);
+
+    //         }
+    //         $sqlReset = "ALTER TABLE usuarios AUTO_INCREMENT = 1;";
+    //         $resultReset = $conexao -> query($sqlReset);
+    //         // header('Location: ../user.php'); 
+    //     }
+    // }

@@ -3,31 +3,11 @@ session_start();
 
 include_once('php/config.php');
 
-// Insert
-if (isset($_POST['submit'])) {
-
-    include_once('php/config.php');
-
-    $nomeEditora = $_POST['nome-editora'];
-    $email = $_POST['email-editora'];
-    $telefone = $_POST['telefone-editora'];
-    $website = $_POST['site-editora'];
-
-    $sqleditora = "SELECT * FROM editoras WHERE nome = '$nomeEditora'";
-    $resultado = $conexao->query($sqleditora);
-
-    if (mysqli_num_rows($resultado) == 1) {
-        echo "<script>window.alert('Editora já cadastrada.')</script>";
-    } else {
-        $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, telefone, website) VALUES ('$nomeEditora', '$email', '$telefone', '$website')");
-    }
-}
-
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
-    header('Location: index.php');
+    echo "<script> window.location.href = 'index.php' </script>";
 }
 $logado = $_SESSION['email'];
 
@@ -99,6 +79,7 @@ $result = $conexao->query($sql);
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="js/script.js"></script>
     <script>
         var search = document.getElementById('pesquisadora')
@@ -156,7 +137,7 @@ $result = $conexao->query($sql);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro da Editora</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    <form action="editora.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".create/create-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="input_row">
                                 <div class="row-md-3">
@@ -204,7 +185,7 @@ $result = $conexao->query($sql);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Editora</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
                     </div>
-                    <form action=".saves/save-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".update/update-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="input_row">
                                 <input type="hidden" name="id" id="campo1">
@@ -284,7 +265,7 @@ $result = $conexao->query($sql);
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Editoras</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO +</div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-editora">
                     <div role="search" class="sbx-custom__wrapper">
@@ -327,7 +308,7 @@ $result = $conexao->query($sql);
                     </td>
                 </tr>";
             }
-            echo "</tbody></table><br>";
+            echo "</tbody></table>";
             ?>
             <!-- Área da paginação -->
             <div class="pagination <?php if (!empty($search)) {
