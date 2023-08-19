@@ -32,18 +32,8 @@ CREATE TABLE `alugueis` (
   `prev_devolucao` varchar(45) NOT NULL,
   `data_devolucao` varchar(45) NOT NULL,
   PRIMARY KEY (`CodAluguel`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `alugueis`
---
-
-LOCK TABLES `alugueis` WRITE;
-/*!40000 ALTER TABLE `alugueis` DISABLE KEYS */;
-INSERT INTO `alugueis` VALUES (1,'Hellraiser','Carlos','2023-05-09','2023-05-24','0'),(2,'Hellraiser','Matheus','2023-05-04','2023-05-15','0'),(3,'Guerra e Paz','Júlia','2023-05-01','2023-05-22','0'),(4,'Guerra e Paz','Carlos','2023-05-02','2023-05-25','0'),(6,'Demon Slayer','Carlos','2023-05-09','2023-05-22','0'),(7,'Guerra e Paz','Ester','2023-05-03','2023-05-08','0'),(8,'Hellraiser','Thiago','2023-04-14','2023-05-04','09/05/2023');
-/*!40000 ALTER TABLE `alugueis` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `editoras`
@@ -59,18 +49,8 @@ CREATE TABLE `editoras` (
   `telefone` varchar(45) NOT NULL,
   `website` varchar(45) NOT NULL,
   PRIMARY KEY (`CodEditora`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `editoras`
---
-
-LOCK TABLES `editoras` WRITE;
-/*!40000 ALTER TABLE `editoras` DISABLE KEYS */;
-INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','1133768965','https://www.companhiadasletras.com.br'),(2,'Panini','panini@contato.com.br','6789911432','panini.com.br'),(3,'Darkside','darkside@gmail.com','6789123443','');
-/*!40000 ALTER TABLE `editoras` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `gerenciadores`
@@ -88,16 +68,6 @@ CREATE TABLE `gerenciadores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gerenciadores`
---
-
-LOCK TABLES `gerenciadores` WRITE;
-/*!40000 ALTER TABLE `gerenciadores` DISABLE KEYS */;
-INSERT INTO `gerenciadores` VALUES (1,'medeiros','1234');
-/*!40000 ALTER TABLE `gerenciadores` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `livros`
 --
 
@@ -113,18 +83,8 @@ CREATE TABLE `livros` (
   `quantidade` int(45) NOT NULL,
   `alugados` int(45) NOT NULL,
   PRIMARY KEY (`CodLivro`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `livros`
---
-
-LOCK TABLES `livros` WRITE;
-/*!40000 ALTER TABLE `livros` DISABLE KEYS */;
-INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Cuzinho','2017-05-10',33,1),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras','2017-11-21',12,3),(3,'Hellraiser','Clive Barker','Darkside','1986-11-12',23,2);
-/*!40000 ALTER TABLE `livros` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `usuarios`
@@ -142,16 +102,6 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`CodUsuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuarios`
---
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Carlos','Crato - CE','Jurandir Meireles, 567','carlao@gmailom'),(2,'Matheus','Fortaleza - CE','Av. Pasteur, 1234','matheus@gmail.com'),(3,'Ester','Belo Horizonte - MG','Palmeiras Vermelhas, 123','ester@gmail.com'),(4,'eu ','quero','cagar','fodased@daf');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -162,4 +112,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-03 21:43:26
+-- Dump completed on 2023-08-19 20:14:38
