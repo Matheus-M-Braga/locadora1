@@ -23,17 +23,18 @@
         }
         $sqlReset = "ALTER TABLE alugueis AUTO_INCREMENT = 1;";
         $resultReset = $conexao->query($sqlReset);
+
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Aluguel deletado com sucesso!',
+                text: '',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1700
+            })
+            .then(() => {window.location.href = '../aluguel.php';})
+        </script>";
     }
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Aluguel deletado com sucesso!',
-            text: '',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1700
-        })
-        .then(() => {window.location.href = '../aluguel.php';})
-    </script>";
     ?>
 </body>

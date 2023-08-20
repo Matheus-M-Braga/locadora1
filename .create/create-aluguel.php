@@ -90,6 +90,17 @@
                      $sqlResultAlterar = $conexao->query($sqlAlterar);
 
                      $result = mysqli_query($conexao, "INSERT INTO alugueis(livro, usuario, data_aluguel, prev_devolucao, data_devolucao) VALUES ('$nomeLivro', '$usuario', '$dat_aluguel', '$prev_devolucao', '$data_devolucao')");
+                     echo "
+                     <script>
+                        Swal.fire({
+                           title: 'Aluguel cadastrado com sucesso!',
+                           text: '',
+                           icon: 'success',
+                           showConfirmButton: false,
+                           timer: 1500
+                        })
+                        .then(() => {window.location.href = '../aluguel.php';})
+                     </script>";
                   } else if ($quantidade_nova < 0) {
                      echo "
                      <script>
