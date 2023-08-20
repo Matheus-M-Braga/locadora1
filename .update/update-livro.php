@@ -1,7 +1,16 @@
-<?php
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../css/style.css?<?php echo rand(1, 1000); ?>" media="all">
+    <link rel="stylesheet" href="../css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+</head>
+
+<body>
+    <?php
     include_once('../php/config.php');
 
-    if(isset($_POST['update'])){
+    if (isset($_POST['update'])) {
 
         $codLivro = $_POST['id'];
         $nomeLivro = $_POST['nome-livro'];
@@ -12,8 +21,19 @@
 
         $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE CodLivro = '$codLivro'";
 
-        $result = $conexao -> query($sqlUpdate);
-        
+        $result = $conexao->query($sqlUpdate);
+
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Livro atualizado com sucesso!',
+                text: '',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1700
+            })
+        .then(() => {window.location.href = '../livro.php';})
+        </script>";
     }
-    header('Location: ../livro.php');
-?>
+    ?>
+</body>
