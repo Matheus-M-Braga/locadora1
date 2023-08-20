@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,43 +11,40 @@
     <link rel="stylesheet" href="css/login.css?<?php echo rand(1, 1000); ?>">
     <title>WDA Livraria</title>
 </head>
+
 <body>
     <div class="log">
         <h1>Acesso</h1><br>
         <form action="php/testelogin.php" method="POST" class="needs-validation" novalidate>
-            
-            <input type="text" placeholder="E-mail" name="email" class="form-control" id="" autocomplete="on" required>
-            <div class="invalid-feedback" style="background-color: white; border-radius: 5px; opacity: 12;">
-                <b>Informe o usuário</b>
-            </div>
+            <input type="text" placeholder="Usuário" name="email" class="form-control" id="" autocomplete="on" required>
+            <p class="invalid-feedback">*Informe o usuário</p>
             <br>
-            <input type="password"  placeholder="Senha" name="senha" class="form-control" id="" autocomplete="off" required>
-            <div class="invalid-feedback" style="background-color: white; border-radius: 5px; opacity: 12;">
-                <b>Informe a senha</b>
-            </div>
+            <input type="password" placeholder="Senha" name="senha" class="form-control" id="" autocomplete="off" required>
+            <p class="invalid-feedback">*Informe a senha</p>
             <br>
             <input type="submit" name="submit" value="Entrar" class="submit">
         </form>
     </div>
     <!-- Script da validação -->
     <script>
-            (function () {
+        (function() {
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
 
             Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                    }
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
 
-                    form.classList.add('was-validated')
-                }, false)
+                        form.classList.add('was-validated')
+                    }, false)
                 })
-            })()
-        </script>
+        })()
+    </script>
 </body>
+
 </html>

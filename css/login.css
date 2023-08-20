@@ -1,17 +1,19 @@
 @charset "UTF-8";
 
-:root{
+:root {
     --cor1: rgb(65, 69, 94);
     --cor2: rgb(183, 83, 82);
     --cor3: rgb(182, 143, 43);
 }
-body{
+
+body {
     font-family: Arial, Helvetica, sans-serif;
     background-image: url(../img/fundo.jpg);
     background-position: top center;
     background-repeat: no-repeat;
 }
-div.log{
+
+div.log {
     text-align: center;
     background-image: url(../img/background.jpg);
     background-size: cover;
@@ -23,16 +25,40 @@ div.log{
     padding: 30px 80px 70px 80px;
     color: black;
 }
-input{
+
+input {
     border-radius: 10px;
     padding: 10px;
     border: none;
     outline: none;
 }
-input:focus{
+
+input:focus {
     outline: 0.1px solid maroon;
 }
-.submit{
+.form-control.is-invalid, .was-validated .form-control:invalid{
+    padding-right: unset;
+    background-image: none;
+}
+.form-control.is-valid, .was-validated .form-control:valid{
+    padding-right: unset;
+    background-image: none;
+}
+.invalid-feedback {
+    opacity: 12;
+    text-align: left;
+    color: rgb(225, 0, 0);
+    width: max-content;
+    padding: 0;
+    margin: 0;
+}
+
+.is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+    display: inline;
+    text-align: left;
+}
+
+.submit {
     background-color: var(--cor1);
     width: 60%;
     border-radius: 10px;
@@ -41,10 +67,13 @@ input:focus{
     font-size: 16px;
     color: white;
     border: none;
+    margin-top: 15px;
 }
-.submit:hover{
+
+.submit:hover {
     background-color: rgb(45, 52, 97);
 }
-.submit:focus{
+
+.submit:focus {
     outline: 0.1px solid rgb(28, 37, 95);
 }
