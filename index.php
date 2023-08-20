@@ -17,12 +17,12 @@
             
             <input type="text" placeholder="E-mail" name="email" class="form-control" id="" autocomplete="on" required>
             <div class="invalid-feedback" style="background-color: white; border-radius: 5px; opacity: 12;">
-                <b>• Campo obrigatório •</b>
+                <b>Informe o usuário</b>
             </div>
             <br>
             <input type="password"  placeholder="Senha" name="senha" class="form-control" id="" autocomplete="off" required>
             <div class="invalid-feedback" style="background-color: white; border-radius: 5px; opacity: 12;">
-                <b>• Campo obrigatório •</b>
+                <b>Informe a senha</b>
             </div>
             <br>
             <input type="submit" name="submit" value="Entrar" class="submit">
