@@ -151,17 +151,17 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
             <div class="graficos">
                 <div id="grafico" class="container bg-light">
                     <div style="text-align:center;">
-                        <h2>Livros mais alugados: </h2>
+                        <h2 class="title">Livros mais alugados</h2>
                     </div>
-                    <canvas id="grafico01" width="300" style="margin-top:-6px;"></canvas>
+                    <canvas id="grafico01" width="300"></canvas>
                     <div>
                     </div>
                 </div>
                 <div id="grafico2" class="container bg-light">
                     <div style="text-align:center;">
-                        <h2>Livros Disponíveis</h2>
+                        <h2 class="title">Livros Disponíveis</h2>
                     </div>
-                    <canvas id="grafico02" width="300" height="200" style="margin-top:-6px;"></canvas>
+                    <canvas id="grafico02" width="300" height="200"></canvas>
                     <div>
                     </div>
                 </div>
@@ -243,13 +243,14 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                     label: '',
                     data: ["<?php echo $quantDisp[0]; ?>", "<?php echo $quantDisp[1]; ?>", "<?php echo $quantDisp[2]; ?>", "<?php echo $quantDisp[3]; ?>", "<?php echo $quantDisp[4]; ?>"],
                     backgroundColor: ['rgba(128, 0, 0)', 'rgb(65, 69, 94)', 'rgb(182, 143, 43)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)'],
-                    borderWidth: 0
+                    borderColor: ['rgba(128, 0, 0)', 'rgb(65, 69, 94)', 'rgb(182, 143, 43)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)'],
+                    borderWidth: 1
                 }]
             },
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        display: false
                     }
                 }
             }
