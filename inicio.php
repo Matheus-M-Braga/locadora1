@@ -77,11 +77,11 @@ while ($barra = $resultado_grafico->fetch_assoc()) {
 }
 
 // livros disponíveis
-$sql_disponiveis = "SELECT nome, quantidade FROM locadorabd.livros ORDER BY quantidade DESC";
+$sql_disponiveis = "SELECT nome, quantidade FROM livros ORDER BY quantidade DESC";
 $result_disponiveis = $conexao->query($sql_disponiveis);
 while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
     $nomesDisp[] = $disponiveis['nome'];
-    $quantDisp[] = $disponiveis['quantidade'];
+    $quantDisp[] = $disponiveis['quantidade'];  
 }
 
 ?>
