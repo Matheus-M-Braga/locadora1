@@ -133,7 +133,7 @@ $resultuser_conect = $conexao->query($sqluser_conect);
                             <div class="input_row">
                                 <div class="row-md-3">
                                     <label for="input1" class="form-label text-black">Livro Alugado</label>
-                                    <select name="nome-livro" class="form-select needs-validation is-invalid" id="input1" required>
+                                    <select name="nome-livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
                                         <option value="" selected disabled>Selecione:</option>
                                         <?php
                                         while ($livro_data = mysqli_fetch_assoc($resultlivro_conect)) {
@@ -144,7 +144,7 @@ $resultuser_conect = $conexao->query($sqluser_conect);
                                 </div>
                                 <div class="row-md-3">
                                     <label for="input2" class="form-label text-black">Usuário</label>
-                                    <select name="usuario" class="form-select needs-validation is-invalid" id="input2" required>
+                                    <select name="usuario" class="form-control form-select needs-validation is-invalid" id="input2" required>
                                         <option value="" selected disabled>Selecione:</option>
                                         <?php
                                         while ($user_data = mysqli_fetch_assoc($resultuser_conect)) {

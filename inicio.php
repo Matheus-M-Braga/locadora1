@@ -4,7 +4,7 @@ session_start();
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
-    header('Location: index.php');
+    echo "<script> window.location.href = 'index.php' </script>";
 }
 $logado = $_SESSION['email'];
 

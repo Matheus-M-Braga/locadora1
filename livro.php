@@ -143,6 +143,8 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                         • Campo obrigatório •
                                     </div>
                                 </div>
+                            </div>
+                            <div class="input_row">
                                 <div class="row-md-3">
                                     <label for="input5" class="form-label text-black">Quantidade</label>
                                     <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
@@ -150,9 +152,16 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                         • Campo obrigatório •
                                     </div>
                                 </div>
+                                <div class="row-md-3">
+                                    <label for="input4" class="form-label text-black">Lançamento</label>
+                                    <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        • Campo obrigatório •
+                                    </div>
+                                </div>
                             </div>
                             <div class="input_row">
-                                <div class="row-md-3">
+                                <div class="row-md-3" style="width: 63%;">
                                     <label for="input3" class="form-label text-black">Editora</label>
                                     <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
                                         <option value="" selected disabled>Selecione:</option>
@@ -162,13 +171,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                         }
                                         ?>
                                     </select>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input4" class="form-label text-black">Lançamento</label>
-                                    <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">

@@ -76,7 +76,7 @@ if (!empty($search)) {
             <div class="logo">
                 <img src="img/favicon.ico" alt="">
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
-            </div>
+            </div>  
             <div class="links">
                 <div class="link">
                     <img src="img/dashboard.png" alt="" class="links_icons">
