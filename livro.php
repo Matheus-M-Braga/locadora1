@@ -132,41 +132,41 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                 <label for="input1" class="form-label text-black bold">Nome</label>
                                 <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">Autor</label>
                                 <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o autor
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Editora</label>
+                                <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
+                                    <option value="" selected disabled>Selecione:</option>
+                                    <?php
+                                    while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
+                                        echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input4" class="form-label text-black">Lançamento</label>
+                                <input name="lancamento" type="text" class="form-control lancamento" id="input4" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe o ano de lançamento
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input5" class="form-label text-black">Quantidade</label>
                                 <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe a quantidade
                                 </div>
                             </div>
-                            <div class="row-md-3">
-                                <label for="input4" class="form-label text-black">Lançamento</label>
-                                <input name="lancamento" type="date" class="form-control date" id="input4" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Campo obrigatório •
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="input3" class="form-label text-black">Editora</label>
-                            <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
-                                <option value="" selected disabled>Selecione:</option>
-                                <?php
-                                while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                    echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
-                                }
-                                ?>
-                            </select>
                         </div>
                         <div class="col-12" style="text-align: center;">
                             <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
@@ -187,22 +187,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                             <label for="campo2" class="form-label text-black bold">Nome</label>
                             <input name="nome-livro" type="text" class="form-control" id="campo2" required autocomplete="off">
                             <div class="invalid-feedback">
-                                • Campo obrigatório •
+                                • Informe o nome
                             </div>
                         </div>
                         <div class="row-md-3">
                             <label for="campo3" class="form-label text-black">Autor</label>
                             <input name="autor" type="text" class="form-control" id="campo3" required autocomplete="off">
                             <div class="invalid-feedback">
-                                • Campo obrigatório •
-                            </div>
-                        </div>
-
-                        <div class="row-md-3">
-                            <label for="campo6" class="form-label text-black">Quantidade</label>
-                            <input name="quantidade" type="number" class="form-control" id="campo6" required autocomplete="off">
-                            <div class="invalid-feedback">
-                                • Campo obrigatório •
+                                • Informe o autor
                             </div>
                         </div>
                         <div class="row-md-3">
@@ -223,9 +215,16 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         </div>
                         <div class="row-md-3">
                             <label for="campo5" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="date" class="form-control date" id="campo5" required autocomplete="off">
+                            <input name="lancamento" type="text" class="form-control lancamento" id="campo5" required autocomplete="off">
                             <div class="invalid-feedback">
-                                • Campo obrigatório •
+                                • Informe o ano de lançamento
+                            </div>
+                        </div>
+                        <div class="row-md-3">
+                            <label for="campo6" class="form-label text-black">Quantidade</label>
+                            <input name="quantidade" type="number" class="form-control" id="campo6" required autocomplete="off">
+                            <div class="invalid-feedback">
+                                • Informe a quantidade
                             </div>
                         </div>
                         <div class="col-12" style="text-align: center;">
@@ -251,28 +250,11 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     </div>
                 </div>
             </div>
-            <!-- Script da validação -->
-            <script>
-                (function() {
-                    'use strict'
-                    var forms = document.querySelectorAll('.needs-validation')
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-            </script>
             <!-- GRID -->
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Livros</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-livro">
                     <div role="search" class="sbx-custom__wrapper">
@@ -283,7 +265,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
             </div>
             <div class="grid-body">
                 <?php
-                // Montagem da grid (foda)
                 $dados = "<table class='container-grid'>
                 <thead>
                     <tr>
@@ -298,17 +279,16 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                $identifier = -1;
+                
                 while ($livro_data = mysqli_fetch_assoc($result)) {
-                    $identifier++;
-                    $lanca = date("d/m/Y", strtotime($livro_data['lancamento']));
+                    // Conexão tabela alugueis
                     $nome_livro = $livro_data['nome'];
                     $id = $livro_data['CodLivro'];
-                    // Conexão tabela alugueis
                     $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
                     $sqlAluguelResult = $conexao->query($sqlAluguelConect);
                     $livro_data['alugados'] = $sqlAluguelResult->num_rows;
                     $aluguel_quant = $livro_data['alugados'];
+
                     mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE CodLivro = '$id' ");
                     echo "
                     <tr>
@@ -316,11 +296,11 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         . "<td class='itens'>" . $livro_data['nome'] . "</td>"
                         . "<td class='itens'>" . $livro_data['autor'] . "</td>"
                         . "<td class='itens'>" . $livro_data['editora'] . "</td>"
-                        . "<td class='itens'>" . $lanca . "</td>"
+                        . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
                         . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
                         . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
                         . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
+                        <img src='img/pencil.png' data-id='$livro_data[CodLivro]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                         &nbsp;&nbsp;
                         <img src='img/bin.png' data-id='$livro_data[CodLivro]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                     </td>
@@ -329,9 +309,10 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 echo "</tbody></table>";
                 ?>
                 <!-- Área da paginação -->
-                <div class="pagination <?php if (!empty($search)) {
-                                            echo 'd-none';
-                                        } ?>">
+                <div class="pagination 
+                <?php if (!empty($search)) {
+                    echo 'd-none';
+                } ?>">
                     <!-- Guia da paginação -->
                     <ul class="pagination">
                         <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
@@ -380,6 +361,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <!-- scripts -->
     <script src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
             // Faz a solicitação AJAX para obter os dados do banco de dados
@@ -415,13 +397,12 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                             window.location.href = ".delete/delet-livro.php" + "?id=" + btnID;
                         })
                     })
-                    // Aqui você pode manipular os dados como quiser,
-                    // por exemplo, exibir na página ou realizar outras operações.
                 },
                 error: function(xhr, status, error) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
+            $('.lancamento').mask('0000')
         });
     </script>
 </body>

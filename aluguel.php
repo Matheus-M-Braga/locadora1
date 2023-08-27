@@ -169,7 +169,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                                 <label for="input4" class="form-label text-black">Previsão de Devolução</label>
                                 <input name="prev_devolucao" type="date" min="<?php echo $hojeFormatado ?>" max="<?php echo $hojeMais30Formatado ?>" id="input4" class="form-control date" autocomplete="off" required>
                                 <div class="invalid-feedback">
-                                    • Campo Facultativo •
+                                    • Informe a data de devolução
                                 </div>
                             </div>
                             <input type="hidden" name="data_devolucao" value="0">
@@ -214,28 +214,11 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     </div>
                 </div>
             </div>
-            <!-- Script da validação -->
-            <script>
-                (function() {
-                    'use strict'
-                    var forms = document.querySelectorAll('.needs-validation')
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-            </script>
             <!-- GRID -->
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Aluguéis</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-alug">
                     <div role="search" class="sbx-custom__wrapper">
@@ -286,9 +269,10 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                 echo "</tbody></table>";
                 ?>
                 <!-- Área da paginação -->
-                <div class="pagination <?php if (!empty($search)) {
-                                            echo 'd-none';
-                                        } ?>">
+                <div class="pagination 
+                <?php if (!empty($search)) {
+                    echo 'd-none';
+                } ?>">
                     <!-- Guia da paginação-->
                     <ul class="pagination">
                         <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
@@ -345,25 +329,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    // Os dados são retornados como um array JSON
-                    console.log(data)
-                    $('.edit').click(function() {
-                        var recordId = $(this).data('id');
-                        x = recordId
-
-                        var coluna1 = data[x].CodEditora;
-                        var coluna2 = data[x].nome;
-                        var coluna3 = data[x].email;
-                        var coluna4 = data[x].telefone;
-                        var coluna5 = data[x].website;
-
-                        $("#campo1").val(coluna1);
-                        $('#campo2').val(coluna2);
-                        $('#campo3').val(coluna3);
-                        $('#campo4').val(coluna4);
-                        $('#campo5').val(coluna5);
-
-                    })
                     $('.exclu').click(function() {
                         var btnID = $(this).data('id')
 
@@ -378,8 +343,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                             window.location.href = ".update/update-aluguel.php" + "?id=" + btnID;
                         })
                     })
-                    // Aqui você pode manipular os dados como quiser,
-                    // por exemplo, exibir na página ou realizar outras operações.
                 },
                 error: function(xhr, status, error) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);

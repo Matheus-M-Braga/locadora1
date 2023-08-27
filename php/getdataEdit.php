@@ -2,15 +2,16 @@
    include_once('config.php');
 
    // Editoras
-   $sqlEdit = "SELECT * FROM editoras";
-   $resultEdit = $conexao -> query($sqlEdit);
+   $sql = "SELECT * FROM editoras";
+   $result = $conexao -> query($sql);
 
-   if($resultEdit -> num_rows > 0){
-      $dataEdit = array();
-      while ($row = $resultEdit -> fetch_assoc()) {
-        $dataEdit[] = $row;
+   if($result -> num_rows > 0){
+      $data = array();
+      while ($row = $result -> fetch_assoc()) {
+         $id = $row['CodEditora'];
+         $data[$id] = $row;
       }
-      echo json_encode($dataEdit);
+      echo json_encode($data);
    } 
    else{
       echo "0 resultados";

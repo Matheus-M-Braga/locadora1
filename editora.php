@@ -9,7 +9,6 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
-$logado = $_SESSION['email'];
 
 // Pesquisa
 if (!empty($_GET['search'])) {
@@ -153,29 +152,22 @@ $result = $conexao->query($sql);
                                 <label for="input1" class="form-label text-black bold">Nome</label>
                                 <input name="nome-editora" type="text" id="input1" class="form-control" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="input2" class="form-control" required autocomplete="off">
+                                <input name="email-editora" type="email" id="input2" class="form-control email" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o email
                                 </div>
                             </div>
 
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Telefone</label>
-                                <input name="telefone-editora" type="tel" id="input3" class="form-control" required autocomplete="off">
+                                <input name="telefone-editora" type="text" id="input3" class="form-control telefone" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
-                                </div>
-                            </div>
-                            <div class="row-md-3">
-                                <label for="input4" class="form-label text-black">Site</label>
-                                <input name="site-editora" placeholder="*Facultativo*" type="text" id="input4" class="form-control date" autocomplete="off">
-                                <div class="valid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o telefone
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -199,29 +191,22 @@ $result = $conexao->query($sql);
                                 <label for="input1" class="form-label text-black bold">Nome</label>
                                 <input name="nome-editora" type="text" id="campo2" class="form-control" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="campo3" class="form-control" required autocomplete="off">
+                                <input name="email-editora" type="email" id="campo3" class="form-control email" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o e-mail
                                 </div>
                             </div>
 
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Telefone</label>
-                                <input name="telefone-editora" type="tel" id="campo4" class="form-control" required autocomplete="off">
+                                <input name="telefone-editora" type="tel" id="campo4" class="form-control telefone" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Campo obrigatório •
-                                </div>
-                            </div>
-                            <div class="row-md-3">
-                                <label for="input4" class="form-label text-black">Site</label>
-                                <input name="site-editora" placeholder="*Facultativo*" type="text" id="campo5" class="form-control date" autocomplete="off">
-                                <div class="valid-feedback">
-                                    • Campo obrigatório •
+                                    • Informe o telefone
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -248,28 +233,11 @@ $result = $conexao->query($sql);
                     </div>
                 </div>
             </div>
-            <!-- Script da validação -->
-            <script>
-                (function() {
-                    'use strict'
-                    var forms = document.querySelectorAll('.needs-validation')
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-            </script>
             <!-- GRID -->
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Editoras</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-editora">
                     <div role="search" class="sbx-custom__wrapper">
@@ -295,9 +263,7 @@ $result = $conexao->query($sql);
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                $identifier = -1;
                 while ($editora_data = mysqli_fetch_assoc($result)) {
-                    $identifier++;
                     echo "
                     <tr>
                         <td class='itens'>" . $editora_data['CodEditora'] . "</td>"
@@ -305,7 +271,7 @@ $result = $conexao->query($sql);
                         . "<td class='itens'>" . $editora_data['email'] . "</td>"
                         . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
                         . "<td class='itens'>
-                            <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
+                            <img src='img/pencil.png' data-id='$editora_data[CodEditora]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                             &nbsp;&nbsp;
                             <img src='img/bin.png' data-id='$editora_data[CodEditora]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                         </td>
@@ -314,9 +280,10 @@ $result = $conexao->query($sql);
                 echo "</tbody></table>";
                 ?>
                 <!-- Área da paginação -->
-                <div class="pagination <?php if (!empty($search)) {
-                                            echo 'd-none';
-                                        } ?>">
+                <div class="pagination 
+                <?php if (!empty($search)) {
+                    echo 'd-none';
+                } ?>">
                     <!-- Guia da paginação-->
                     <ul class="pagination">
                         <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
@@ -365,16 +332,16 @@ $result = $conexao->query($sql);
     <!-- scritps -->
     <script src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Faz a solicitação AJAX para obter os dados do banco de dados
+            // Consulta ajax
             $.ajax({
                 url: 'php/getdataEdit.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    // Os dados são retornados como um array JSON
-                    console.log(data)
+                    console.log(data);
                     $('.edit').click(function() {
                         var recordId = $(this).data('id');
                         x = recordId
@@ -389,7 +356,6 @@ $result = $conexao->query($sql);
                         $('#campo2').val(coluna2);
                         $('#campo3').val(coluna3);
                         $('#campo4').val(coluna4);
-                        $('#campo5').val(coluna5);
 
                     })
                     $('.exclu').click(function() {
@@ -399,13 +365,13 @@ $result = $conexao->query($sql);
                             window.location.href = ".delete/delet-editora.php" + "?id=" + btnID;
                         })
                     })
-                    // Aqui você pode manipular os dados como quiser,
-                    // por exemplo, exibir na página ou realizar outras operações.
                 },
                 error: function(xhr, status, error) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
+            // Máscaras
+            $('.telefone').mask('(00) 00000-0000');
         });
     </script>
 </body>

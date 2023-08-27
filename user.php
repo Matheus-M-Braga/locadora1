@@ -163,7 +163,7 @@ if (!empty($search)) {
                 <div class="conteudo-modal">
                     <div class="top_modal">
                         <h1 class="text-balck titulo_modal">Editar Usuário</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
                     </div>
                     <form action=".update/update-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
@@ -190,12 +190,11 @@ if (!empty($search)) {
                                 </div>
                             </div>
                             <div class="row-md-3">
+                                <label for="validationCustom02" class="form-label text-black">E-mail</label>
+                                <input name="email" type="email" id="campo5" class="form-control date" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o email
                                 </div>
-                                <label for="validationCustom02" class="form-label text-black">E-mail</label>
-
-                                <input name="email" type="email" id="campo5" class="form-control date" required autocomplete="off" value="">
                             </div>
                             <div class="col-12" style="text-align: center;">
                                 <button class="btn btn-success" type="submit" name="update">Confirmar</button>
@@ -221,31 +220,11 @@ if (!empty($search)) {
                     </div>
                 </div>
             </div>
-            <!-- Script da validação -->
-            <script>
-                (function() {
-                    'use strict'
-
-                    var forms = document.querySelectorAll('.needs-validation')
-
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-            </script>
             <!-- GRID -->
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Usuários</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal')">NOVO <span class="material-symbols-outlined">add</span></div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-user">
                     <div role="search" class="sbx-custom__wrapper">
@@ -269,9 +248,7 @@ if (!empty($search)) {
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                $identifier = -1;
                 while ($user_data = mysqli_fetch_assoc($result)) {
-                    $identifier++;
                     echo "
                     <tr>
                     <td class='itens'>" . $user_data['CodUsuario'] . "</td>"
@@ -280,7 +257,7 @@ if (!empty($search)) {
                         . "<td class='itens'>" . $user_data['Endereco'] . "</td>"
                         . "<td class='itens'>" . $user_data['Email'] . "</td>"
                         . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
+                        <img src='img/pencil.png' data-id='$user_data[CodUsuario]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                         &nbsp;&nbsp;
                         <img src='img/bin.png' data-id='$user_data[CodUsuario]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                     </td>
@@ -340,6 +317,7 @@ if (!empty($search)) {
     </div>
     <!-- scritps -->
     <script src="js/script.js"></script>
+    <!-- Consulta ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -366,17 +344,13 @@ if (!empty($search)) {
                         $('#campo3').val(coluna3);
                         $('#campo4').val(coluna4);
                         $('#campo5').val(coluna5);
-
                     })
                     $('.exclu').click(function() {
                         var btnID = $(this).data('id')
-
                         $('.confirm_exclu').click(function() {
                             window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
                         })
                     })
-                    // Aqui você pode manipular os dados como quiser,
-                    // por exemplo, exibir na página ou realizar outras operações.
                 },
                 error: function(xhr, status, error) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);

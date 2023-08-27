@@ -2,15 +2,17 @@
    include_once('config.php');
 
    // Livros
-   $sqlBook = "SELECT * FROM livros";
-   $result = $conexao -> query($sqlBook);
+   $sql = "SELECT * FROM livros";
+   $result = $conexao -> query($sql);
 
    if($result -> num_rows > 0){
       $data = array();
       while ($row = $result -> fetch_assoc()) {
-        $data[] = $row;
+         $id = $row['CodLivro'];
+         $data[$id] = $row;
       }
       echo json_encode($data);
+      echo var_dump($data)
    } 
    else{
       echo "0 resultados";

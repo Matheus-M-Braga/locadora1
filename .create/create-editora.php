@@ -16,7 +16,6 @@
       $nomeEditora = $_POST['nome-editora'];
       $email = $_POST['email-editora'];
       $telefone = $_POST['telefone-editora'];
-      $website = $_POST['site-editora'];
 
       $sqleditora = "SELECT * FROM editoras WHERE nome = '$nomeEditora'";
       $resultado = $conexao->query($sqleditora);
@@ -34,7 +33,7 @@
             .then(() => {window.location.href = '../editora.php';})
          </script>";
       } else {
-         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, telefone, website) VALUES ('$nomeEditora', '$email', '$telefone', '$website')");
+         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, telefone) VALUES ('$nomeEditora', '$email', '$telefone')");
          echo "
          <script>
             Swal.fire({
