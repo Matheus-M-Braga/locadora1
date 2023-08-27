@@ -18,7 +18,7 @@ div.log {
     flex-direction: column;
     justify-content: space-evenly;
     text-align: center;
-    background-image: url(../img/background.jpg);
+    background: #d2d6d6;
     background-size: cover;
     border-radius: 10px;
     position: absolute;
@@ -38,10 +38,9 @@ div.log {
     align-items: center;
     height: 60%;
 }
-input {
+.form input {
     border-radius: 10px;
-    padding: 10px;
-    border: none;
+    border: 1px solid gray;
     outline: 0;
 }
 
@@ -63,9 +62,9 @@ input:focus {
     opacity: 12;
     text-align: left;
     color: rgb(225, 0, 0);
-    width: max-content;
-    padding: 0;
+    padding: 0 0 0 33px;
     margin: 0;
+    font-size: 13px;
 }
 
 .is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {

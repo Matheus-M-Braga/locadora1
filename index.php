@@ -15,7 +15,7 @@
 
 <body>
     <div class="log">
-        <h1 class="title">Login</h1>
+        <h1 class="title">Acesso</h1>
         <form action="index.php" method="POST" class="needs-validation form" novalidate>
             <input type="text" placeholder="Usuário" name="email" class="form-control" id="" autocomplete="on" required>
             <p class="invalid-feedback">*Informe o usuário</p>
