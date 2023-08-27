@@ -76,7 +76,7 @@ if (!empty($search)) {
             <div class="logo">
                 <img src="img/favicon.ico" alt="">
                 <a class="title-link" href="inicio.php">WDA Livraria</a>
-            </div>  
+            </div>
             <div class="links">
                 <div class="link">
                     <img src="img/dashboard.png" alt="" class="links_icons">
@@ -123,36 +123,32 @@ if (!empty($search)) {
                     </div>
                     <form action=".create/create-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input1" class="form-label text-black bold">Nome</label>
-                                    <input name="nome-user" type="text" id="input1" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input2" class="form-label text-black">Cidade</label>
-                                    <input name="cidade" type="text" id="input2" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black bold">Nome</label>
+                                <input name="nome-user" type="text" id="input1" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe o nome
                                 </div>
                             </div>
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input3" class="form-label text-black">Endereço</label>
-                                    <input name="endereco" type="text" id="input3" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">Cidade</label>
+                                <input name="cidade" type="text" id="input2" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe a cidade
                                 </div>
-                                <div class="row-md-3">
-                                    <label for="validationCustom02" class="form-label text-black">E-mail</label>
-                                    <input name="email" type="email" class="form-control date" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Endereço</label>
+                                <input name="endereco" type="text" id="input3" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe o endereço
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="email" class="form-label text-black">E-mail</label>
+                                <input name="email" type="email" id="email" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe o email
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -171,38 +167,35 @@ if (!empty($search)) {
                     </div>
                     <form action=".update/update-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="input_row">
-                                <input type="hidden" id="campo1" name="id">
-                                <div class="row-md-3">
-                                    <label for="input1" class="form-label text-black bold">Nome</label>
-                                    <input name="nome-user" type="text" id="campo2" class="form-control" required autocomplete="off" value="">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input2" class="form-label text-black">Cidade</label>
-                                    <input name="cidade" type="text" id="campo3" class="form-control" required autocomplete="off" value="">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <input type="hidden" id="campo1" name="id">
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black bold">Nome</label>
+                                <input name="nome-user" type="text" id="campo2" class="form-control" required autocomplete="off" value="">
+                                <div class="invalid-feedback">
+                                    • Informe o nome
                                 </div>
                             </div>
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input3" class="form-label text-black">Endereço</label>
-                                    <input name="endereco" type="text" id="campo4" class="form-control" required autocomplete="off" value="">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">Cidade</label>
+                                <input name="cidade" type="text" id="campo3" class="form-control" required autocomplete="off" value="">
+                                <div class="invalid-feedback">
+                                    • Informe a cidade
                                 </div>
-                                <div class="row-md-3">
-                                    <label for="validationCustom02" class="form-label text-black">E-mail</label>
-                                    <input name="email" type="email" id="campo5" class="form-control date" required autocomplete="off" value="">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Endereço</label>
+                                <input name="endereco" type="text" id="campo4" class="form-control" required autocomplete="off" value="">
+                                <div class="invalid-feedback">
+                                    • Informe o endereço
                                 </div>
+                            </div>
+                            <div class="row-md-3">
+                                <div class="invalid-feedback">
+                                    • Informe o email
+                                </div>
+                                <label for="validationCustom02" class="form-label text-black">E-mail</label>
+
+                                <input name="email" type="email" id="campo5" class="form-control date" required autocomplete="off" value="">
                             </div>
                             <div class="col-12" style="text-align: center;">
                                 <button class="btn btn-success" type="submit" name="update">Confirmar</button>
@@ -256,93 +249,92 @@ if (!empty($search)) {
                 </div>
                 <form class="searchbox sbx-custom" id="search-user">
                     <div role="search" class="sbx-custom__wrapper">
+                        <span class="material-symbols-outlined search">search</span>
                         <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                        <button type="submit" class="sbx-custom__submit" onclick="searchData()">
-                            <img src="img/search.png" alt="">
-                        </button>
                     </div>
                 </form>
             </div>
             <!-- Tag responsável por exibir a listagem da página list -->
-            <?php
-            $dados = "<table class='container-grid'>
-            <thead>
-                <tr>
-                    <th class='titulos'>ID</th>
-                    <th class='titulos'>NOME</th>
-                    <th class='titulos'>CIDADE</th>
-                    <th class='titulos'>ENDEREÇO</th>
-                    <th class='titulos'>EMAIL</th>
-                    <th class='titulos'>AÇÕES</th>
-                </tr>
-            </thead><tbody>";
-            echo $dados;
-            $identifier = -1;
-            while ($user_data = mysqli_fetch_assoc($result)) {
-                $identifier++;
-                echo "
-                <tr>
-                <td class='itens'>" . $user_data['CodUsuario'] . "</td>"
-                    . "<td class='itens'>" . $user_data['Nome'] . "</td>"
-                    . "<td class='itens'>" . $user_data['Cidade'] . "</td>"
-                    . "<td class='itens'>" . $user_data['Endereco'] . "</td>"
-                    . "<td class='itens'>" . $user_data['Email'] . "</td>"
-                    . "<td class='itens'>
-                    <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
-                    &nbsp;&nbsp;
-                    <img src='img/bin.png' data-id='$user_data[CodUsuario]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                </td>
-                </tr>";
-            }
-            echo "</tbody></table>";
-            ?>
-            <!-- Área da paginação -->
-            <div class="pagination <?php if (!empty($search)) {
-                                        echo 'd-none';
-                                    } ?>">
-                <!-- Guia da paginação-->
-                <ul class="pagination">
-                    <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                        <a class="page-link" href="user.php?pagina=1" aria-label="Anterior">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <?php
-                    // Exibir link da página anterior, se existir
-                    if ($paginaAtual > 4) {
-                        echo "<li class='page-item'><a class='page-link' href='user.php?pagina=1'>1</a></li>";
-                    }
-
-                    // Exibir páginas anteriores à página atual
-                    if ($paginaAtual == $totalPaginas) {
-                        for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+            <div class="grid-body">
+                <?php
+                $dados = "<table class='container-grid'>
+                <thead>
+                    <tr>
+                        <th class='titulos'>ID</th>
+                        <th class='titulos'>NOME</th>
+                        <th class='titulos'>CIDADE</th>
+                        <th class='titulos'>ENDEREÇO</th>
+                        <th class='titulos'>EMAIL</th>
+                        <th class='titulos'>AÇÕES</th>
+                    </tr>
+                </thead><tbody>";
+                echo $dados;
+                $identifier = -1;
+                while ($user_data = mysqli_fetch_assoc($result)) {
+                    $identifier++;
+                    echo "
+                    <tr>
+                    <td class='itens'>" . $user_data['CodUsuario'] . "</td>"
+                        . "<td class='itens'>" . $user_data['Nome'] . "</td>"
+                        . "<td class='itens'>" . $user_data['Cidade'] . "</td>"
+                        . "<td class='itens'>" . $user_data['Endereco'] . "</td>"
+                        . "<td class='itens'>" . $user_data['Email'] . "</td>"
+                        . "<td class='itens'>
+                        <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
+                        &nbsp;&nbsp;
+                        <img src='img/bin.png' data-id='$user_data[CodUsuario]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                    </td>
+                    </tr>";
+                }
+                echo "</tbody></table>";
+                ?>
+                <!-- Área da paginação -->
+                <div class="pagination
+                <?php if (!empty($search)) {
+                    echo 'd-none';
+                } ?>">
+                    <!-- Guia da paginação-->
+                    <ul class="pagination">
+                        <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
+                            <a class="page-link" href="user.php?pagina=1" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <?php
+                        // Exibir link da página anterior, se existir
+                        if ($paginaAtual > 4) {
+                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=1'>1</a></li>";
                         }
-                    } else {
-                        for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                        // Exibir páginas anteriores à página atual
+                        if ($paginaAtual == $totalPaginas) {
+                            for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    }
-                    // Exibir página atual
-                    echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-
-                    // Exibir páginas posteriores à página atual
-                    if ($paginaAtual == 1) {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                        // Exibir página atual
+                        echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
+                        // Exibir páginas posteriores à página atual
+                        if ($paginaAtual == 1) {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    } else {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
-                        }
-                    }
-                    ?>
-                    <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                        <a class="page-link" href="user.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                        ?>
+                        <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
+                            <a class="page-link" href="user.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>

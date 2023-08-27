@@ -133,7 +133,7 @@ $result = $conexao->query($sql);
                     <li><a href="livro.php">Livros</a></li>
                     <li><a href="editora.php" class="selected">Edtioras</a></li>
                     <li><a href="aluguel.php">Aluguéis</a></li>
-                </ul>   
+                </ul>
             </div>
             <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
         </nav>
@@ -149,36 +149,33 @@ $result = $conexao->query($sql);
                     </div>
                     <form action=".create/create-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input1" class="form-label text-black bold">Nome</label>
-                                    <input name="nome-editora" type="text" id="input1" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input2" class="form-label text-black">E-mail</label>
-                                    <input name="email-editora" type="email" id="input2" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black bold">Nome</label>
+                                <input name="nome-editora" type="text" id="input1" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
                                 </div>
                             </div>
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input3" class="form-label text-black">Telefone</label>
-                                    <input name="telefone-editora" type="tel" id="input3" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">E-mail</label>
+                                <input name="email-editora" type="email" id="input2" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
                                 </div>
-                                <div class="row-md-3">
-                                    <label for="input4" class="form-label text-black">Site</label>
-                                    <input name="site-editora" placeholder="*Facultativo*" type="text" id="input4" class="form-control date" autocomplete="off">
-                                    <div class="valid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            </div>
+
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Telefone</label>
+                                <input name="telefone-editora" type="tel" id="input3" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input4" class="form-label text-black">Site</label>
+                                <input name="site-editora" placeholder="*Facultativo*" type="text" id="input4" class="form-control date" autocomplete="off">
+                                <div class="valid-feedback">
+                                    • Campo obrigatório •
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -197,37 +194,34 @@ $result = $conexao->query($sql);
                     </div>
                     <form action=".update/update-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="input_row">
-                                <input type="hidden" name="id" id="campo1">
-                                <div class="row-md-3">
-                                    <label for="input1" class="form-label text-black bold">Nome</label>
-                                    <input name="nome-editora" type="text" id="campo2" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input2" class="form-label text-black">E-mail</label>
-                                    <input name="email-editora" type="email" id="campo3" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <input type="hidden" name="id" id="campo1">
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black bold">Nome</label>
+                                <input name="nome-editora" type="text" id="campo2" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
                                 </div>
                             </div>
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input3" class="form-label text-black">Telefone</label>
-                                    <input name="telefone-editora" type="tel" id="campo4" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">E-mail</label>
+                                <input name="email-editora" type="email" id="campo3" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
                                 </div>
-                                <div class="row-md-3">
-                                    <label for="input4" class="form-label text-black">Site</label>
-                                    <input name="site-editora" placeholder="*Facultativo*" type="text" id="campo5" class="form-control date" autocomplete="off">
-                                    <div class="valid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
+                            </div>
+
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Telefone</label>
+                                <input name="telefone-editora" type="tel" id="campo4" class="form-control" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input4" class="form-label text-black">Site</label>
+                                <input name="site-editora" placeholder="*Facultativo*" type="text" id="campo5" class="form-control date" autocomplete="off">
+                                <div class="valid-feedback">
+                                    • Campo obrigatório •
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -279,92 +273,92 @@ $result = $conexao->query($sql);
                 </div>
                 <form class="searchbox sbx-custom" id="search-editora">
                     <div role="search" class="sbx-custom__wrapper">
+                        <span class="material-symbols-outlined search">search</span>
                         <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                        <button type="submit" class="sbx-custom__submit" onclick="searchData()">
-                            <img src="img/search.png" alt="">
-                        </button>
                     </div>
                 </form>
             </div>
-            <?php
-            if (!empty($_GET['pagina'])) {
-                $paginaAtual = $_GET['pagina'];
-            }
-            // Montagem da grid (complicado)
-            $dados = "<table class='container-grid'>
-            <thead>
-                <tr>
-                    <th class='titulos'>ID</th>
-                    <th class='titulos'>NOME</th>
-                    <th class='titulos'>EMAIL</th>
-                    <th class='titulos'>TELEFONE</th>
-                    <th class='titulos'>AÇÕES</th>
-                </tr>
-            </thead><tbody>";
-            echo $dados;
-            $identifier = -1;
-            while ($editora_data = mysqli_fetch_assoc($result)) {
-                $identifier++;
-                echo "
-                <tr>
-                    <td class='itens'>" . $editora_data['CodEditora'] . "</td>"
-                    . "<td class='itens'>" . $editora_data['nome'] . "</td>"
-                    . "<td class='itens'>" . $editora_data['email'] . "</td>"
-                    . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
-                    . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
-                        &nbsp;&nbsp;
-                        <img src='img/bin.png' data-id='$editora_data[CodEditora]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                    </td>
-                </tr>";
-            }
-            echo "</tbody></table>";
-            ?>
-            <!-- Área da paginação -->
-            <div class="pagination <?php if (!empty($search)) {
-                                        echo 'd-none';
-                                    } ?>">
-                <!-- Guia da paginação-->
-                <ul class="pagination">
-                    <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                        <a class="page-link" href="editora.php?pagina=1" aria-label="Anterior">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <?php
-                    // Exibir link da página anterior, se existir
-                    if ($paginaAtual > 4) {
-                        echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=1'>1</a></li>";
-                    }
-                    // Exibir páginas anteriores à página atual
-                    if ($paginaAtual == $totalPaginas) {
-                        for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+            <div class="grid-body">
+                <?php
+                if (!empty($_GET['pagina'])) {
+                    $paginaAtual = $_GET['pagina'];
+                }
+                // Montagem da grid (complicado)
+                $dados = "<table class='container-grid'>
+                <thead>
+                    <tr>
+                        <th class='titulos'>ID</th>
+                        <th class='titulos'>NOME</th>
+                        <th class='titulos'>EMAIL</th>
+                        <th class='titulos'>TELEFONE</th>
+                        <th class='titulos'>AÇÕES</th>
+                    </tr>
+                </thead><tbody>";
+                echo $dados;
+                $identifier = -1;
+                while ($editora_data = mysqli_fetch_assoc($result)) {
+                    $identifier++;
+                    echo "
+                    <tr>
+                        <td class='itens'>" . $editora_data['CodEditora'] . "</td>"
+                        . "<td class='itens'>" . $editora_data['nome'] . "</td>"
+                        . "<td class='itens'>" . $editora_data['email'] . "</td>"
+                        . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
+                        . "<td class='itens'>
+                            <img src='img/pencil.png' data-id='$identifier' class='edit' onclick=" . "abrirModal('edit-modal')" . " alt='PencilEdit' title='Editar'>
+                            &nbsp;&nbsp;
+                            <img src='img/bin.png' data-id='$editora_data[CodEditora]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                        </td>
+                    </tr>";
+                }
+                echo "</tbody></table>";
+                ?>
+                <!-- Área da paginação -->
+                <div class="pagination <?php if (!empty($search)) {
+                                            echo 'd-none';
+                                        } ?>">
+                    <!-- Guia da paginação-->
+                    <ul class="pagination">
+                        <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
+                            <a class="page-link" href="editora.php?pagina=1" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <?php
+                        // Exibir link da página anterior, se existir
+                        if ($paginaAtual > 4) {
+                            echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=1'>1</a></li>";
                         }
-                    } else {
-                        for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                        // Exibir páginas anteriores à página atual
+                        if ($paginaAtual == $totalPaginas) {
+                            for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    }
-                    // Exibir página atual
-                    echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-                    // Exibir páginas posteriores à página atual
-                    if ($paginaAtual == 1) {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                        // Exibir página atual
+                        echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
+                        // Exibir páginas posteriores à página atual
+                        if ($paginaAtual == 1) {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    } else {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='editora.php?pagina=$i'>$i</a></li>";
-                        }
-                    }
-                    ?>
-                    <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                        <a class="page-link" href="editora.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                        ?>
+                        <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
+                            <a class="page-link" href="editora.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>

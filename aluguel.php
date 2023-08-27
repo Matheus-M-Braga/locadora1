@@ -46,6 +46,11 @@ $resultlivro_conect = $conexao->query($sqllivro_conect);
 // Conexão tabela Usuários
 $sqluser_conect = "SELECT * FROM usuarios ORDER BY CodUsuario ASC";
 $resultuser_conect = $conexao->query($sqluser_conect);
+$hoje = new DateTime();
+$hojeMais30 = (clone $hoje)->add(new DateInterval('P30D'));
+$hojeFormatado = $hoje->format('Y-m-d');
+$hojeMais30Formatado = $hojeMais30->format('Y-m-d');
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -130,44 +135,41 @@ $resultuser_conect = $conexao->query($sqluser_conect);
                     </class>
                     <form action=".create/create-aluguel.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input1" class="form-label text-black">Livro Alugado</label>
-                                    <select name="nome-livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
-                                        <option value="" selected disabled>Selecione:</option>
-                                        <?php
-                                        while ($livro_data = mysqli_fetch_assoc($resultlivro_conect)) {
-                                            echo "<option>" . $livro_data['nome'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input2" class="form-label text-black">Usuário</label>
-                                    <select name="usuario" class="form-control form-select needs-validation is-invalid" id="input2" required>
-                                        <option value="" selected disabled>Selecione:</option>
-                                        <?php
-                                        while ($user_data = mysqli_fetch_assoc($resultuser_conect)) {
-                                            echo "<option>" . $user_data['Nome'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
+                            <div class="row-md-3">
+                                <label for="input1" class="form-label text-black">Livro Alugado</label>
+                                <select name="nome-livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
+                                    <option value="" selected disabled>Selecione:</option>
+                                    <?php
+                                    while ($livro_data = mysqli_fetch_assoc($resultlivro_conect)) {
+                                        echo "<option>" . $livro_data['nome'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="input2" class="form-label text-black">Usuário</label>
+                                <select name="usuario" class="form-control form-select needs-validation is-invalid" id="input2" required>
+                                    <option value="" selected disabled>Selecione:</option>
+                                    <?php
+                                    while ($user_data = mysqli_fetch_assoc($resultuser_conect)) {
+                                        echo "<option>" . $user_data['Nome'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Data do Aluguel (Hoje)</label>
+                                <input name="dat_aluguel" type="date" id="input3" class="form-control" value="<?php echo $hojeFormatado ?>" disabled required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Campo obrigatório •
                                 </div>
                             </div>
-                            <div class="input_row">
-                                <div class="row-md-3">
-                                    <label for="input3" class="form-label text-black">Data do Aluguel</label>
-                                    <input name="dat_aluguel" type="date" id="input3" class="form-control" required autocomplete="off">
-                                    <div class="invalid-feedback">
-                                        • Campo obrigatório •
-                                    </div>
-                                </div>
-                                <div class="row-md-3">
-                                    <label for="input4" class="form-label text-black">Previsão de Devolução</label>
-                                    <input name="prev_devolucao" type="date" id="input4" class="form-control date" autocomplete="off" required>
-                                    <div class="invalid-feedback">
-                                        • Campo Facultativo •
-                                    </div>
+                            <div class="row-md-3">
+                                <label for="input4" class="form-label text-black">Previsão de Devolução</label>
+                                <input name="prev_devolucao" type="date" min="<?php echo $hojeFormatado ?>" max="<?php echo $hojeMais30Formatado ?>" id="input4" class="form-control date" autocomplete="off" required>
+                                <div class="invalid-feedback">
+                                    • Campo Facultativo •
                                 </div>
                             </div>
                             <input type="hidden" name="data_devolucao" value="0">
@@ -237,98 +239,98 @@ $resultuser_conect = $conexao->query($sqluser_conect);
                 </div>
                 <form class="searchbox sbx-custom" id="search-alug">
                     <div role="search" class="sbx-custom__wrapper">
+                        <span class="material-symbols-outlined search">search</span>
                         <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                        <button type="submit" class="sbx-custom__submit" onclick="searchData()">
-                            <img src="img/search.png" alt="">
-                        </button>
                     </div>
                 </form>
             </div>
-            <?php
-            // Montagem da grid (incrível)
-            $dados = "<table class='container-grid'>
-                <thead>
+            <div class="grid-body">
+                <?php
+                // Montagem da grid (incrível)
+                $dados = "<table class='container-grid'>
+                    <thead>
+                        <tr>
+                            <th class='titulos'>ID</th>
+                            <th class='titulos'>LIVRO</th>
+                            <th class='titulos'>USUÁRIO</th>
+                            <th class='titulos'>ALUGUEL</th>
+                            <th class='titulos'>PREVISÃO</th>
+                            <th class='titulos'>DEVOLUÇÃO</th>
+                            <th class='titulos'>AÇÕES</th>
+                        </tr>
+                    </thead><tbody>";
+                echo $dados;
+                while ($aluguel_data = mysqli_fetch_assoc($result)) {
+                    $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
+                    $dev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
+                    echo "
                     <tr>
-                        <th class='titulos'>ID</th>
-                        <th class='titulos'>LIVRO</th>
-                        <th class='titulos'>USUÁRIO</th>
-                        <th class='titulos'>ALUGUEL</th>
-                        <th class='titulos'>PREVISÃO</th>
-                        <th class='titulos'>DEVOLUÇÃO</th>
-                        <th class='titulos'>AÇÕES</th>
-                    </tr>
-                </thead><tbody>";
-            echo $dados;
-            while ($aluguel_data = mysqli_fetch_assoc($result)) {
-                $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
-                $dev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
-                echo "
-                <tr>
-                    <td class='itens'>" . $aluguel_data['CodAluguel'] . "</td>"
-                    . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
-                    . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
-                    . "<td class='itens'>" . $alug_dat . "</td>"
-                    . "<td class='itens'>" . $dev_dat . "</td>";
-                if ($aluguel_data['data_devolucao'] == 0) {
-                    echo "<td class='itens'>Não Devolvido</td>";
-                    echo "<td class='itens'>
-                        <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[CodAluguel]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
-                        <img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                        </td></tr>";
-                } else {
-                    $hoje = date("Y/m/d");
-                    $previsao = $aluguel_data['prev_devolucao'];
-                    echo "<td class='itens'>" . $aluguel_data['data_devolucao'] . "</td>";
-                    echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                        <td class='itens'>" . $aluguel_data['CodAluguel'] . "</td>"
+                        . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
+                        . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
+                        . "<td class='itens'>" . $alug_dat . "</td>"
+                        . "<td class='itens'>" . $dev_dat . "</td>";
+                    if ($aluguel_data['data_devolucao'] == 0) {
+                        echo "<td class='itens'>Não Devolvido</td>";
+                        echo "<td class='itens'>
+                            <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[CodAluguel]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
+                            <img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                            </td></tr>";
+                    } else {
+                        $hoje = date("Y/m/d");
+                        $previsao = $aluguel_data['prev_devolucao'];
+                        echo "<td class='itens'>" . $aluguel_data['data_devolucao'] . "</td>";
+                        echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                    }
                 }
-            }
-            echo "</tbody></table>";
-            ?>
-            <!-- Área da paginação -->
-            <div class="pagination <?php if (!empty($search)) {
-                                        echo 'd-none';
-                                    } ?>">
-                <!-- Guia da paginação-->
-                <ul class="pagination">
-                    <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                        <a class="page-link" href="aluguel.php?pagina=1" aria-label="Anterior">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <?php
-                    // Exibir link da página anterior, se existir
-                    if ($paginaAtual > 4) {
-                        echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=1'>1</a></li>";
-                    }
-                    // Exibir páginas anteriores à página atual
-                    if ($paginaAtual == $totalPaginas) {
-                        for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                echo "</tbody></table>";
+                ?>
+                <!-- Área da paginação -->
+                <div class="pagination <?php if (!empty($search)) {
+                                            echo 'd-none';
+                                        } ?>">
+                    <!-- Guia da paginação-->
+                    <ul class="pagination">
+                        <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
+                            <a class="page-link" href="aluguel.php?pagina=1" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <?php
+                        // Exibir link da página anterior, se existir
+                        if ($paginaAtual > 4) {
+                            echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=1'>1</a></li>";
                         }
-                    } else {
-                        for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                        // Exibir páginas anteriores à página atual
+                        if ($paginaAtual == $totalPaginas) {
+                            for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    }
-                    // Exibir página atual
-                    echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-                    // Exibir páginas posteriores à página atual
-                    if ($paginaAtual == 1) {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                        // Exibir página atual
+                        echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
+                        // Exibir páginas posteriores à página atual
+                        if ($paginaAtual == 1) {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                            }
+                        } else {
+                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
+                                echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
+                            }
                         }
-                    } else {
-                        for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                            echo "<li class='page-item'><a class='page-link' href='aluguel.php?pagina=$i'>$i</a></li>";
-                        }
-                    }
-                    ?>
-                    <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                        <a class="page-link" href="aluguel.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                        ?>
+                        <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
+                            <a class="page-link" href="aluguel.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>
