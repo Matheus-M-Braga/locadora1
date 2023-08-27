@@ -8,7 +8,7 @@
    if($result -> num_rows > 0){
       $data = array();
       while ($row = $result -> fetch_assoc()) {
-         $id = $row['CodLivro'];
+         $id = $row['id'];
          $data[$id] = $row;
       }
       echo json_encode($data);

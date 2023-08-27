@@ -15,9 +15,9 @@ $logado = $_SESSION['email'];
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
 
-    $sql = "SELECT * FROM usuarios WHERE CodUsuario LIKE '%$data%' OR Nome LIKE '%$data%' OR Cidade LIKE '%$data%' OR Email LIKE '%$data%' OR Endereco LIKE '%$data%' ORDER BY CodUsuario ASC";
+    $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR cidade LIKE '%$data%' OR email LIKE '%$data%' OR endereco LIKE '%$data%' ORDER BY id ASC";
 } else {
-    $sql = "SELECT * FROM usuarios ORDER BY CodUsuario ASC";
+    $sql = "SELECT * FROM usuarios ORDER BY id ASC";
 }
 
 $result = $conexao->query($sql);
@@ -33,10 +33,10 @@ $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM usuarios WHERE CodUsuario LIKE '%$data%' OR Nome LIKE '%$data%' OR Cidade LIKE '%$data%' OR Email LIKE '%$data%' OR Endereco LIKE '%$data%' ORDER BY CodUsuario ASC";
+    $sqlsearch = "SELECT * FROM usuarios WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR cidade LIKE '%$data%' OR email LIKE '%$data%' OR endereco LIKE '%$data%' ORDER BY id ASC";
     $result = $conexao->query($sqlsearch);
 } else {
-    $sql = "SELECT * FROM usuarios ORDER BY CodUsuario ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
 ?>
@@ -251,15 +251,15 @@ if (!empty($search)) {
                 while ($user_data = mysqli_fetch_assoc($result)) {
                     echo "
                     <tr>
-                    <td class='itens'>" . $user_data['CodUsuario'] . "</td>"
-                        . "<td class='itens'>" . $user_data['Nome'] . "</td>"
-                        . "<td class='itens'>" . $user_data['Cidade'] . "</td>"
-                        . "<td class='itens'>" . $user_data['Endereco'] . "</td>"
-                        . "<td class='itens'>" . $user_data['Email'] . "</td>"
+                    <td class='itens'>" . $user_data['id'] . "</td>"
+                        . "<td class='itens'>" . $user_data['nome'] . "</td>"
+                        . "<td class='itens'>" . $user_data['cidade'] . "</td>"
+                        . "<td class='itens'>" . $user_data['endereco'] . "</td>"
+                        . "<td class='itens'>" . $user_data['email'] . "</td>"
                         . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$user_data[CodUsuario]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                        <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                         &nbsp;&nbsp;
-                        <img src='img/bin.png' data-id='$user_data[CodUsuario]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                        <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                     </td>
                     </tr>";
                 }
@@ -321,23 +321,21 @@ if (!empty($search)) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Faz a solicitação AJAX para obter os dados do banco de dados
             $.ajax({
                 url: 'php/getdataUser.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    // Os dados são retornados como um array JSON
                     console.log(data)
                     $('.edit').click(function() {
                         var recordId = $(this).data('id');
                         x = recordId
 
-                        var coluna1 = data[x].CodUsuario;
-                        var coluna2 = data[x].Nome;
-                        var coluna3 = data[x].Cidade;
-                        var coluna4 = data[x].Endereco;
-                        var coluna5 = data[x].Email;
+                        var coluna1 = data[x].id;
+                        var coluna2 = data[x].nome;
+                        var coluna3 = data[x].cidade;
+                        var coluna4 = data[x].endereco;
+                        var coluna5 = data[x].email;
 
                         $("#campo1").val(coluna1);
                         $('#campo2').val(coluna2);

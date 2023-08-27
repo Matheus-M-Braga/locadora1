@@ -8,7 +8,7 @@
    if($resultUser -> num_rows > 0){
       $data = [];
       while ($row = $resultUser -> fetch_assoc()) {
-         $id = $row['CodUsuario'];
+         $id = $row['id'];
          $data[$id] = $row;
       }
       echo json_encode($data);

@@ -14,9 +14,9 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
 
-    $sql = "SELECT * FROM editoras WHERE CodEditora LIKE '%$data%' OR nome LIKE '%$data%' OR email LIKE '%$data%' OR telefone LIKE '%$data%' ORDER BY CodEditora ASC";
+    $sql = "SELECT * FROM editoras WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR email LIKE '%$data%' OR telefone LIKE '%$data%' ORDER BY id ASC";
 } else {
-    $sql = "SELECT * FROM editoras ORDER BY CodEditora ASC";
+    $sql = "SELECT * FROM editoras ORDER BY id ASC";
 }
 $result = $conexao->query($sql);
 
@@ -32,10 +32,10 @@ $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM editoras WHERE CodEditora LIKE '%$data%' OR nome LIKE '%$data%' OR email LIKE '%$data%' OR telefone LIKE '%$data%' ORDER BY CodEditora ASC";
+    $sqlsearch = "SELECT * FROM editoras WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR email LIKE '%$data%' OR telefone LIKE '%$data%' ORDER BY id ASC";
     $result = $conexao->query($sqlsearch);
 } else {
-    $sql = "SELECT * FROM editoras ORDER BY CodEditora ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $sql = "SELECT * FROM editoras ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
 
@@ -54,11 +54,11 @@ if (isset($_GET['name'])) {
 if (isset($_GET['id'])) {
 
 
-    $sql = "SELECT * FROM editoras ORDER BY CodEditora ASC LIMIT $registrosPorPagina";
+    $sql = "SELECT * FROM editoras ORDER BY id ASC LIMIT $registrosPorPagina";
     $result = $conexao->query($sql);
 
     if ($_GET['id'] == 1) {
-        $sql = "SELECT * FROM editoras WHERE CodEditora > 5 ORDER BY CodEditora DESC LIMIT $registrosPorPagina";
+        $sql = "SELECT * FROM editoras WHERE id > 5 ORDER BY id DESC LIMIT $registrosPorPagina";
         $result = $conexao->query($sql);
     }
 }
@@ -266,14 +266,14 @@ $result = $conexao->query($sql);
                 while ($editora_data = mysqli_fetch_assoc($result)) {
                     echo "
                     <tr>
-                        <td class='itens'>" . $editora_data['CodEditora'] . "</td>"
+                        <td class='itens'>" . $editora_data['id'] . "</td>"
                         . "<td class='itens'>" . $editora_data['nome'] . "</td>"
                         . "<td class='itens'>" . $editora_data['email'] . "</td>"
                         . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
                         . "<td class='itens'>
-                            <img src='img/pencil.png' data-id='$editora_data[CodEditora]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                            <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                             &nbsp;&nbsp;
-                            <img src='img/bin.png' data-id='$editora_data[CodEditora]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                            <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                         </td>
                     </tr>";
                 }
@@ -346,7 +346,7 @@ $result = $conexao->query($sql);
                         var recordId = $(this).data('id');
                         x = recordId
 
-                        var coluna1 = data[x].CodEditora;
+                        var coluna1 = data[x].id;
                         var coluna2 = data[x].nome;
                         var coluna3 = data[x].email;
                         var coluna4 = data[x].telefone;

@@ -15,9 +15,9 @@ $logado = $_SESSION['email'];
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
 
-    $sql = "SELECT * FROM alugueis WHERE CodAluguel LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY CodAluguel ASC";
+    $sql = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY id ASC";
 } else {
-    $sql = "SELECT * FROM alugueis ORDER BY CodAluguel ASC";
+    $sql = "SELECT * FROM alugueis ORDER BY id ASC";
 }
 $result = $conexao->query($sql);
 
@@ -32,20 +32,22 @@ $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM alugueis WHERE CodAluguel LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY CodAluguel ASC";
+    $sqlsearch = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY id ASC";
     $result = $conexao->query($sqlsearch);
 } else {
-    $sql = "SELECT * FROM alugueis ORDER BY CodAluguel ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $sql = "SELECT * FROM alugueis ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
 
 // Conexão tabela Livros
-$sqllivro_conect = "SELECT * FROM livros ORDER BY CodLivro ASC";
+$sqllivro_conect = "SELECT * FROM livros ORDER BY id ASC";
 $resultlivro_conect = $conexao->query($sqllivro_conect);
 
 // Conexão tabela Usuários
-$sqluser_conect = "SELECT * FROM usuarios ORDER BY CodUsuario ASC";
+$sqluser_conect = "SELECT * FROM usuarios ORDER BY id ASC";
 $resultuser_conect = $conexao->query($sqluser_conect);
+
+// Cálculo datepicker
 $hoje = new DateTime();
 $hojeMais30 = (clone $hoje)->add(new DateInterval('P30D'));
 $hojeFormatado = $hoje->format('Y-m-d');
@@ -152,7 +154,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                                     <option value="" selected disabled>Selecione:</option>
                                     <?php
                                     while ($user_data = mysqli_fetch_assoc($resultuser_conect)) {
-                                        echo "<option>" . $user_data['Nome'] . "</option>";
+                                        echo "<option>" . $user_data['nome'] . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -248,7 +250,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     $dev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
                     echo "
                     <tr>
-                        <td class='itens'>" . $aluguel_data['CodAluguel'] . "</td>"
+                        <td class='itens'>" . $aluguel_data['id'] . "</td>"
                         . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
                         . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
                         . "<td class='itens'>" . $alug_dat . "</td>"
@@ -256,14 +258,14 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     if ($aluguel_data['data_devolucao'] == 0) {
                         echo "<td class='itens'>Não Devolvido</td>";
                         echo "<td class='itens'>
-                            <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[CodAluguel]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
-                            <img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                            <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[id]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
+                            <img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                             </td></tr>";
                     } else {
                         $hoje = date("Y/m/d");
                         $previsao = $aluguel_data['prev_devolucao'];
                         echo "<td class='itens'>" . $aluguel_data['data_devolucao'] . "</td>";
-                        echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[CodAluguel]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                        echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
                     }
                 }
                 echo "</tbody></table>";

@@ -25,7 +25,7 @@ if (isset($linha_total_alugueis['total_alugueis'])) {
 }
 
 // último aluguel
-$sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY CodAluguel DESC LIMIT 1";
+$sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY id DESC LIMIT 1";
 $resultado_ultimo_aluguel = $conexao->query($sql_ultimo_aluguel);
 
 $ultimo_alugado = $resultado_ultimo_aluguel->fetch_assoc();

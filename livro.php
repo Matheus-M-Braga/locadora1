@@ -15,9 +15,9 @@ $logado = $_SESSION['email'];
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
 
-    $sql = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' or autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
+    $sql = "SELECT * FROM livros WHERE id LIKE '%$data%'OR nome LIKE '%$data%' or autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY id ASC";
 } else {
-    $sql = "SELECT * FROM livros ORDER BY CodLivro ASC";
+    $sql = "SELECT * FROM livros ORDER BY id ASC";
 }
 
 $result = $conexao->query($sql);
@@ -33,15 +33,15 @@ $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM livros WHERE CodLivro LIKE '%$data%'OR nome LIKE '%$data%' OR autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY CodLivro ASC";
+    $sqlsearch = "SELECT * FROM livros WHERE id LIKE '%$data%'OR nome LIKE '%$data%' OR autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY id ASC";
     $result = $conexao->query($sqlsearch);
 } else {
-    $sql = "SELECT * FROM livros ORDER BY CodLivro ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $sql = "SELECT * FROM livros ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
 
 // Conexão tabela editoras
-$sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
+$sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
 $resultEditora_conect = $conexao->query($sqlEditoras_conect);
 
 ?>
@@ -204,7 +204,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                 <?php
                                 $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
                                 $resultado = $conexao->query($sqllivro);
-                                $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY CodEditora ASC";
+                                $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
                                 $resultEditora_conect = $conexao->query($sqlEditoras_conect);
 
                                 while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
@@ -283,16 +283,16 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 while ($livro_data = mysqli_fetch_assoc($result)) {
                     // Conexão tabela alugueis
                     $nome_livro = $livro_data['nome'];
-                    $id = $livro_data['CodLivro'];
+                    $id = $livro_data['id'];
                     $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
                     $sqlAluguelResult = $conexao->query($sqlAluguelConect);
                     $livro_data['alugados'] = $sqlAluguelResult->num_rows;
                     $aluguel_quant = $livro_data['alugados'];
 
-                    mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE CodLivro = '$id' ");
+                    mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
                     echo "
                     <tr>
-                    <td class='itens'>" . $livro_data['CodLivro'] . "</td>"
+                    <td class='itens'>" . $livro_data['id'] . "</td>"
                         . "<td class='itens'>" . $livro_data['nome'] . "</td>"
                         . "<td class='itens'>" . $livro_data['autor'] . "</td>"
                         . "<td class='itens'>" . $livro_data['editora'] . "</td>"
@@ -300,9 +300,9 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
                         . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
                         . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$livro_data[CodLivro]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                        <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
                         &nbsp;&nbsp;
-                        <img src='img/bin.png' data-id='$livro_data[CodLivro]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                        <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                     </td>
                     </tr>";
                 }
@@ -364,19 +364,17 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <script src="js/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Faz a solicitação AJAX para obter os dados do banco de dados
             $.ajax({
                 url: 'php/getdataBook.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    // Os dados são retornados como um array JSON
                     console.log(data)
                     $('.edit').click(function() {
                         var recordId = $(this).data('id');
                         x = recordId
 
-                        var coluna1 = data[x].CodLivro;
+                        var coluna1 = data[x].id;
                         var coluna2 = data[x].nome;
                         var coluna3 = data[x].autor;
                         var coluna4 = data[x].editora;
