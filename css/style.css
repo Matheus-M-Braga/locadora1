@@ -384,7 +384,11 @@ select {
 
 #exclu-modal .col-12 button,
 #devol-modal .col-12 button {
-  width: 50%;
+  width: 48%;
+}
+.col-12 .btn-danger{
+  background: maroon;
+  border: none;
 }
 
 /*Searchbar*/
