@@ -12,7 +12,6 @@
          $data[$id] = $row;
       }
       echo json_encode($data);
-      echo var_dump($data)
    } 
    else{
       echo "0 resultados";
