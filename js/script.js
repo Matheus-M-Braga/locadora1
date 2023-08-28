@@ -31,7 +31,9 @@ tableRows.forEach((row) => {
   const cells = row.querySelectorAll(".itens");
   cells.forEach((cell, index) => {
     const title = tableHeaders[index].textContent;
-    cell.dataset.title = title;
+    if (cell.textContent !== "Nenhum registro encontrado") {
+      cell.dataset.title = title;
+    }
   });
 });
 

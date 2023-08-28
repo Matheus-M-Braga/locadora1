@@ -536,6 +536,12 @@ table {
   cursor: pointer;
 }
 
+.container-grid .itens.noresult{
+  text-align: center;
+  vertical-align: middle;
+  font-style: italic;
+}
+
 .page-item .page-link {
   color: goldenrod;
   background-color: #264347;

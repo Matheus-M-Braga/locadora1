@@ -9,24 +9,14 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
-$logado = $_SESSION['email'];
 
-// Pesquisa
-if (!empty($_GET['search'])) {
-    $data = $_GET['search'];
-
-    $sql = "SELECT * FROM livros WHERE id LIKE '%$data%'OR nome LIKE '%$data%' or autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY id ASC";
-} else {
-    $sql = "SELECT * FROM livros ORDER BY id ASC";
-}
-
-$result = $conexao->query($sql);
-
-// Número de registros por página
+// Paginação/Pesquisa
+$sql = "SELECT * FROM livros ORDER BY id ASC";
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$data = $search;
 
 // Select com os parâmetros
 $result = $conexao->query($sql);
@@ -43,7 +33,6 @@ if (!empty($search)) {
 // Conexão tabela editoras
 $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
 $resultEditora_conect = $conexao->query($sqlEditoras_conect);
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -279,32 +268,36 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                
-                while ($livro_data = mysqli_fetch_assoc($result)) {
-                    // Conexão tabela alugueis
-                    $nome_livro = $livro_data['nome'];
-                    $id = $livro_data['id'];
-                    $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
-                    $sqlAluguelResult = $conexao->query($sqlAluguelConect);
-                    $livro_data['alugados'] = $sqlAluguelResult->num_rows;
-                    $aluguel_quant = $livro_data['alugados'];
 
-                    mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
-                    echo "
-                    <tr>
-                    <td class='itens'>" . $livro_data['id'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['nome'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['autor'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['editora'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
-                        . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
-                        . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                        &nbsp;&nbsp;
-                        <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                    </td>
-                    </tr>";
+                if (mysqli_num_rows($result) > 0) {
+                    while ($livro_data = mysqli_fetch_assoc($result)) {
+                        // Conexão tabela alugueis
+                        $nome_livro = $livro_data['nome'];
+                        $id = $livro_data['id'];
+                        $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
+                        $sqlAluguelResult = $conexao->query($sqlAluguelConect);
+                        $livro_data['alugados'] = $sqlAluguelResult->num_rows;
+                        $aluguel_quant = $livro_data['alugados'];
+
+                        mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
+                        echo "
+                        <tr>
+                        <td class='itens'>" . $livro_data['id'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['autor'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['editora'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
+                                . "<td class='itens'>
+                            <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                            &nbsp;&nbsp;
+                            <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                        </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
                 }
                 echo "</tbody></table>";
                 ?>

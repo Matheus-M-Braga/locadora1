@@ -3,22 +3,22 @@ session_start();
 
 include_once('php/config.php');
 date_default_timezone_set('America/Sao_Paulo');
+
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
-$logado = $_SESSION['email'];
 
-// Número de registros por página
+// Paginação/Pesquisa
+$sql = "SELECT * FROM alugueis";
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Pesquisa/Paginação
-$sql = "SELECT * FROM alugueis";
+// Select com os parâmetros
 $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
@@ -251,33 +251,37 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                         </tr>
                     </thead><tbody>";
                 echo $dados;
-                while ($aluguel_data = mysqli_fetch_assoc($result)) {
-                    // Datas para serem exibidas no padrão d/m/Y na tabela
-                    $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
-                    $prev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
-                    $dev_dat = date("d/m/Y", strtotime($aluguel_data['data_devolucao']));
+                if (mysqli_num_rows($result) > 0) {
+                    while ($aluguel_data = mysqli_fetch_assoc($result)) {
+                        // Datas para serem exibidas no padrão d/m/Y na tabela
+                        $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
+                        $prev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
+                        $dev_dat = date("d/m/Y", strtotime($aluguel_data['data_devolucao']));
 
-                    echo "
-                    <tr>
+                        echo "
+                        <tr>
                         <td class='itens'>" . $aluguel_data['id'] . "</td>"
-                        . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
-                        . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
-                        . "<td class='itens'>" . $alug_dat . "</td>"
-                        . "<td class='itens'>" . $prev_dat . "</td>";
-                    if ($aluguel_data['data_devolucao'] == 0) {
-                        echo "<td class='itens'>...</td>"
-                            . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                        echo "<td class='itens'>
+                            . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
+                            . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
+                            . "<td class='itens'>" . $alug_dat . "</td>"
+                            . "<td class='itens'>" . $prev_dat . "</td>";
+                        if ($aluguel_data['data_devolucao'] == 0) {
+                            echo "<td class='itens'>...</td>"
+                                . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
+                            echo "<td class='itens'>
                             <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[id]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
                             <img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                             </td></tr>";
-                    } else {
-                        $hoje = date("Y/m/d");
-                        $previsao = $aluguel_data['prev_devolucao'];
-                        echo "<td class='itens'>" . $dev_dat . "</td>"
-                            . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                        // echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                        } else {
+                            $hoje = date("Y/m/d");
+                            $previsao = $aluguel_data['prev_devolucao'];
+                            echo "<td class='itens'>" . $dev_dat . "</td>"
+                                . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
+                            // echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                        }
                     }
+                } else {
+                    echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
                 }
                 echo "</tbody></table>";
                 ?>

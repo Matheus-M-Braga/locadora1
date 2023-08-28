@@ -10,21 +10,13 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-// Pesquisa
-if (!empty($_GET['search'])) {
-    $data = $_GET['search'];
-
-    $sql = "SELECT * FROM editoras WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR email LIKE '%$data%' OR telefone LIKE '%$data%' ORDER BY id ASC";
-} else {
-    $sql = "SELECT * FROM editoras ORDER BY id ASC";
-}
-$result = $conexao->query($sql);
-
-// Número de registros por página
+// Paginação/Pesquisa
+$sql = "SELECT * FROM editoras ORDER BY id ASC";
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$data = $search;
 
 // Select com os parâmetros
 $result = $conexao->query($sql);
@@ -36,34 +28,32 @@ if (!empty($search)) {
     $result = $conexao->query($sqlsearch);
 } else {
     $sql = "SELECT * FROM editoras ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
-    $result = $conexao->query($sql);
+    $result = $conexao->query($sql); 
 }
 
-// Ordem alfabética 
-if (isset($_GET['name'])) {
-    $sql = "SELECT * FROM editoras ORDER BY nome ASC LIMIT $registrosPorPagina";
-    $result = $conexao->query($sql);
+// // Ordem alfabética 
+// if (isset($_GET['name'])) {
+//     $sql = "SELECT * FROM editoras ORDER BY nome ASC LIMIT $registrosPorPagina";
+//     $result = $conexao->query($sql);
 
-    if ($_GET['name'] == 1) {
-        $sql = "SELECT * FROM editoras ORDER BY nome DESC LIMIT $registrosPorPagina";
-        $result = $conexao->query($sql);
-    }
-}
+//     if ($_GET['name'] == 1) {
+//         $sql = "SELECT * FROM editoras ORDER BY nome DESC LIMIT $registrosPorPagina";
+//         $result = $conexao->query($sql);
+//     }
+// }
 
-// Ordem pelo id
-if (isset($_GET['id'])) {
+// // Ordem pelo id
+// if (isset($_GET['id'])) {
 
 
-    $sql = "SELECT * FROM editoras ORDER BY id ASC LIMIT $registrosPorPagina";
-    $result = $conexao->query($sql);
+//     $sql = "SELECT * FROM editoras ORDER BY id ASC LIMIT $registrosPorPagina";
+//     $result = $conexao->query($sql);
 
-    if ($_GET['id'] == 1) {
-        $sql = "SELECT * FROM editoras WHERE id > 5 ORDER BY id DESC LIMIT $registrosPorPagina";
-        $result = $conexao->query($sql);
-    }
-}
-
-$result = $conexao->query($sql);
+//     if ($_GET['id'] == 1) {
+//         $sql = "SELECT * FROM editoras WHERE id > 5 ORDER BY id DESC LIMIT $registrosPorPagina";
+//         $result = $conexao->query($sql);
+//     }
+// }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -263,19 +253,23 @@ $result = $conexao->query($sql);
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                while ($editora_data = mysqli_fetch_assoc($result)) {
-                    echo "
-                    <tr>
-                        <td class='itens'>" . $editora_data['id'] . "</td>"
-                        . "<td class='itens'>" . $editora_data['nome'] . "</td>"
-                        . "<td class='itens'>" . $editora_data['email'] . "</td>"
-                        . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
-                        . "<td class='itens'>
-                            <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                            &nbsp;&nbsp;
-                            <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                        </td>
-                    </tr>";
+                if (mysqli_num_rows($result) > 0) {
+                    while ($editora_data = mysqli_fetch_assoc($result)) {
+                        echo "
+                        <tr>
+                            <td class='itens'>" . $editora_data['id'] . "</td>"
+                                . "<td class='itens'>" . $editora_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $editora_data['email'] . "</td>"
+                                . "<td class='itens'>" . $editora_data['telefone'] . "</td>"
+                                . "<td class='itens'>
+                                <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                &nbsp;&nbsp;
+                                <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td class='itens noresult' colspan='5'>Nenhum registro encontrado</td></tr>";
                 }
                 echo "</tbody></table>";
                 ?>

@@ -9,24 +9,14 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
-$logado = $_SESSION['email'];
 
-// Pesquisa
-if (!empty($_GET['search'])) {
-    $data = $_GET['search'];
-
-    $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR cidade LIKE '%$data%' OR email LIKE '%$data%' OR endereco LIKE '%$data%' ORDER BY id ASC";
-} else {
-    $sql = "SELECT * FROM usuarios ORDER BY id ASC";
-}
-
-$result = $conexao->query($sql);
-
-// Número de registros por página
+// Paginaçã/Pesquisa
+$sql = "SELECT * FROM usuarios ORDER BY id ASC";
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$data = $search;
 
 // Select com os parâmetros
 $result = $conexao->query($sql);
@@ -236,7 +226,8 @@ if (!empty($search)) {
             <!-- Tag responsável por exibir a listagem da página list -->
             <div class="grid-body">
                 <?php
-                $dados = "<table class='container-grid'>
+                $dados = "
+                <table class='container-grid'>
                 <thead>
                     <tr>
                         <th class='titulos'>ID</th>
@@ -248,22 +239,27 @@ if (!empty($search)) {
                     </tr>
                 </thead><tbody>";
                 echo $dados;
-                while ($user_data = mysqli_fetch_assoc($result)) {
-                    echo "
-                    <tr>
-                    <td class='itens'>" . $user_data['id'] . "</td>"
-                        . "<td class='itens'>" . $user_data['nome'] . "</td>"
-                        . "<td class='itens'>" . $user_data['cidade'] . "</td>"
-                        . "<td class='itens'>" . $user_data['endereco'] . "</td>"
-                        . "<td class='itens'>" . $user_data['email'] . "</td>"
-                        . "<td class='itens'>
-                        <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                        &nbsp;&nbsp;
-                        <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                    </td>
-                    </tr>";
+                if (mysqli_num_rows($result) > 0) {
+                    while ($user_data = mysqli_fetch_assoc($result)) {
+                        echo "
+                        <tr>
+                        <td class='itens'>" . $user_data['id'] . "</td>"
+                            . "<td class='itens'>" . $user_data['nome'] . "</td>"
+                            . "<td class='itens'>" . $user_data['cidade'] . "</td>"
+                            . "<td class='itens'>" . $user_data['endereco'] . "</td>"
+                            . "<td class='itens'>" . $user_data['email'] . "</td>"
+                            . "<td class='itens'>
+                            <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                            &nbsp;&nbsp;
+                            <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                        </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
                 }
                 echo "</tbody></table>";
+
                 ?>
                 <!-- Área da paginação -->
                 <div class="pagination
