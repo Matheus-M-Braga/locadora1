@@ -31,7 +31,7 @@ if (!empty($search)) {
         $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR data_aluguel LIKE '%$data_date_formatted%' OR prev_devolucao LIKE '%$data_date_formatted%' OR data_devolucao LIKE '%$data_date_formatted%' OR status LIKE '%$search%' ORDER BY id ASC";
     } else {
         if (strpos($search, '/') !== false) {
-            $day_month = DateTime::createFromFormat('d/m', $search)->format('');
+            $day_month = DateTime::createFromFormat('d/m', $search)->format('m/d');
             $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR data_aluguel LIKE '%$day_month%' OR prev_devolucao LIKE '%$day_month%' OR data_devolucao LIKE '%$day_month%' OR status LIKE '%$search%' ORDER BY id ASC";
         } else {
             $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR status LIKE '%$search%' ORDER BY id ASC";
