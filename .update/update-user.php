@@ -18,21 +18,44 @@
         $endereco = $_POST['endereco'];
         $email = $_POST['email'];
 
-        $sqlUpdate = "UPDATE usuarios SET Nome = '$nomeUsuario', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$codUsuario'";
 
-        $result = $conexao->query($sqlUpdate);
+        // Conexão tabela aluguéis
+        $sql_usuario = "SELECT * FROM usuarios WHERE id = $codUsuario";
+        $result_usuario = $conexao -> query($sql_usuario);
+        $usuario_data = mysqli_fetch_assoc($result_usuario);
+        $nome_old = $usuario_data['nome'];
+        
+        $sql_aluguel = "SELECT * FROM alugueis WHERE usuario = '$nome_old' AND data_devolucao = 0";
+        $result_aluguel = $conexao->query($sql_aluguel);
 
-        echo "
-        <script>
-            Swal.fire({
-                title: 'Usuário atualizado com sucesso!',
-                text: '',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1700
-            })
-            .then(() => {window.location.href = '../user.php';})
-        </script>";
+        if ($result_aluguel->num_rows > 0) {
+            echo "
+            <script>
+                Swal.fire({
+                    title: 'Usuário possui aluguel ativo, não pode sofre alterações!',
+                    text: '',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+                .then(() => {window.location.href = '../user.php';})
+            </script>";
+        } else {
+            $sqlUpdate = "UPDATE usuarios SET Nome = '$nomeUsuario', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$codUsuario'";
+            $result = $conexao->query($sqlUpdate);
+
+            echo "
+            <script>
+                Swal.fire({
+                    title: 'Usuário atualizado com sucesso!',
+                    text: '',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+                .then(() => {window.location.href = '../user.php';})
+            </script>";
+        }
     }
     ?>
 </body>

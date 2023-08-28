@@ -40,7 +40,7 @@ if (!empty($search)) {
 
     $result = $conexao->query($sql);
 } else {
-    $sql = "SELECT * FROM alugueis ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
+    $sql = "SELECT * FROM alugueis ORDER BY status DESC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
 
@@ -276,7 +276,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                         $previsao = $aluguel_data['prev_devolucao'];
                         echo "<td class='itens'>" . $dev_dat . "</td>"
                             . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                        echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
+                        // echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
                     }
                 }
                 echo "</tbody></table>";

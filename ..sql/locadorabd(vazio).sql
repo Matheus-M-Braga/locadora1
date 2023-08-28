@@ -79,9 +79,9 @@ CREATE TABLE `livros` (
   `nome` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
   `editora` varchar(45) NOT NULL,
-  `lancamento` varchar(45) NOT NULL,
-  `quantidade` int(45) NOT NULL,
-  `alugados` int(45) NOT NULL,
+  `lancamento` int(4) NOT NULL,
+  `quantidade` int(4) NOT NULL,
+  `alugados` int(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -112,4 +112,4 @@ CREATE TABLE `usuarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-27 22:26:19
+-- Dump completed on 2023-08-28 15:14:13

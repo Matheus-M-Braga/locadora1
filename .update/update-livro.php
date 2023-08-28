@@ -19,21 +19,44 @@
         $lancamento = $_POST['lancamento'];
         $quantidade = $_POST['quantidade'];
 
-        $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
+        // Conexão tabela aluguéis
+        $sql_livro = "SELECT * FROM livros WHERE id = $codLivro";
+        $result_livro = $conexao -> query($sql_livro);
+        $livro_data = mysqli_fetch_assoc($result_livro);
+        $nome_old = $livro_data['nome'];
 
-        $result = $conexao->query($sqlUpdate);
+        $sql_aluguel = "SELECT * FROM alugueis WHERE livro = '$nome_old' AND data_devolucao = 0";
+        $result_aluguel = $conexao->query($sql_aluguel);
 
-        echo "
-        <script>
-            Swal.fire({
-                title: 'Livro atualizado com sucesso!',
-                text: '',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1700
-            })
-        .then(() => {window.location.href = '../livro.php';})
-        </script>";
+        if ($result_aluguel->num_rows > 0) {
+            echo "
+            <script>
+                Swal.fire({
+                    title: 'Livro está alugado, não pode sofrer alterações!',
+                    text: '',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+            .then(() => {window.location.href = '../livro.php';})
+            </script>";
+        } else {
+            $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
+
+            $result = $conexao->query($sqlUpdate);
+
+            echo "
+            <script>
+                Swal.fire({
+                    title: 'Livro atualizado com sucesso!',
+                    text: '',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+            .then(() => {window.location.href = '../livro.php';})
+            </script>";
+        }
     }
     ?>
 </body>

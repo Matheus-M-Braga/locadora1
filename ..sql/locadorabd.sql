@@ -42,7 +42,7 @@ CREATE TABLE `alugueis` (
 
 LOCK TABLES `alugueis` WRITE;
 /*!40000 ALTER TABLE `alugueis` DISABLE KEYS */;
-INSERT INTO `alugueis` VALUES (1,'Demon Slayer','Matheus','2023-08-27','2023-09-02','2023-08-27','No prazo'),(2,'Meu ovo','meu pinto','2023-08-27','2023-08-27','2023-08-27','No prazo'),(3,'porra','sadada','2023-08-27','2023-08-27','0','Pendente');
+INSERT INTO `alugueis` VALUES (1,'Demon Slayer','Matheus','2023-08-27','2023-09-02','2023-08-28','No prazo'),(2,'Meu ovo','meu pinto','2023-08-27','2023-08-27','2023-08-28','Atrasado'),(3,'porra','sadada','2023-08-27','2023-08-27','2023-08-28','Atrasado');
 /*!40000 ALTER TABLE `alugueis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `editoras` (
 
 LOCK TABLES `editoras` WRITE;
 /*!40000 ALTER TABLE `editoras` DISABLE KEYS */;
-INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','1133768965'),(2,'Panini','panini@contato.com','6789911432'),(3,'Darkside','darkside@gmail.com','6789123443'),(4,'TechnoLords','technolordsviera@gmail.com','85 986052523'),(8,'matheus','boceta@gmail.com','(12) 31231-2312');
+INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','(11) 33768-9652'),(2,'Panini','panini@contato.com','(67) 89911-4322'),(3,'Darkside','darkside@gmail.com','(67) 89123-4432'),(4,'TechnoLords','technolordsviera@gmail.com','(85) 98605-2523'),(8,'matheus','boceta@gmail.com','(12) 31231-2312');
 /*!40000 ALTER TABLE `editoras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,9 +109,9 @@ CREATE TABLE `livros` (
   `nome` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
   `editora` varchar(45) NOT NULL,
-  `lancamento` varchar(45) NOT NULL,
-  `quantidade` int(45) NOT NULL,
-  `alugados` int(45) NOT NULL,
+  `lancamento` int(4) NOT NULL,
+  `quantidade` int(4) NOT NULL,
+  `alugados` int(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -122,7 +122,7 @@ CREATE TABLE `livros` (
 
 LOCK TABLES `livros` WRITE;
 /*!40000 ALTER TABLE `livros` DISABLE KEYS */;
-INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Companhia das Letras','2017',32,0),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras','2017',14,0),(3,'Hellraiser','Clive Barker','Companhia das Letras','1986',24,0),(6,'Livrozin','Autorzin','Companhia das Letras','2006',32,0),(8,'saaaaa','adadsa','Companhia das Letras','2023',123,0),(9,'porra','meu pau','Darkside','2023-08-29',11,0),(10,'Novo','meu pau','Darkside','2023-08-31',11,1),(11,'Teste','caralho','Panini','2023-08-23',15,0),(12,'Meu ovo','grande','Darkside','2023-08-30',15,0),(14,'testando','dfjaisoklf','Panini','2023-08-29',15,0),(16,'asdas','asdasd','TechnoLords','1236',124,0);
+INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Companhia das Letras',2017,36,0),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras',2017,14,0),(3,'Hellraiser','Clive Barker','Companhia das Letras',1986,24,0),(6,'Livrozin','Autorzin','Companhia das Letras',2006,32,0),(8,'saaaaa','adadsa','Companhia das Letras',2023,123,0),(9,'porra','meu pau','Darkside',2023,15,0),(10,'Novo','meu pau','Darkside',2023,11,0),(11,'Teste','caralho','Panini',2023,15,0),(12,'Meu ovo','grande','Darkside',2023,17,0),(14,'testando','dfjaisoklf','Panini',2023,15,0),(16,'asdas','asdasd','TechnoLords',1236,124,0);
 /*!40000 ALTER TABLE `livros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-27 22:25:58
+-- Dump completed on 2023-08-28 15:13:35

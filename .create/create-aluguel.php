@@ -21,7 +21,7 @@
       $status = "Pendente";
 
 
-      $sqlSelect = "SELECT * FROM alugueis WHERE livro = '$nomeLivro' AND usuario = '$usuario'";
+      $sqlSelect = "SELECT * FROM alugueis WHERE livro = '$nomeLivro' AND usuario = '$usuario' AND data_devolucao = 0";
       $resultSelect = $conexao->query($sqlSelect);
 
       if (mysqli_num_rows($resultSelect) == 1) {
