@@ -18,6 +18,7 @@
       $dat_aluguel = date('Y-m-d');
       $prev_devolucao = $_POST['prev_devolucao'];
       $data_devolucao = $_POST['data_devolucao'];
+      $status = "Pendente";
 
 
       $sqlSelect = "SELECT * FROM alugueis WHERE livro = '$nomeLivro' AND usuario = '$usuario'";
@@ -49,7 +50,7 @@
             $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$nomeLivro'";
             $sqlResultAlterar = $conexao->query($sqlAlterar);
 
-            $result = mysqli_query($conexao, "INSERT INTO alugueis(livro, usuario, data_aluguel, prev_devolucao, data_devolucao) VALUES ('$nomeLivro', '$usuario', '$dat_aluguel', '$prev_devolucao', '$data_devolucao')");
+            $result = mysqli_query($conexao, "INSERT INTO alugueis(livro, usuario, data_aluguel, prev_devolucao, data_devolucao, status) VALUES ('$nomeLivro', '$usuario', '$dat_aluguel', '$prev_devolucao', '$data_devolucao', '$status')");
             echo "
             <script>
                Swal.fire({

@@ -15,7 +15,7 @@ $logado = $_SESSION['email'];
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
 
-    $sql = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY id ASC";
+    $sql = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' OR status LIKE '%$data%' ORDER BY id ASC";
 } else {
     $sql = "SELECT * FROM alugueis ORDER BY id ASC";
 }
@@ -32,7 +32,7 @@ $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' ORDER BY id ASC";
+    $sqlsearch = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' OR status LIKE '%$data%' ORDER BY id ASC";
     $result = $conexao->query($sqlsearch);
 } else {
     $sql = "SELECT * FROM alugueis ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";

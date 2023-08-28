@@ -20,6 +20,8 @@
 
         $aluguel_data = mysqli_fetch_assoc($resultSelect);
         $livro = $aluguel_data['livro'];
+        $comp_previsao = $aluguel_data['prev_devolucao'];
+        $comp_devolucao = $aluguel_data['data_devolucao'];
 
         $hoje = date('Y-m-d');
 
@@ -37,7 +39,12 @@
         $sqlResultAlterar = $conexao->query($sqlAlterar);
 
         if ($resultSelect->num_rows > 0) {
-            $sqlUpdate = "UPDATE alugueis SET data_devolucao = '$hoje' WHERE id = $id";
+            if ($comp_devolucao <= $comp_previsao) {
+                $status = "No prazo";
+            } else if ($comp_devolucao > $comp_previsao) {
+                $status = "Atrasado";
+            }
+            $sqlUpdate = "UPDATE alugueis SET data_devolucao = '$hoje', status = '$status' WHERE id = $id";
             $resultUpdate = $conexao->query($sqlUpdate);
             echo "
             <script>
