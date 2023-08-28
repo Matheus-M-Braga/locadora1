@@ -130,14 +130,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-livro" type="text" class="form-control" id="input1" required autocomplete="off">
+                                <input name="nome-livro" type="text" class="form-control" id="input1" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">Autor</label>
-                                <input name="autor" type="text" class="form-control" id="input2" required autocomplete="off">
+                                <input name="autor" type="text" class="form-control" id="input2" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o autor
                                 </div>
@@ -155,14 +155,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                             </div>
                             <div class="row-md-3">
                                 <label for="input4" class="form-label text-black">Lançamento</label>
-                                <input name="lancamento" type="text" class="form-control lancamento" id="input4" required autocomplete="off">
+                                <input name="lancamento" type="text" class="form-control number" id="input4" maxlength="4" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o ano de lançamento
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input5" class="form-label text-black">Quantidade</label>
-                                <input name="quantidade" type="number" class="form-control" id="input5" required autocomplete="off">
+                                <input name="quantidade" type="number" class="form-control number" id="input5" maxlength="4" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe a quantidade
                                 </div>
@@ -185,14 +185,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <input type="hidden" name="id" id="campo1">
                         <div class="row-md-3">
                             <label for="campo2" class="form-label text-black bold">Nome</label>
-                            <input name="nome-livro" type="text" class="form-control" id="campo2" required autocomplete="off">
+                            <input name="nome-livro" type="text" class="form-control" id="campo2" maxlength="45" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o nome
                             </div>
                         </div>
                         <div class="row-md-3">
                             <label for="campo3" class="form-label text-black">Autor</label>
-                            <input name="autor" type="text" class="form-control" id="campo3" required autocomplete="off">
+                            <input name="autor" type="text" class="form-control" id="campo3" maxlength="45" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o autor
                             </div>
@@ -215,14 +215,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         </div>
                         <div class="row-md-3">
                             <label for="campo5" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="text" class="form-control lancamento" id="campo5" required autocomplete="off">
+                            <input name="lancamento" type="text" class="form-control number" id="campo5" maxlength="4" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o ano de lançamento
                             </div>
                         </div>
                         <div class="row-md-3">
                             <label for="campo6" class="form-label text-black">Quantidade</label>
-                            <input name="quantidade" type="number" class="form-control" id="campo6" required autocomplete="off">
+                            <input name="quantidade" type="number" class="form-control number" id="campo6" maxlength="4" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe a quantidade
                             </div>
@@ -400,7 +400,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
-            $('.lancamento').mask('0000')
+            $('.number').mask('0000')
         });
     </script>
 </body>

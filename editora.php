@@ -150,14 +150,14 @@ $result = $conexao->query($sql);
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="input1" class="form-control" required autocomplete="off">
+                                <input name="nome-editora" type="text" id="input1" class="form-control" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="input2" class="form-control email" required autocomplete="off">
+                                <input name="email-editora" type="email" id="input2" class="form-control" maxlength="100" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o email
                                 </div>
@@ -189,14 +189,14 @@ $result = $conexao->query($sql);
                             <input type="hidden" name="id" id="campo1">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="campo2" class="form-control" required autocomplete="off">
+                                <input name="nome-editora" type="text" id="campo2" class="form-control" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="campo3" class="form-control email" required autocomplete="off">
+                                <input name="email-editora" type="email" id="campo3" class="form-control" maxlength="100" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o e-mail
                                 </div>
@@ -204,7 +204,7 @@ $result = $conexao->query($sql);
 
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Telefone</label>
-                                <input name="telefone-editora" type="tel" id="campo4" class="form-control telefone" required autocomplete="off">
+                                <input name="telefone-editora" type="text" id="campo4" class="form-control telefone" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o telefone
                                 </div>

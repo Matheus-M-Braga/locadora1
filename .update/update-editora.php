@@ -17,7 +17,7 @@
         $email = $_POST['email-editora'];
         $telefone = $_POST['telefone-editora'];
 
-        $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', telefone = '$telefone' WHERE CodEditora = '$codEditora'";
+        $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', telefone = '$telefone' WHERE id = '$codEditora'";
 
         $result = $conexao->query($sqlUpdate);
         echo "

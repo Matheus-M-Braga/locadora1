@@ -18,7 +18,7 @@
         $endereco = $_POST['endereco'];
         $email = $_POST['email'];
 
-        $sqlUpdate = "UPDATE usuarios SET Nome = '$nomeUsuario', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE CodUsuario = '$codUsuario'";
+        $sqlUpdate = "UPDATE usuarios SET Nome = '$nomeUsuario', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$codUsuario'";
 
         $result = $conexao->query($sqlUpdate);
 

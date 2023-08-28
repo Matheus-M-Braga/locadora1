@@ -57,6 +57,8 @@ tableRows.forEach((row) => {
 function resetForm(modalId) {
   var form = document.querySelector(`#${modalId} form`);
   form.classList.remove("was-validated");
+  if(modalId === 'vis-modal'){
+    form.reset()
+  }
 }
 
-// Máscaras 

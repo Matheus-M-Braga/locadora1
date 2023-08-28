@@ -125,28 +125,28 @@ if (!empty($search)) {
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-user" type="text" id="input1" class="form-control" required autocomplete="off">
+                                <input name="nome-user" type="text" id="input1" class="form-control" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">Cidade</label>
-                                <input name="cidade" type="text" id="input2" class="form-control" required autocomplete="off">
+                                <input name="cidade" type="text" id="input2" class="form-control cidade" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe a cidade
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Endereço</label>
-                                <input name="endereco" type="text" id="input3" class="form-control" required autocomplete="off">
+                                <input name="endereco" type="text" id="input3" class="form-control endereco" maxlength="75" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o endereço
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="email" class="form-label text-black">E-mail</label>
-                                <input name="email" type="email" id="email" class="form-control" required autocomplete="off">
+                                <input name="email" type="email" id="email" class="form-control" maxlength="100" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o email
                                 </div>
@@ -170,28 +170,28 @@ if (!empty($search)) {
                             <input type="hidden" id="campo1" name="id">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-user" type="text" id="campo2" class="form-control" required autocomplete="off" value="">
+                                <input name="nome-user" type="text" id="campo2" class="form-control" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">Cidade</label>
-                                <input name="cidade" type="text" id="campo3" class="form-control" required autocomplete="off" value="">
+                                <input name="cidade" type="text" id="campo3" class="form-control cidade" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe a cidade
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Endereço</label>
-                                <input name="endereco" type="text" id="campo4" class="form-control" required autocomplete="off" value="">
+                                <input name="endereco" type="text" id="campo4" class="form-control endereco" maxlength="75" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o endereço
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="validationCustom02" class="form-label text-black">E-mail</label>
-                                <input name="email" type="email" id="campo5" class="form-control date" required autocomplete="off" value="">
+                                <input name="email" type="email" id="campo5" class="form-control date" maxlength="100" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o email
                                 </div>
@@ -319,6 +319,7 @@ if (!empty($search)) {
     <script src="js/script.js"></script>
     <!-- Consulta ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({

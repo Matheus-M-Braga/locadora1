@@ -19,7 +19,7 @@
         $lancamento = $_POST['lancamento'];
         $quantidade = $_POST['quantidade'];
 
-        $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE CodLivro = '$codLivro'";
+        $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
 
         $result = $conexao->query($sqlUpdate);
 

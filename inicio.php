@@ -14,6 +14,15 @@ $sqlAluguel = "SELECT livro FROM alugueis";
 
 $resultadolivro = $conexao->query($sqlAluguel);
 
+// mais alugados
+$sql_grafico = "SELECT livro, count(livro) as quantidade_aluguel FROM alugueis WHERE livro = livro GROUP BY livro ORDER BY COUNT(livro) DESC limit 3";
+$resultado_grafico = $conexao->query($sql_grafico);
+
+while ($barra = $resultado_grafico->fetch_assoc()) {
+    $nomes[] = $barra['livro'];
+    $info[] = $barra['quantidade_aluguel'];
+}
+
 // total de aluguéis
 $sql_total_alugueis = "SELECT COUNT(*) AS total_alugueis FROM alugueis";
 $resultado_total_alugueis = $conexao->query($sql_total_alugueis);
@@ -24,64 +33,60 @@ if (isset($linha_total_alugueis['total_alugueis'])) {
     $quantidade_alugueis = $linha_total_alugueis['total_alugueis'];
 }
 
+// aluguéis pendentes
+$sql_pendentes = "SELECT count(status) as pendentes FROM alugueis where status = 'Pendente'";
+$resultado_pendentes = $conexao->query($sql_pendentes);
+$total_pendentes = $resultado_pendentes->fetch_assoc();
+if (isset($total_pendentes['pendentes'])) {
+    $pendentes = $total_pendentes['pendentes'];
+}
+
+// aluguéis entregues no prazo
+$sql_noprazo = "SELECT count(status) as noprazo FROM alugueis where status = 'No prazo'";
+$resultado_noprazo = $conexao->query($sql_noprazo);
+$total_noprazo = $resultado_noprazo->fetch_assoc();
+if (isset($total_noprazo['noprazo'])) {
+    $noprazo = $total_noprazo['noprazo'];
+}
+
+// aluguéis entregues com atraso
+$sql_atrasados = "SELECT count(status) as atrasados FROM alugueis where status = 'Atrasado'";
+$resultado_atrasados = $conexao->query($sql_atrasados);
+$total_atrasados = $resultado_atrasados->fetch_assoc();
+if (isset($total_atrasados['atrasados'])) {
+    $atrasados = $total_atrasados['atrasados'];
+}
+
 // último aluguel
 $sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY id DESC LIMIT 1";
 $resultado_ultimo_aluguel = $conexao->query($sql_ultimo_aluguel);
-
 $ultimo_alugado = $resultado_ultimo_aluguel->fetch_assoc();
-
 if (isset($ultimo_alugado['livro'])) {
     $ultimo_livro = $ultimo_alugado['livro'];
 }
 
-// mais alugado
-$sql_mais_alugado = "SELECT livro FROM alugueis WHERE livro = livro GROUP BY livro ORDER BY COUNT(livro) DESC LIMIT 1";
-$resultado_mais_alugado = $conexao->query($sql_mais_alugado);
-$mais_alugado = $resultado_mais_alugado->fetch_assoc();
-if (isset($mais_alugado['livro'])) {
-    $mais_alug =  $mais_alugado['livro'];
+// Total de usuários
+$sql_usuarios = "SELECT count(*) AS total_usuarios FROM usuarios";
+$resultado_usuarios = $conexao->query($sql_usuarios);
+$total_usuarios = $resultado_usuarios->fetch_assoc();
+if (isset($total_usuarios['total_usuarios'])) {
+    $usuarios = $total_usuarios['total_usuarios'];
 }
 
 // total de livros
 $sql_total_livros = "SELECT sum(quantidade) AS total_livros FROM livros";
 $resultado_total_livros = $conexao->query($sql_total_livros);
 $total_livros = $resultado_total_livros->fetch_assoc();
-
 if (isset($total_livros['total_livros'])) {
-    $totais_livros = $total_livros['total_livros'];
+    $livros = $total_livros['total_livros'];
 }
 
-// livros nao devolvidos
-$sql_nao_devolvidos = "SELECT count(data_devolucao) as nao_devolvidos FROM alugueis where data_devolucao = 0";
-$resultado_nao_devolvidos = $conexao->query($sql_nao_devolvidos);
-$total_nao_devo = $resultado_nao_devolvidos->fetch_assoc();
-if (isset($total_nao_devo['nao_devolvidos'])) {
-    $total_nao_devo = $total_nao_devo['nao_devolvidos'];
-}
-
-// livros devolvidos
-$sql_devo = "SELECT count(data_devolucao) as devolvidos FROM alugueis where data_devolucao!=0";
-$resultado_devo = $conexao->query($sql_devo);
-$total_devo = $resultado_devo->fetch_assoc();
-if (isset($total_devo['devolvidos'])) {
-    $total_devol = $total_devo['devolvidos'];
-}
-
-// mais alugados
-$sql_grafico = "SELECT livro, count(livro) as quantidade_aluguel FROM alugueis WHERE livro = livro GROUP BY livro ORDER BY COUNT(livro) DESC limit 3";
-$resultado_grafico = $conexao->query($sql_grafico);
-
-while ($barra = $resultado_grafico->fetch_assoc()) {
-    $nomes[] = $barra['livro'];
-    $info[] = $barra['quantidade_aluguel'];
-}
-
-// livros disponíveis
-$sql_disponiveis = "SELECT nome, quantidade FROM livros ORDER BY quantidade DESC";
-$result_disponiveis = $conexao->query($sql_disponiveis);
-while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
-    $nomesDisp[] = $disponiveis['nome'];
-    $quantDisp[] = $disponiveis['quantidade'];  
+// Total de editoras
+$sql_editoras = "SELECT count(*) AS total_editoras FROM editoras";
+$resultado_editoras = $conexao->query($sql_editoras);
+$total_editoras = $resultado_editoras->fetch_assoc();
+if (isset($total_editoras['total_editoras'])) {
+    $editoras = $total_editoras['total_editoras'];
 }
 
 ?>
@@ -158,7 +163,7 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                 </div>
                 <div id="grafico2" class="container bg-light">
                     <div style="text-align:center;">
-                        <h2 class="title">Livros Disponíveis</h2>
+                        <h2 class="title">Status de Aluguéis</h2>
                     </div>
                     <canvas id="grafico02" width="300" height="200"></canvas>
                     <div>
@@ -166,28 +171,6 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                 </div>
             </div>
             <div class="dash_father">
-                <div class="dash_container">
-                    <span class="title">Livro mais alugado</span>
-                    <?php if (isset($mais_alug)) {
-                        echo "<span class='content'> <img src='img/top1.png' alt=''>" . $mais_alug . "</span>";
-                    } else {
-                        echo " <span class='content'>Aguardando dados...</span> ";
-                    }
-                    ?>
-                </div>
-                <div class="dash_container">
-                    <span class="title">Livros Disponíveis</span>
-                    <div class="relat">
-                        <p>
-                            <?php echo "<span class='content number'> <img src='img/books.png' alt=''>" . $totais_livros . "</span>" ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="dash_container">
-                    <span class="title">Status dos Aluguéis:</span>
-                    <?php echo  "<span class='content'> Devolvidos: " . $total_devol . "</span>"; ?>
-                    <?php echo "<span class='content'> Pendentes: " . $total_nao_devo . "</span>"; ?>
-                </div>
                 <div class="dash_container">
                     <span class="title">Últmo livro alugado:</span>
                     <?php
@@ -197,6 +180,30 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
                         echo "<span class='content'>Aguardando dados...</span>";
                     }
                     ?>
+                </div>
+                <div class="dash_container">
+                    <span class="title">Usuários cadastrados</span>
+                    <div class="relat">
+                        <p>
+                            <?php echo "<span class='content number'> <img src='img/users.png' alt=''>" . $usuarios . "</span>" ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="dash_container">
+                    <span class="title">Livros cadastrados</span>
+                    <div class="relat">
+                        <p>
+                            <?php echo "<span class='content number'> <img src='img/books.png' alt=''>" . $livros . "</span>" ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="dash_container">
+                    <span class="title">Editoras cadastradas</span>
+                    <div class="relat">
+                        <p>
+                            <?php echo "<span class='content number'> <img src='img/publis.png' alt=''>" . $editoras . "</span>" ?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -237,12 +244,12 @@ while ($disponiveis = mysqli_fetch_assoc($result_disponiveis)) {
         new Chart(cty, {
             type: 'pie',
             data: {
-                labels: ["<?php echo $nomesDisp[0]; ?>", "<?php echo $nomesDisp[1]; ?>", "<?php echo $nomesDisp[2]; ?>", "<?php echo $nomesDisp[3]; ?>", "<?php echo $nomesDisp[4]; ?>"],
+                labels: ["Pendentes", "No prazo", "Atrasados"],
                 datasets: [{
                     label: '',
-                    data: ["<?php echo $quantDisp[0]; ?>", "<?php echo $quantDisp[1]; ?>", "<?php echo $quantDisp[2]; ?>", "<?php echo $quantDisp[3]; ?>", "<?php echo $quantDisp[4]; ?>"],
-                    backgroundColor: ['rgba(128, 0, 0)', 'rgb(65, 69, 94)', 'rgb(182, 143, 43)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)'],
-                    borderColor: ['rgba(128, 0, 0)', 'rgb(65, 69, 94)', 'rgb(182, 143, 43)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)'],
+                    data: ["<?php echo $pendentes ?>", "<?php echo $noprazo ?>", "<?php echo $atrasados ?>"],
+                    backgroundColor: ['rgb(182, 143, 43)','rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
+                    borderColor: ['rgb(182, 143, 43)', 'rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
                     borderWidth: 1
                 }]
             },
