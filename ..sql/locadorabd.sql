@@ -25,14 +25,15 @@ DROP TABLE IF EXISTS `alugueis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `alugueis` (
-  `CodAluguel` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `livro` varchar(45) NOT NULL,
   `usuario` varchar(45) NOT NULL,
   `data_aluguel` varchar(45) NOT NULL,
   `prev_devolucao` varchar(45) NOT NULL,
   `data_devolucao` varchar(45) NOT NULL,
-  PRIMARY KEY (`CodAluguel`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `alugueis` (
 
 LOCK TABLES `alugueis` WRITE;
 /*!40000 ALTER TABLE `alugueis` DISABLE KEYS */;
-INSERT INTO `alugueis` VALUES (3,'Guerra e Paz','Júlia','2023-05-01','2023-05-22','18/08/2023'),(6,'Demon Slayer','Carlos','2023-05-09','2023-05-22','19/08/2023'),(7,'Guerra e Paz','Ester','2023-05-03','2023-05-08','0'),(9,'Guerra e Paz','Matheus','2023-08-18','2023-08-30','0'),(10,'Demon Slayer','Ester','2023-08-19','2023-08-29','0'),(11,'Hellraiser','Matheus','2023-08-19','2023-08-31','0'),(12,'Livrozin','Carlos','2023-08-19','2023-08-30','19/08/2023');
+INSERT INTO `alugueis` VALUES (1,'Demon Slayer','Matheus','2023-08-27','2023-09-02','2023-08-27','No prazo'),(2,'Meu ovo','meu pinto','2023-08-27','2023-08-27','2023-08-27','No prazo'),(3,'porra','sadada','2023-08-27','2023-08-27','0','Pendente');
 /*!40000 ALTER TABLE `alugueis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,13 +54,12 @@ DROP TABLE IF EXISTS `editoras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `editoras` (
-  `CodEditora` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `telefone` varchar(45) NOT NULL,
-  `website` varchar(45) NOT NULL,
-  PRIMARY KEY (`CodEditora`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `editoras` (
 
 LOCK TABLES `editoras` WRITE;
 /*!40000 ALTER TABLE `editoras` DISABLE KEYS */;
-INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','1133768965','https://www.companhiadasletras.com.br'),(2,'Panini','panini@contato.com','6789911432','panini.com.br'),(3,'Darkside','darkside@gmail.com','6789123443',''),(4,'TechnoLords','technolordsviera@gmail.com','85 986052523','technolords.com.br');
+INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','1133768965'),(2,'Panini','panini@contato.com','6789911432'),(3,'Darkside','darkside@gmail.com','6789123443'),(4,'TechnoLords','technolordsviera@gmail.com','85 986052523'),(8,'matheus','boceta@gmail.com','(12) 31231-2312');
 /*!40000 ALTER TABLE `editoras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,10 +80,10 @@ DROP TABLE IF EXISTS `gerenciadores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gerenciadores` (
-  `CodGerente` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(75) NOT NULL,
   `senha` varchar(8) NOT NULL,
-  PRIMARY KEY (`CodGerente`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,15 +105,15 @@ DROP TABLE IF EXISTS `livros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `livros` (
-  `CodLivro` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
   `editora` varchar(45) NOT NULL,
   `lancamento` varchar(45) NOT NULL,
   `quantidade` int(45) NOT NULL,
   `alugados` int(45) NOT NULL,
-  PRIMARY KEY (`CodLivro`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `livros` (
 
 LOCK TABLES `livros` WRITE;
 /*!40000 ALTER TABLE `livros` DISABLE KEYS */;
-INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Companhia das Letras','2017-05-10',33,1),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras','2017-11-21',12,2),(3,'Hellraiser','Clive Barker','Darkside','1986-11-12',24,1),(6,'Livrozin','Autorzin','Panini','2006-03-12',32,0),(7,'asdasd','asdasd','Darkside','2023-08-19',123,0),(8,'saaaaa','adadsa','Panini','2023-08-19',123,0),(9,'porra','meu pau','Darkside','2023-08-29',12,0),(10,'Novo','meu pau','Darkside','2023-08-31',12,0),(11,'Teste','caralho','Panini','2023-08-23',15,0),(12,'Meu ovo','grande','Darkside','2023-08-30',15,0),(13,'adsadas','asdadas','Companhia das Letras','2023-08-21',1563,0),(14,'testando','dfjaisoklf','Panini','2023-08-29',15,0),(15,'esgotado','esgoto','TechnoLords','2023-08-30',0,0);
+INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Companhia das Letras','2017',32,0),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras','2017',14,0),(3,'Hellraiser','Clive Barker','Companhia das Letras','1986',24,0),(6,'Livrozin','Autorzin','Companhia das Letras','2006',32,0),(8,'saaaaa','adadsa','Companhia das Letras','2023',123,0),(9,'porra','meu pau','Darkside','2023-08-29',11,0),(10,'Novo','meu pau','Darkside','2023-08-31',11,1),(11,'Teste','caralho','Panini','2023-08-23',15,0),(12,'Meu ovo','grande','Darkside','2023-08-30',15,0),(14,'testando','dfjaisoklf','Panini','2023-08-29',15,0),(16,'asdas','asdasd','TechnoLords','1236',124,0);
 /*!40000 ALTER TABLE `livros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,13 +134,13 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
-  `CodUsuario` int(11) NOT NULL AUTO_INCREMENT,
-  `Nome` varchar(45) NOT NULL,
-  `Cidade` varchar(45) NOT NULL,
-  `Endereco` varchar(75) NOT NULL,
-  `Email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`CodUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `cidade` varchar(45) NOT NULL,
+  `endereco` varchar(75) NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'Matheus','Fortaleza - CE','Av. Pasteur, 1234','matheus@gmail.com'),(3,'Ester','Belo Horizonte - MG','Palmeiras Vermelhas, 123','ester@gmail.com'),(4,'Josias','Rolandia','logo ali','josias@wda.com.br');
+INSERT INTO `usuarios` VALUES (2,'Matheus','Fortaleza - CE','Av. Pasteur, 1234','matheus@gmail.com'),(3,'Ester','Belo Horizonte - MG','Palmeiras Vermelhas, 123','ester@gmail.com'),(4,'Josias','Rolandia','logo ali','josias@wda.com.br'),(5,'Ricardin','Crato','rua tal','email@gmail.com'),(6,'meu pinto','dsjf','sdjalçf','ljkjfalker@fgadf'),(7,'sadada','sadadasd','dsadasda','2edads@asd');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -162,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-19 20:14:59
+-- Dump completed on 2023-08-27 22:25:58
