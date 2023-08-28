@@ -74,16 +74,18 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script>
-        var search = document.getElementById('pesquisadora')
-        search.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                searchData();
-            }
-        })
+        document.addEventListener("DOMContentLoaded", function() {
+            var search = document.getElementById('pesquisadora');
+            search.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    searchData();
+                }
+            });
 
-        function searchData() {
-            window.location = "user.php?search=" = search.value
-        }
+            function searchData() {
+                window.location = "aluguel.php?search=" + search.value;
+            }
+        });
     </script>
     <title>WDA Livraria</title>
 </head>

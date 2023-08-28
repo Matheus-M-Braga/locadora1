@@ -49,16 +49,18 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        var search = document.getElementById('pesquisadora')
-        search.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                searchData();
-            }
-        })
+        document.addEventListener("DOMContentLoaded", function() {
+            var search = document.getElementById('pesquisadora');
+            search.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    searchData();
+                }
+            });
 
-        function searchData() {
-            window.location = "user.php?search=" = search.value
-        }
+            function searchData() {
+                window.location = "livro.php?search=" + search.value;
+            }
+        });
     </script>
     <title>WDA Livraria</title>
 </head>
