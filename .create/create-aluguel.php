@@ -33,7 +33,7 @@
                showConfirmButton: false,
                timer: 1500
             })
-            
+            .then(() => {window.location.href = '../aluguel.php';})
          </script>";
       } else {
          // Conexão tabela Livros
@@ -59,7 +59,7 @@
                   showConfirmButton: false,
                   timer: 1500
                })
-      
+               .then(() => {window.location.href = '../aluguel.php';})
             </script>";
          } else if ($quantidade_nova < 0) {
             echo "
@@ -71,7 +71,7 @@
                   showConfirmButton: false,
                   timer: 1500
                })
-               
+               .then(() => {window.location.href = '../aluguel.php';})
             </script>";
          }
       }
