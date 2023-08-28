@@ -13,12 +13,12 @@
 
         $codAluguel = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM alugueis WHERE CodAluguel = $codAluguel";
+        $sqlSelect = "SELECT * FROM alugueis WHERE id = $codAluguel";
 
         $result = $conexao->query($sqlSelect);
 
         if ($result->num_rows > 0) {
-            $sqlDelete = "DELETE FROM alugueis WHERE CodAluguel = $codAluguel";
+            $sqlDelete = "DELETE FROM alugueis WHERE id = $codAluguel";
             $resultDelete = $conexao->query($sqlDelete);
         }
         $sqlReset = "ALTER TABLE alugueis AUTO_INCREMENT = 1;";

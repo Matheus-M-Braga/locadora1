@@ -2,7 +2,7 @@
 session_start();
 
 include_once('php/config.php');
-
+date_default_timezone_set('America/Sao_Paulo');
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
@@ -241,22 +241,39 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                             <th class='titulos'>ALUGUEL</th>
                             <th class='titulos'>PREVISÃO</th>
                             <th class='titulos'>DEVOLUÇÃO</th>
+                            <th class='titulos'>STATUS</th>
                             <th class='titulos'>AÇÕES</th>
                         </tr>
                     </thead><tbody>";
                 echo $dados;
                 while ($aluguel_data = mysqli_fetch_assoc($result)) {
+                    // Datas para serem exibidas no padrão d/m/Y na tabela
                     $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
-                    $dev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
+                    $prev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
+                    $dev_dat = date("d/m/Y", strtotime($aluguel_data['data_devolucao']));
+
+                    // Para comparação
+                    $comp_previsao = $aluguel_data['prev_devolucao'];
+                    $comp_devolucao = $aluguel_data['data_devolucao'];
+
+                    if($aluguel_data['data_devolucao'] == 0){
+                        $status = "Pendente";
+                    } else if($comp_devolucao <= $comp_previsao){
+                        $status = "No prazo";
+                    } else if($comp_devolucao > $comp_previsao){
+                        $status = "Atrasado";
+                    }
+
                     echo "
                     <tr>
                         <td class='itens'>" . $aluguel_data['id'] . "</td>"
                         . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
                         . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
                         . "<td class='itens'>" . $alug_dat . "</td>"
-                        . "<td class='itens'>" . $dev_dat . "</td>";
+                        . "<td class='itens'>" . $prev_dat . "</td>";
                     if ($aluguel_data['data_devolucao'] == 0) {
-                        echo "<td class='itens'>Não Devolvido</td>";
+                        echo "<td class='itens'>...</td>"
+                            . "<td class='itens'>" . $status . "</td>";
                         echo "<td class='itens'>
                             <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[id]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
                             <img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
@@ -264,7 +281,8 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     } else {
                         $hoje = date("Y/m/d");
                         $previsao = $aluguel_data['prev_devolucao'];
-                        echo "<td class='itens'>" . $aluguel_data['data_devolucao'] . "</td>";
+                        echo "<td class='itens'>" . $dev_dat . "</td>"
+                            . "<td class='itens'>" . $status . "</td>";
                         echo "<td class='itens'><img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'></td></tr>";
                     }
                 }
@@ -325,7 +343,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Faz a solicitação AJAX para obter os dados do banco de dados
             $.ajax({
                 url: 'php/getdataAlug.php',
                 type: 'GET',

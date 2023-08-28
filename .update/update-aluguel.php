@@ -13,16 +13,15 @@
 
         date_default_timezone_set('America/Sao_Paulo');
 
-        $CodAluguel = $_GET['id'];
+        $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM alugueis WHERE CodAluguel = $CodAluguel";
+        $sqlSelect = "SELECT * FROM alugueis WHERE id = $id";
         $resultSelect = $conexao->query($sqlSelect);
 
         $aluguel_data = mysqli_fetch_assoc($resultSelect);
         $livro = $aluguel_data['livro'];
 
-        $hoje = new DateTime();
-        $hoje2 = $hoje->format('d/m/Y');
+        $hoje = date('Y-m-d');
 
 
         // Conexão tabela Livros
@@ -38,7 +37,7 @@
         $sqlResultAlterar = $conexao->query($sqlAlterar);
 
         if ($resultSelect->num_rows > 0) {
-            $sqlUpdate = "UPDATE alugueis SET data_devolucao = '$hoje2' WHERE CodAluguel = $CodAluguel";
+            $sqlUpdate = "UPDATE alugueis SET data_devolucao = '$hoje' WHERE id = $id";
             $resultUpdate = $conexao->query($sqlUpdate);
             echo "
             <script>
