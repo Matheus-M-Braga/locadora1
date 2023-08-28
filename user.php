@@ -10,7 +10,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-// Paginaçã/Pesquisa
+// Paginaçã0/Pesquisa
 $sql = "SELECT * FROM usuarios ORDER BY id ASC";
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
