@@ -11,29 +11,34 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
 }
 $logado = $_SESSION['email'];
 
-// Pesquisa
-if (!empty($_GET['search'])) {
-    $data = $_GET['search'];
-
-    $sql = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' OR status LIKE '%$data%' ORDER BY id ASC";
-} else {
-    $sql = "SELECT * FROM alugueis ORDER BY id ASC";
-}
-$result = $conexao->query($sql);
-
 // Número de registros por página
 $registrosPorPagina = 5;
 $paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Select com os parâmetros
+// Pesquisa/Paginação
+$sql = "SELECT * FROM alugueis";
 $result = $conexao->query($sql);
 $totalRegistros = $result->num_rows;
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM alugueis WHERE id LIKE '%$data%' OR livro LIKE '%$data%' or usuario LIKE '%$data%' OR data_aluguel LIKE '%$data%' OR prev_devolucao LIKE '%$data%' OR data_devolucao LIKE '%$data%' OR status LIKE '%$data%' ORDER BY id ASC";
-    $result = $conexao->query($sqlsearch);
+    $search = urldecode($search);
+    $data_date = DateTime::createFromFormat('d/m/Y', $search);
+
+    if ($data_date) {
+        $data_date_formatted = $data_date->format('Y-m-d');
+        $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR data_aluguel LIKE '%$data_date_formatted%' OR prev_devolucao LIKE '%$data_date_formatted%' OR data_devolucao LIKE '%$data_date_formatted%' OR status LIKE '%$search%' ORDER BY id ASC";
+    } else {
+        if (strpos($search, '/') !== false) {
+            $day_month = DateTime::createFromFormat('d/m', $search)->format('');
+            $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR data_aluguel LIKE '%$day_month%' OR prev_devolucao LIKE '%$day_month%' OR data_devolucao LIKE '%$day_month%' OR status LIKE '%$search%' ORDER BY id ASC";
+        } else {
+            $sql = "SELECT * FROM alugueis WHERE id LIKE '%$search%' OR livro LIKE '%$search%' or usuario LIKE '%$search%' OR status LIKE '%$search%' ORDER BY id ASC";
+        }
+    }
+
+    $result = $conexao->query($sql);
 } else {
     $sql = "SELECT * FROM alugueis ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
