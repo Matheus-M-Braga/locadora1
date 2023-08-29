@@ -23,7 +23,7 @@ input:focus {
 
 body {
   overflow: hidden;
-  background: #1C4D4F;
+  background: #1c4d4f;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -185,7 +185,7 @@ a.selected {
   width: 100%;
   height: 100vh;
   padding: 15px;
-  background: #1C4D4F;
+  background: #1c4d4f;
   background-position: center right;
   background-size: cover;
 }
@@ -386,7 +386,7 @@ select {
 #devol-modal .col-12 button {
   width: 48%;
 }
-.col-12 .btn-danger{
+.col-12 .btn-danger {
   background: maroon;
   border: none;
 }
@@ -524,6 +524,17 @@ table {
   padding: 15px;
   font-weight: bolder;
   color: white;
+  cursor: pointer;
+}
+th:last-child{
+  cursor: auto;
+}
+.rotate180{
+  transform: rotate(180deg);
+}
+.titulos .order_arrow {
+  vertical-align: middle;
+  margin-left: 3px;
 }
 
 .container-grid .itens {
@@ -536,7 +547,7 @@ table {
   cursor: pointer;
 }
 
-.container-grid .itens.noresult{
+.container-grid .itens.noresult {
   text-align: center;
   vertical-align: middle;
   font-style: italic;

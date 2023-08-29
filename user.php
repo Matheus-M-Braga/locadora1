@@ -29,6 +29,22 @@ if (!empty($search)) {
     $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
     $result = $conexao->query($sql);
 }
+
+// Ordenação
+$sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
+$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'asc';
+$validColumns = array('id', 'nome', 'cidade', 'endereco', 'email');
+$validOrders = array('asc', 'desc');
+if (!in_array($sortBy, $validColumns)) {
+    $sortBy = 'id';
+}
+if (!in_array($sortOrder, $validOrders)) {
+    $sortOrder = 'asc';
+}
+if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
+    $sqlOrderBy = "SELECT * FROM usuarios ORDER BY $sortBy $sortOrder LIMIT $registrosPorPagina OFFSET $offset";
+    $result = $conexao->query($sqlOrderBy);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -216,7 +232,7 @@ if (!empty($search)) {
             <div class="grid-header">
                 <div class="wrapper">
                     <span class="titulo-pg">Usuários</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
+                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO<span class="material-symbols-outlined">add</span></div>
                 </div>
                 <form class="searchbox sbx-custom" id="search-user">
                     <div role="search" class="sbx-custom__wrapper">
@@ -225,44 +241,42 @@ if (!empty($search)) {
                     </div>
                 </form>
             </div>
-            <!-- Tag responsável por exibir a listagem da página list -->
             <div class="grid-body">
-                <?php
-                $dados = "
                 <table class='container-grid'>
-                <thead>
-                    <tr>
-                        <th class='titulos'>ID</th>
-                        <th class='titulos'>NOME</th>
-                        <th class='titulos'>CIDADE</th>
-                        <th class='titulos'>ENDEREÇO</th>
-                        <th class='titulos'>EMAIL</th>
-                        <th class='titulos'>AÇÕES</th>
-                    </tr>
-                </thead><tbody>";
-                echo $dados;
-                if (mysqli_num_rows($result) > 0) {
-                    while ($user_data = mysqli_fetch_assoc($result)) {
-                        echo "
+                    <thead>
                         <tr>
-                        <td class='itens'>" . $user_data['id'] . "</td>"
-                            . "<td class='itens'>" . $user_data['nome'] . "</td>"
-                            . "<td class='itens'>" . $user_data['cidade'] . "</td>"
-                            . "<td class='itens'>" . $user_data['endereco'] . "</td>"
-                            . "<td class='itens'>" . $user_data['email'] . "</td>"
-                            . "<td class='itens'>
-                            <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                            &nbsp;&nbsp;
-                            <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                        </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
-                }
-                echo "</tbody></table>";
-
-                ?>
+                            <th class='titulos' id='id'>ID <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'id' && $sortOrder === 'desc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
+                            <th class='titulos' id='nome'>NOME <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'nome' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
+                            <th class='titulos' id='cidade'>CIDADE <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'cidade' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
+                            <th class='titulos' id='endereco'>ENDEREÇO <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'endereco' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
+                            <th class='titulos' id='mail'>EMAIL <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'email' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
+                            <th class='titulos'>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($user_data = mysqli_fetch_assoc($result)) {
+                                echo "
+                                <tr>
+                                <td class='itens ID'>" . $user_data['id'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['nome'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['cidade'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['endereco'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['email'] . "</td>"
+                                    . "<td class='itens'>
+                                    <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                    &nbsp;&nbsp;
+                                    <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                                </td>
+                                </tr>";
+                            }
+                        } else {
+                            echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 <!-- Área da paginação -->
                 <div class="pagination
                 <?php if (!empty($search)) {
@@ -353,7 +367,31 @@ if (!empty($search)) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
-        });
+            // Ordenação
+            $('th').click(function() {
+                const seta = $(this).find('.order_arrow');
+                seta.toggleClass('rotate180');
+
+                $('th .order_arrow').not(seta).removeClass('rotate180');
+            });
+            $('#id').click(function() {
+                window.location.href = "user.php?sortBy=id&sortOrder=<?php echo ($sortBy === 'id' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
+            })
+            $('#nome').click(function() {
+                window.location.href = "user.php?sortBy=nome&sortOrder=<?php echo ($sortBy === 'nome' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
+            })
+            $('#cidade').click(function() {
+                window.location.href = "user.php?sortBy=cidade&sortOrder=<?php echo ($sortBy === 'cidade' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
+            })
+            $('#endereco').click(function() {
+                window.location.href = "user.php?sortBy=endereco&sortOrder=<?php echo ($sortBy === 'endereco' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
+            })
+            $('#mail').click(function() {
+                window.location.href = "user.php?sortBy=email&sortOrder=<?php echo ($sortBy === 'email' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
+                console.log("avestruz")
+            })
+
+        })
     </script>
 </body>
 

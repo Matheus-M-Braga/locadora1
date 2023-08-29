@@ -32,7 +32,7 @@ tableRows.forEach((row) => {
   cells.forEach((cell, index) => {
     const title = tableHeaders[index].textContent;
     if (cell.textContent !== "Nenhum registro encontrado") {
-      cell.dataset.title = title;
+      cell.dataset.title = title.replace("arrow_drop_down", "");
     }
   });
 });
