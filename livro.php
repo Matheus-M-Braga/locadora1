@@ -10,25 +10,10 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-// Paginação/Pesquisa
-$sql = "SELECT * FROM livros ORDER BY id ASC";
-$registrosPorPagina = 5;
-$paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-$offset = ($paginaAtual - 1) * $registrosPorPagina;
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$data = $search;
 
-// Select com os parâmetros
+$sql = "SELECT * FROM livros ORDER BY id ASC";
 $result = $conexao->query($sql);
-$totalRegistros = $result->num_rows;
-$totalPaginas = ceil($totalRegistros / $registrosPorPagina);
-if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM livros WHERE id LIKE '%$data%'OR nome LIKE '%$data%' OR autor LIKE '%$data%' or editora LIKE '%$data%' OR lancamento LIKE '%$data%' or quantidade LIKE '%$data%' ORDER BY id ASC";
-    $result = $conexao->query($sqlsearch);
-} else {
-    $sql = "SELECT * FROM livros ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
-    $result = $conexao->query($sql);
-}
+
 
 // Conexão tabela editoras
 $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
@@ -41,13 +26,17 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Boot -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- Strap -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var search = document.getElementById('pesquisadora');
@@ -247,109 +236,56 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     <span class="titulo-pg">Livros</span>
                     <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
                 </div>
-                <form class="searchbox sbx-custom" id="search-livro">
-                    <div role="search" class="sbx-custom__wrapper">
-                        <span class="material-symbols-outlined search">search</span>
-                        <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                    </div>
-                </form>
             </div>
             <div class="grid-body">
-                <?php
-                $dados = "<table class='container-grid'>
-                <thead>
-                    <tr>
-                        <th class='titulos'>ID</th>
-                        <th class='titulos'>NOME</th>
-                        <th class='titulos'>AUTOR</th>
-                        <th class='titulos'>EDITORA</th>
-                        <th class='titulos'>LANÇAMENTO</th>
-                        <th class='titulos'>QUANTIDADE</th>
-                        <th class='titulos'>ALUGADOS</th>
-                        <th class='titulos'>AÇÕES</th>
-                    </tr>
-                </thead><tbody>";
-                echo $dados;
-
-                if (mysqli_num_rows($result) > 0) {
-                    while ($livro_data = mysqli_fetch_assoc($result)) {
-                        // Conexão tabela alugueis
-                        $nome_livro = $livro_data['nome'];
-                        $id = $livro_data['id'];
-                        $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
-                        $sqlAluguelResult = $conexao->query($sqlAluguelConect);
-                        $livro_data['alugados'] = $sqlAluguelResult->num_rows;
-                        $aluguel_quant = $livro_data['alugados'];
-
-                        mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
-                        echo "
+                <table class="container-grid" id="tabela">
+                    <thead>
                         <tr>
-                        <td class='itens'>" . $livro_data['id'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['nome'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['autor'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['editora'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
-                                . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
-                                . "<td class='itens'>
-                            <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                            &nbsp;&nbsp;
-                            <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                        </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
-                }
-                echo "</tbody></table>";
-                ?>
-                <!-- Área da paginação -->
-                <div class="pagination 
-                <?php if (!empty($search)) {
-                    echo 'd-none';
-                } ?>">
-                    <!-- Guia da paginação -->
-                    <ul class="pagination">
-                        <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                            <a class="page-link" href="livro.php?pagina=1" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+                            <th class='titulos'>ID</th>
+                            <th class='titulos'>NOME</th>
+                            <th class='titulos'>AUTOR</th>
+                            <th class='titulos'>EDITORA</th>
+                            <th class='titulos'>LANÇAMENTO</th>
+                            <th class='titulos'>QUANTIDADE</th>
+                            <th class='titulos'>ALUGADOS</th>
+                            <th class='titulos'>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php
-                        // Exibir link da página anterior, se existir
-                        if ($paginaAtual > 4) {
-                            echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=1'>1</a></li>";
-                        }
-                        // Exibir páginas anteriores à página atual
-                        if ($paginaAtual == $totalPaginas) {
-                            for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($livro_data = mysqli_fetch_assoc($result)) {
+                                // Conexão tabela alugueis
+                                $nome_livro = $livro_data['nome'];
+                                $id = $livro_data['id'];
+                                $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
+                                $sqlAluguelResult = $conexao->query($sqlAluguelConect);
+                                $livro_data['alugados'] = $sqlAluguelResult->num_rows;
+                                $aluguel_quant = $livro_data['alugados'];
+
+                                mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
+                                echo "
+                                <tr>
+                                    <td class='itens'>" . $livro_data['id'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['nome'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['autor'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['editora'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
+                                    . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
+                                    . "<td class='itens'>
+                                        <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                        &nbsp;&nbsp;
+                                        <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                                    </td>
+                                </tr>";
                             }
                         } else {
-                            for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
-                            }
-                        }
-                        // Exibir página atual
-                        echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-                        // Exibir páginas posteriores à página atual
-                        if ($paginaAtual == 1) {
-                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
-                            }
-                        } else {
-                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='livro.php?pagina=$i'>$i</a></li>";
-                            }
+                            echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
-                        <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                            <a class="page-link" href="livro.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
@@ -357,6 +293,9 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <script src="js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -395,9 +334,44 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
+            $(document).ready(function() {
+                $('#tabela').DataTable({
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "Linhas por página: _MENU_",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "",
+                        "oPaginate": {
+                            "sNext": ">",
+                            "sPrevious": "<",
+                            "sFirst": "<<",
+                            "sLast": ">>"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        },
+                        "select": {
+                            "rows": {
+                                "_": "Selecionado %d linhas",
+                                "0": "Nenhuma linha selecionada",
+                                "1": "Selecionado 1 linha"
+                            }
+                        }
+                    },
+                    lengthMenu: [5, 10, 15, 30],
+                });
+
+            });
             $('.number').mask('0000')
         });
     </script>
 </body>
-
 </html>

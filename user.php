@@ -10,41 +10,9 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-// Paginaçã0/Pesquisa
+// Select inicial
 $sql = "SELECT * FROM usuarios ORDER BY id ASC";
-$registrosPorPagina = 5;
-$paginaAtual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-$offset = ($paginaAtual - 1) * $registrosPorPagina;
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$data = $search;
-
-// Select com os parâmetros
 $result = $conexao->query($sql);
-$totalRegistros = $result->num_rows;
-$totalPaginas = ceil($totalRegistros / $registrosPorPagina);
-if (!empty($search)) {
-    $sqlsearch = "SELECT * FROM usuarios WHERE id LIKE '%$data%' OR nome LIKE '%$data%' OR cidade LIKE '%$data%' OR email LIKE '%$data%' OR endereco LIKE '%$data%' ORDER BY id ASC";
-    $result = $conexao->query($sqlsearch);
-} else {
-    $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT $registrosPorPagina OFFSET $offset";
-    $result = $conexao->query($sql);
-}
-
-// Ordenação
-$sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
-$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'asc';
-$validColumns = array('id', 'nome', 'cidade', 'endereco', 'email');
-$validOrders = array('asc', 'desc');
-if (!in_array($sortBy, $validColumns)) {
-    $sortBy = 'id';
-}
-if (!in_array($sortOrder, $validOrders)) {
-    $sortOrder = 'asc';
-}
-if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
-    $sqlOrderBy = "SELECT * FROM usuarios ORDER BY $sortBy $sortOrder LIMIT $registrosPorPagina OFFSET $offset";
-    $result = $conexao->query($sqlOrderBy);
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -53,13 +21,16 @@ if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/f4c3c17e91.js" crossorigin="anonymous"></script>
+    <!-- Boot -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- Strap -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var search = document.getElementById('pesquisadora');
@@ -234,23 +205,17 @@ if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
                     <span class="titulo-pg">Usuários</span>
                     <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO<span class="material-symbols-outlined">add</span></div>
                 </div>
-                <form class="searchbox sbx-custom" id="search-user">
-                    <div role="search" class="sbx-custom__wrapper">
-                        <span class="material-symbols-outlined search">search</span>
-                        <input type="search" name="search" placeholder="Pesquisar..." autocomplete="off" class="sbx-custom__input" id="pesquisadora">
-                    </div>
-                </form>
             </div>
             <div class="grid-body">
-                <table class='container-grid'>
+                <table class='container-grid ' id="tabela">
                     <thead>
                         <tr>
-                            <th class='titulos' id='id'>ID <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'id' && $sortOrder === 'desc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
-                            <th class='titulos' id='nome'>NOME <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'nome' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
-                            <th class='titulos' id='cidade'>CIDADE <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'cidade' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
-                            <th class='titulos' id='endereco'>ENDEREÇO <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'endereco' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
-                            <th class='titulos' id='mail'>EMAIL <span class='material-symbols-outlined order_arrow <?php echo ($sortBy === 'email' && $sortOrder === 'asc') ? 'rotate180' : ''; ?>'>arrow_drop_down</span></th>
-                            <th class='titulos'>AÇÕES</th>
+                            <th class='titulos' id='id'>ID</th>
+                            <th class='titulos' id='nome'>NOME</th>
+                            <th class='titulos' id='cidade'>CIDADE</th>
+                            <th class='titulos' id='endereco'>ENDEREÇO</th>
+                            <th class='titulos' id='mail'>EMAIL</th>
+                            <th class='titulos acoes'>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -277,53 +242,6 @@ if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
                         ?>
                     </tbody>
                 </table>
-                <!-- Área da paginação -->
-                <div class="pagination
-                <?php if (!empty($search)) {
-                    echo 'd-none';
-                } ?>">
-                    <!-- Guia da paginação-->
-                    <ul class="pagination">
-                        <li class="page-item <?php echo ($paginaAtual == 1) ? '' : ''; ?>">
-                            <a class="page-link" href="user.php?pagina=1" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <?php
-                        // Exibir link da página anterior, se existir
-                        if ($paginaAtual > 4) {
-                            echo "<li class='page-item'><a class='page-link' href='user.php?pagina=1'>1</a></li>";
-                        }
-                        // Exibir páginas anteriores à página atual
-                        if ($paginaAtual == $totalPaginas) {
-                            for ($i = max(1, $paginaAtual - 2); $i < $paginaAtual; $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
-                            }
-                        } else {
-                            for ($i = max(1, $paginaAtual - 1); $i < $paginaAtual; $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
-                            }
-                        }
-                        // Exibir página atual
-                        echo "<li class='page-item active'><span class='page-link'>$paginaAtual</span></li>";
-                        // Exibir páginas posteriores à página atual
-                        if ($paginaAtual == 1) {
-                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 2, $totalPaginas); $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
-                            }
-                        } else {
-                            for ($i = $paginaAtual + 1; $i <= min($paginaAtual + 1, $totalPaginas); $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='user.php?pagina=$i'>$i</a></li>";
-                            }
-                        }
-                        ?>
-                        <li class="page-item <?php echo ($paginaAtual == $totalPaginas) ? '' : ''; ?>">
-                            <a class="page-link" href="user.php?pagina=<?php echo $totalPaginas; ?>" aria-label="Próxima">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </main>
     </div>
@@ -332,6 +250,9 @@ if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
     <!-- Consulta ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -367,30 +288,42 @@ if (!empty($_GET['sortBy']) && !empty($_GET['sortOrder'])) {
                     console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
                 }
             });
-            // Ordenação
-            $('th').click(function() {
-                const seta = $(this).find('.order_arrow');
-                seta.toggleClass('rotate180');
+            $(document).ready(function() {
+                $('#tabela').DataTable({
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "Linhas por página: _MENU_",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "",
+                        "oPaginate": {
+                            "sNext": ">",
+                            "sPrevious": "<",
+                            "sFirst": "<<",
+                            "sLast": ">>"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        },
+                        "select": {
+                            "rows": {
+                                "_": "Selecionado %d linhas",
+                                "0": "Nenhuma linha selecionada",
+                                "1": "Selecionado 1 linha"
+                            }
+                        }
+                    },
+                    lengthMenu: [5, 10, 15, 30],
+                });
 
-                $('th .order_arrow').not(seta).removeClass('rotate180');
             });
-            $('#id').click(function() {
-                window.location.href = "user.php?sortBy=id&sortOrder=<?php echo ($sortBy === 'id' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
-            })
-            $('#nome').click(function() {
-                window.location.href = "user.php?sortBy=nome&sortOrder=<?php echo ($sortBy === 'nome' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
-            })
-            $('#cidade').click(function() {
-                window.location.href = "user.php?sortBy=cidade&sortOrder=<?php echo ($sortBy === 'cidade' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
-            })
-            $('#endereco').click(function() {
-                window.location.href = "user.php?sortBy=endereco&sortOrder=<?php echo ($sortBy === 'endereco' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
-            })
-            $('#mail').click(function() {
-                window.location.href = "user.php?sortBy=email&sortOrder=<?php echo ($sortBy === 'email' && $sortOrder === 'asc') ? 'desc' : 'asc'; ?>"
-                console.log("avestruz")
-            })
-
         })
     </script>
 </body>
