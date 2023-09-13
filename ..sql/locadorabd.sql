@@ -40,12 +40,6 @@ CREATE TABLE `alugueis` (
 -- Dumping data for table `alugueis`
 --
 
-LOCK TABLES `alugueis` WRITE;
-/*!40000 ALTER TABLE `alugueis` DISABLE KEYS */;
-INSERT INTO `alugueis` VALUES (1,'Demon Slayer','Matheus','2023-08-27','2023-09-02','2023-08-28','No prazo'),(2,'Meu ovo','meu pinto','2023-08-27','2023-08-27','2023-08-28','Atrasado'),(3,'porra','sadada','2023-08-27','2023-08-27','2023-08-28','Atrasado');
-/*!40000 ALTER TABLE `alugueis` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `editoras`
 --
@@ -68,7 +62,12 @@ CREATE TABLE `editoras` (
 
 LOCK TABLES `editoras` WRITE;
 /*!40000 ALTER TABLE `editoras` DISABLE KEYS */;
-INSERT INTO `editoras` VALUES (1,'Companhia das Letras','companhia@livrobingo.com.br','(11) 33768-9652'),(2,'Panini','panini@contato.com','(67) 89911-4322'),(3,'Darkside','darkside@gmail.com','(67) 89123-4432'),(4,'TechnoLords','technolordsviera@gmail.com','(85) 98605-2523'),(8,'matheus','boceta@gmail.com','(12) 31231-2312');
+INSERT INTO `editoras` VALUES 
+(1, 'Companhia das Letras', 'contato@companhiadasletras.com', '(11) 3376-8965'),
+(2, 'Editora Globo', 'contato@editoraglobo.com', '(51) 3355-1234'),
+(3, 'Editora Intrínseca', 'contato@editoraintrinseca.com', '(21) 9876-5432'),
+(4, 'Editora Record', 'contato@editorarecord.com', '(11) 5555-4321'),
+(5, 'Editora Sextante', 'contato@editorasextante.com', '(31) 2345-6789');
 /*!40000 ALTER TABLE `editoras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +92,12 @@ CREATE TABLE `gerenciadores` (
 
 LOCK TABLES `gerenciadores` WRITE;
 /*!40000 ALTER TABLE `gerenciadores` DISABLE KEYS */;
-INSERT INTO `gerenciadores` VALUES (1,'medeiros','1234');
+INSERT INTO `gerenciadores` VALUES 
+(1, 'admin', 'senha123'),
+(2, 'manager', 'senha456'),
+(3, 'supervisor', 'senha789'),
+(4, 'root', 'senhaabc'),
+(5, 'developer', 'senhamaster');
 /*!40000 ALTER TABLE `gerenciadores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +117,7 @@ CREATE TABLE `livros` (
   `quantidade` int(4) NOT NULL,
   `alugados` int(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +126,17 @@ CREATE TABLE `livros` (
 
 LOCK TABLES `livros` WRITE;
 /*!40000 ALTER TABLE `livros` DISABLE KEYS */;
-INSERT INTO `livros` VALUES (1,'Demon Slayer','Koyoharu Gotōge','Companhia das Letras',2017,36,0),(2,'Guerra e Paz','Liev Tolstói','Companhia das Letras',2017,14,0),(3,'Hellraiser','Clive Barker','Companhia das Letras',1986,24,0),(6,'Livrozin','Autorzin','Companhia das Letras',2006,32,0),(8,'saaaaa','adadsa','Companhia das Letras',2023,123,0),(9,'porra','meu pau','Darkside',2023,15,0),(10,'Novo','meu pau','Darkside',2023,11,0),(11,'Teste','caralho','Panini',2023,15,0),(12,'Meu ovo','grande','Darkside',2023,17,0),(14,'testando','dfjaisoklf','Panini',2023,15,0),(16,'asdas','asdasd','TechnoLords',1236,124,0);
+INSERT INTO `livros` VALUES 
+(1, 'O Senhor dos Anéis', 'J.R.R. Tolkien', 'Companhia das Letras', 1954, 50, 10),
+(2, 'Dom Casmurro', 'Machado de Assis', 'Editora Globo', 1899, 30, 5),
+(3, 'Crime e Castigo', 'Fiódor Dostoiévski', 'Editora Intrínseca', 1866, 25, 3),
+(4, '1984', 'George Orwell', 'Companhia das Letras', 1949, 40, 8),
+(5, 'A Revolução dos Bichos', 'George Orwell', 'Companhia das Letras', 1945, 35, 7),
+(6, 'Cem Anos de Solidão', 'Gabriel García Márquez', 'Companhia das Letras', 1967, 28, 6),
+(7, 'Memórias Póstumas de Brás Cubas', 'Machado de Assis', 'Editora Globo', 1881, 32, 4),
+(8, 'O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Companhia das Letras', 1943, 45, 9),
+(9, 'Orgulho e Preconceito', 'Jane Austen', 'Editora Globo', 1813, 27, 5),
+(10, 'A Metamorfose', 'Franz Kafka', 'Editora Intrínseca', 1915, 23, 4);
 /*!40000 ALTER TABLE `livros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +163,22 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'Matheus','Fortaleza - CE','Av. Pasteur, 1234','matheus@gmail.com'),(3,'Ester','Belo Horizonte - MG','Palmeiras Vermelhas, 123','ester@gmail.com'),(4,'Josias','Rolandia','logo ali','josias@wda.com.br'),(5,'Ricardin','Crato','rua tal','email@gmail.com'),(6,'meu pinto','dsjf','sdjalçf','ljkjfalker@fgadf'),(7,'sadada','sadadasd','dsadasda','2edads@asd');
+INSERT INTO `usuarios` (id, nome, cidade, endereco, email) VALUES
+(1, 'Matheus', 'Fortaleza - CE', 'Av. Pasteur, 1234', 'matheus@gmail.com'),
+(2, 'Ester', 'Belo Horizonte - MG', 'Palmeiras Vermelhas, 123', 'ester@gmail.com'),
+(3, 'Josias', 'Rolândia - PR', 'Rua das Árvores, 123', 'josias@wda.com.br'),
+(4, 'Ricardo', 'Crato - CE', 'Rua Principal, 456', 'ricardo@gmail.com'),
+(5, 'Maria', 'São Paulo - SP', 'Av. Paulista, 789', 'maria@gmail.com'),
+(6, 'João', 'Fortaleza - CE', 'Av. Pasteur, 567', 'joao@gmail.com'),
+(7, 'Isabela', 'Recife - PE', 'Rua das Flores, 567', 'isabela@gmail.com'),
+(8, 'Lucas', 'São Paulo - SP', 'Av. Paulista, 789', 'lucas@gmail.com'),
+(9, 'Marina', 'Porto Alegre - RS', 'Rua Porto, 456', 'marina@gmail.com'),
+(10, 'Felipe', 'Salvador - BA', 'Av. da Praia, 789', 'felipe@gmail.com'),
+(11, 'Gabriela', 'Curitiba - PR', 'Rua Curitiba, 123', 'gabriela@gmail.com'),
+(12, 'Rafael', 'Brasília - DF', 'Av. Brasília, 456', 'rafael@gmail.com'),
+(13, 'Ana', 'Fortaleza - CE', 'Av. Castelo, 789', 'ana@gmail.com'),
+(14, 'Pedro', 'Belo Horizonte - MG', 'Rua Palmeiras, 456', 'pedro@gmail.com'),
+(15, 'Carolina', 'Rio de Janeiro - RJ', 'Av. Copacabana, 123', 'carolina@gmail.com');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

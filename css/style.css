@@ -193,11 +193,12 @@ a.selected {
 main {
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.6);
   height: 90%;
-  width: 90%;
+  width: 101%;
   padding: 11px;
   background-color: #d2d6d6;
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   border: none;
 }
 
@@ -217,6 +218,7 @@ main::-webkit-scrollbar-thumb {
 
 .grid-header {
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -402,7 +404,7 @@ select {
 }
 
 div.dataTables_filter {
-  width: 65%;
+  width: 35%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -448,6 +450,7 @@ div.dataTables_wrapper div.dataTables_length select {
 .dataTables_length label {
   display: flex;
   width: 36%;
+  gap: 10px;
   align-items: center;
   justify-content: space-between;
 }
@@ -457,7 +460,7 @@ div.dataTables_wrapper div.dt-row {
   margin-top: 7px !important;
   margin-bottom: -14px !important;
 }
-ul.pagination{
+ul.pagination {
   justify-content: flex-end;
 }
 div.dataTables_wrapper div.dt-row::-webkit-scrollbar {
@@ -470,6 +473,11 @@ div.dataTables_wrapper div.dt-row::-webkit-scrollbar-thumb {
 }
 div.dataTables_wrapper div.dt-row::-webkit-scrollbar-track {
   background: none;
+}
+div.bottom{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important; 
 }
 .col-md-6:last-child {
   display: flex;
@@ -516,6 +524,9 @@ div.dataTables_wrapper div.dt-row::-webkit-scrollbar-track {
 }
 
 .dash_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid var(--cor3);
   border-radius: 5px;
@@ -595,7 +606,7 @@ table {
 }
 
 .container-grid .itens {
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   padding: 15px;
 }

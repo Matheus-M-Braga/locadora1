@@ -231,12 +231,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 </div>
             </div>
             <!-- GRID -->
-            <div class="grid-header">
-                <div class="wrapper">
-                    <span class="titulo-pg">Livros</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
-                </div>
-            </div>
             <div class="grid-body">
                 <table class="container-grid" id="tabela">
                     <thead>
@@ -335,7 +329,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 }
             });
             $(document).ready(function() {
-                $('#tabela').DataTable({
+               var tabela = $('#tabela').DataTable({
                     "language": {
                         "sEmptyTable": "Nenhum registro encontrado",
                         "sInfo": "",
@@ -347,7 +341,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         "sLoadingRecords": "Carregando...",
                         "sProcessing": "Processando...",
                         "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "",
+                        "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
                         "oPaginate": {
                             "sNext": ">",
                             "sPrevious": "<",
@@ -364,14 +358,15 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                 "0": "Nenhuma linha selecionada",
                                 "1": "Selecionado 1 linha"
                             }
-                        }
+                        },
                     },
+                    "dom": '<"grid-header"f>rt<"bottom"lp>',
                     lengthMenu: [5, 10, 15, 30],
                 });
-
             });
             $('.number').mask('0000')
         });
     </script>
 </body>
+
 </html>

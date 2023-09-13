@@ -55,12 +55,47 @@ tableRows.forEach((row) => {
     );
   });
 })();
+
 // Reset
 function resetForm(modalId) {
   var form = document.querySelector(`#${modalId} form`);
   form.classList.remove("was-validated");
-  if(modalId === 'vis-modal'){
-    form.reset()
+  if (modalId === "vis-modal") {
+    form.reset();
   }
 }
 
+// Monta o header da tabela
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    var gridHeader = document.querySelector(".grid-header");
+
+    if (gridHeader) {
+      var wrapper = document.createElement("div");
+      wrapper.className = "wrapper";
+
+      var tituloPg = document.createElement("span");
+      tituloPg.className = "titulo-pg";
+      tituloPg.textContent = "Livros";
+
+      var novoBtn = document.createElement("div");
+      novoBtn.className = "novobtn";
+      novoBtn.textContent = "NOVO";
+      novoBtn.addEventListener("click", function () {
+        abrirModal("vis-modal");
+        resetForm("vis-modal");
+      });
+
+      var plusIcon = document.createElement("span");
+      plusIcon.className = "material-symbols-outlined";
+      plusIcon.textContent = "add";
+
+      novoBtn.appendChild(plusIcon);
+      wrapper.appendChild(tituloPg);
+      wrapper.appendChild(novoBtn);
+      gridHeader.appendChild(wrapper);
+    } else {
+      console.error("Elemento .grid-header não encontrado.");
+    }
+  }, 10);
+});

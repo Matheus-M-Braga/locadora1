@@ -101,6 +101,7 @@ if (isset($total_editoras['total_editoras'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
     <title>WDA Livraria</title>
@@ -151,7 +152,7 @@ if (isset($total_editoras['total_editoras'])) {
     </header>
     <!-- conteudo -->
     <div class="corpo">
-        <main>
+        <main style="overflow-y: auto;">
             <div class="graficos">
                 <div id="grafico" class="container bg-light">
                     <div style="text-align:center;">
@@ -175,7 +176,7 @@ if (isset($total_editoras['total_editoras'])) {
                     <span class="title">Últmo livro alugado:</span>
                     <?php
                     if (isset($ultimo_alugado)) {
-                        echo "<span class='content'> <img src='img/book.png' alt=''>" . $ultimo_livro . "</span>";
+                        echo "<span class='content'>" . $ultimo_livro . "</span>";
                     } else {
                         echo "<span class='content'>Aguardando dados...</span>";
                     }
@@ -185,7 +186,7 @@ if (isset($total_editoras['total_editoras'])) {
                     <span class="title">Usuários cadastrados</span>
                     <div class="relat">
                         <p>
-                            <?php echo "<span class='content number'> <img src='img/users.png' alt=''>" . $usuarios . "</span>" ?>
+                            <?php echo "<span class='content number'> " . $usuarios . "</span>" ?>
                         </p>
                     </div>
                 </div>
@@ -193,7 +194,7 @@ if (isset($total_editoras['total_editoras'])) {
                     <span class="title">Livros cadastrados</span>
                     <div class="relat">
                         <p>
-                            <?php echo "<span class='content number'> <img src='img/books.png' alt=''>" . $livros . "</span>" ?>
+                            <?php echo "<span class='content number'> " . $livros . "</span>" ?>
                         </p>
                     </div>
                 </div>
@@ -201,7 +202,7 @@ if (isset($total_editoras['total_editoras'])) {
                     <span class="title">Editoras cadastradas</span>
                     <div class="relat">
                         <p>
-                            <?php echo "<span class='content number'> <img src='img/publis.png' alt=''>" . $editoras . "</span>" ?>
+                            <?php echo "<span class='content number'> " . $editoras . "</span>" ?>
                         </p>
                     </div>
                 </div>
@@ -248,7 +249,7 @@ if (isset($total_editoras['total_editoras'])) {
                 datasets: [{
                     label: '',
                     data: ["<?php echo $pendentes ?>", "<?php echo $noprazo ?>", "<?php echo $atrasados ?>"],
-                    backgroundColor: ['rgb(182, 143, 43)','rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
+                    backgroundColor: ['rgb(182, 143, 43)', 'rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
                     borderColor: ['rgb(182, 143, 43)', 'rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
                     borderWidth: 1
                 }]
