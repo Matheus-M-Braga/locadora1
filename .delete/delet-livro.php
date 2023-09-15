@@ -13,7 +13,7 @@
 
         $codLivro = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM livros WHERE CodLivro = $codLivro";
+        $sqlSelect = "SELECT * FROM livros WHERE id = $codLivro";
 
         $result = $conexao->query($sqlSelect);
 

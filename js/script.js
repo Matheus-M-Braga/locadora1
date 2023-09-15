@@ -64,7 +64,11 @@ function resetForm(modalId) {
     form.reset();
   }
 }
-
+// Nome da página pra gerar o header
+function GetPageName() {
+  var titulo = document.getElementById("pageTitle");
+  return titulo.textContent;
+}
 // Monta o header da tabela
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
@@ -76,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var tituloPg = document.createElement("span");
       tituloPg.className = "titulo-pg";
-      tituloPg.textContent = "Livros";
+      tituloPg.textContent = this.GetPageName();
 
       var novoBtn = document.createElement("div");
       novoBtn.className = "novobtn";
@@ -97,5 +101,5 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       console.error("Elemento .grid-header não encontrado.");
     }
-  }, 10);
+  }, 100);
 });

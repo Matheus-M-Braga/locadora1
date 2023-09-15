@@ -37,20 +37,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var search = document.getElementById('pesquisadora');
-            search.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
-                    searchData();
-                }
-            });
-
-            function searchData() {
-                window.location = "livro.php?search=" + search.value;
-            }
-        });
-    </script>
     <title>WDA Livraria</title>
 </head>
 
@@ -89,7 +75,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 <ul class="dropdown-content" id="dropdownContent">
                     <li><a href="inicio.php">Dashboard</a></li>
                     <li><a href="user.php">Usuários</a></li>
-                    <li><a href="livro.php" class="selected">Livros</a></li>
+                    <li><a href="livro.php" class="selected" id="pageTitle">Livros</a></li>
                     <li><a href="editora.php">Edtioras</a></li>
                     <li><a href="aluguel.php">Aluguéis</a></li>
                 </ul>
@@ -159,7 +145,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 <div class="conteudo-modal">
                     <div class="top_modal">
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
                     </div>
                     <form action=".update/update-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <input type="hidden" name="id" id="campo1">
@@ -297,7 +283,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                     $('.edit').click(function() {
                         var recordId = $(this).data('id');
                         x = recordId
@@ -364,7 +350,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                     lengthMenu: [5, 10, 15, 30],
                 });
             });
-            $('.number').mask('0000')
+            // $('.number').mask('0000')
         });
     </script>
 </body>

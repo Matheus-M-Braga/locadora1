@@ -46,20 +46,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var search = document.getElementById('pesquisadora');
-            search.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
-                    searchData();
-                }
-            });
-
-            function searchData() {
-                window.location = "aluguel.php?search=" + search.value;
-            }
-        });
-    </script>
     <title>WDA Livraria</title>
 </head>
 
@@ -100,7 +86,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     <li><a href="user.php">Usuários</a></li>
                     <li><a href="livro.php">Livros</a></li>
                     <li><a href="editora.php">Edtioras</a></li>
-                    <li><a href="aluguel.php" class="selected">Aluguéis</a></li>
+                    <li><a href="aluguel.php" class="selected" id="pageTitle">Aluguéis</a></li>
                 </ul>
             </div>
             <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
@@ -197,12 +183,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                 </div>
             </div>
             <!-- GRID -->
-            <div class="grid-header">
-                <div class="wrapper">
-                    <span class="titulo-pg">Aluguéis</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
-                </div>
-            </div>
             <div class="grid-body">
                 <table class='container-grid' id='tabela'>
                     <thead>
@@ -305,7 +285,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                         "sLoadingRecords": "Carregando...",
                         "sProcessing": "Processando...",
                         "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "",
+                        "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
                         "oPaginate": {
                             "sNext": ">",
                             "sPrevious": "<",
@@ -324,6 +304,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                             }
                         }
                     },
+                    "dom": '<"grid-header"f>rt<"bottom"lp>',
                     lengthMenu: [5, 10, 15, 30],
                 });
             });

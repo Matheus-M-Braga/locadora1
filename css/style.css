@@ -479,6 +479,12 @@ div.bottom{
   justify-content: space-between !important;
   align-items: center !important; 
 }
+.bottom{
+  margin-top: 30px;
+}
+li.disabled .page-link{
+  background-color: #1c4d4fb5 !important;
+}
 .col-md-6:last-child {
   display: flex;
   align-items: flex-end;
@@ -493,7 +499,7 @@ div.bottom{
 }
 
 .graficos #grafico2 {
-  width: 31%;
+  width: 28%;
 }
 
 .container.bg-light {

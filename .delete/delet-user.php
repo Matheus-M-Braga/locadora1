@@ -13,11 +13,11 @@
 
         $codUsuario = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM usuarios WHERE CodUsuario = $codUsuario";
+        $sqlSelect = "SELECT * FROM usuarios WHERE id = $codUsuario";
 
         $result = $conexao->query($sqlSelect);
         $user_data = mysqli_fetch_assoc($result);
-        $nomeUsuario = $user_data['Nome'];
+        $nomeUsuario = $user_data['nome'];
 
         // Conexão tabela alugueis
         $sqlAluguel_conect = "SELECT * FROM alugueis WHERE usuario = '$nomeUsuario' AND data_devolucao = 0";
@@ -41,7 +41,7 @@
             </script>";
         } else {
             if ($result->num_rows > 0) {
-                $sqlDelete = "DELETE FROM usuarios WHERE CodUsuario = $codUsuario";
+                $sqlDelete = "DELETE FROM usuarios WHERE id = $codUsuario";
                 $resultDelete = $conexao->query($sqlDelete);
             }
             $sqlReset = "ALTER TABLE usuarios AUTO_INCREMENT = 1;";

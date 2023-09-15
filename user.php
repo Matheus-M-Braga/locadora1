@@ -31,20 +31,6 @@ $result = $conexao->query($sql);
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var search = document.getElementById('pesquisadora');
-            search.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
-                    searchData();
-                }
-            });
-
-            function searchData() {
-                window.location = "user.php?search=" + search.value;
-            }
-        });
-    </script>
     <title>WDA Livraria</title>
 </head>
 
@@ -82,7 +68,7 @@ $result = $conexao->query($sql);
                 <button onclick="toggleDropdown()">Menu</button>
                 <ul class="dropdown-content" id="dropdownContent">
                     <li><a href="inicio.php">Dashboard</a></li>
-                    <li><a href="user.php" class="selected">Usuários</a></li>
+                    <li><a href="user.php" class="selected" id="pageTitle">Usuários</a></li>
                     <li><a href="livro.php">Livros</a></li>
                     <li><a href="editora.php">Edtioras</a></li>
                     <li><a href="aluguel.php">Aluguéis</a></li>
@@ -146,31 +132,31 @@ $result = $conexao->query($sql);
                     </div>
                     <form action=".update/update-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <input type="hidden" id="campo1" name="id">
+                            <input type="hidden" class="id" id="id" name="id">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-user" type="text" id="campo2" class="form-control" maxlength="45" required autocomplete="off" value="">
+                                <input name="nome-user" type="text" id="nome" class="form-control nome" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input2" class="form-label text-black">Cidade</label>
-                                <input name="cidade" type="text" id="campo3" class="form-control cidade" maxlength="45" required autocomplete="off" value="">
+                                <input name="cidade" type="text" id="cidade" class="form-control cidade" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe a cidade
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="input3" class="form-label text-black">Endereço</label>
-                                <input name="endereco" type="text" id="campo4" class="form-control endereco" maxlength="75" required autocomplete="off" value="">
+                                <input name="endereco" type="text" id="endereco" class="form-control endereco" maxlength="75" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o endereço
                                 </div>
                             </div>
                             <div class="row-md-3">
                                 <label for="validationCustom02" class="form-label text-black">E-mail</label>
-                                <input name="email" type="email" id="campo5" class="form-control date" maxlength="100" required autocomplete="off" value="">
+                                <input name="email" type="email" id="email" class="form-control email date" maxlength="100" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o email
                                 </div>
@@ -200,12 +186,6 @@ $result = $conexao->query($sql);
                 </div>
             </div>
             <!-- GRID -->
-            <div class="grid-header">
-                <div class="wrapper">
-                    <span class="titulo-pg">Usuários</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO<span class="material-symbols-outlined">add</span></div>
-                </div>
-            </div>
             <div class="grid-body">
                 <table class='container-grid ' id="tabela">
                     <thead>
@@ -255,76 +235,81 @@ $result = $conexao->query($sql);
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
-            $.ajax({
-                url: 'php/getdataUser.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data)
-                    $('.edit').click(function() {
-                        var recordId = $(this).data('id');
-                        x = recordId
-
-                        var coluna1 = data[x].id;
-                        var coluna2 = data[x].nome;
-                        var coluna3 = data[x].cidade;
-                        var coluna4 = data[x].endereco;
-                        var coluna5 = data[x].email;
-
-                        $("#campo1").val(coluna1);
-                        $('#campo2').val(coluna2);
-                        $('#campo3').val(coluna3);
-                        $('#campo4').val(coluna4);
-                        $('#campo5').val(coluna5);
-                    })
-                    $('.exclu').click(function() {
-                        var btnID = $(this).data('id')
-                        $('.confirm_exclu').click(function() {
-                            window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
-                        })
-                    })
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
-                }
-            });
-            $(document).ready(function() {
-                $('#tabela').DataTable({
-                    "language": {
-                        "sEmptyTable": "Nenhum registro encontrado",
-                        "sInfo": "",
-                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sInfoThousands": ".",
-                        "sLengthMenu": "Linhas por página: _MENU_",
-                        "sLoadingRecords": "Carregando...",
-                        "sProcessing": "Processando...",
-                        "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "",
-                        "oPaginate": {
-                            "sNext": ">",
-                            "sPrevious": "<",
-                            "sFirst": "<<",
-                            "sLast": ">>"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Ordenar colunas de forma ascendente",
-                            "sSortDescending": ": Ordenar colunas de forma descendente"
-                        },
-                        "select": {
-                            "rows": {
-                                "_": "Selecionado %d linhas",
-                                "0": "Nenhuma linha selecionada",
-                                "1": "Selecionado 1 linha"
-                            }
-                        }
+            function loadDataFromServer() {
+                $.ajax({
+                    url: 'php/getdataUser.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        setupEditAndDeleteEvents(data);
                     },
-                    lengthMenu: [5, 10, 15, 30],
+                    error: function(xhr, status, error) {
+                        console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
+                    }
+                });
+            }
+
+            function setupEditAndDeleteEvents(data) {
+                $('#tabela').off('click', '.edit');
+                $('#tabela').off('click', '.exclu');
+
+                $('#tabela').on('click', '.edit', function() {
+                    var recordId = $(this).data('id');
+                    x = recordId;
+                    UserFields = ["id", "nome", "cidade", "endereco", "email"]
+                    var userData = data[x];
+                    for (var i = 0; i < UserFields.length; i++) {
+                        var fieldName = UserFields[i];
+                        var fieldValue = userData[fieldName];
+                        $('.' + fieldName).val(fieldValue);
+                    }
                 });
 
-            });
+                $('#tabela').on('click', '.exclu', function() {
+                    var btnID = $(this).data('id');
+                    $('.confirm_exclu').off('click').on('click', function() {
+                        window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
+                    });
+                });
+            }
+            loadDataFromServer();
         })
+        $(document).ready(function() {
+            $('#tabela').DataTable({
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "Linhas por página: _MENU_",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
+                    "oPaginate": {
+                        "sNext": ">",
+                        "sPrevious": "<",
+                        "sFirst": "<<",
+                        "sLast": ">>"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "Selecionado %d linhas",
+                            "0": "Nenhuma linha selecionada",
+                            "1": "Selecionado 1 linha"
+                        }
+                    }
+                },
+                "dom": '<"grid-header"f>rt<"bottom"lp>',
+                lengthMenu: [5, 10, 15, 30],
+            })
+        });
     </script>
 </body>
 

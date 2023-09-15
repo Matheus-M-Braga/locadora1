@@ -30,20 +30,6 @@ $result = $conexao->query($sql);
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var search = document.getElementById('pesquisadora');
-            search.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
-                    searchData();
-                }
-            });
-
-            function searchData() {
-                window.location = "editora.php?search=" + search.value;
-            }
-        });
-    </script>
     <title>WDA Livraria</title>
 </head>
 
@@ -83,7 +69,7 @@ $result = $conexao->query($sql);
                     <li><a href="inicio.php">Dashboard</a></li>
                     <li><a href="user.php">Usuários</a></li>
                     <li><a href="livro.php">Livros</a></li>
-                    <li><a href="editora.php" class="selected">Edtioras</a></li>
+                    <li><a href="editora.php" class="selected" id="pageTitle">Editoras</a></li>
                     <li><a href="aluguel.php">Aluguéis</a></li>
                 </ul>
             </div>
@@ -187,12 +173,6 @@ $result = $conexao->query($sql);
                 </div>
             </div>
             <!-- GRID -->
-            <div class="grid-header">
-                <div class="wrapper">
-                    <span class="titulo-pg">Editoras</span>
-                    <div class="novobtn" onclick="abrirModal('vis-modal'); resetForm('vis-modal');">NOVO <span class="material-symbols-outlined">add</span></div>
-                </div>
-            </div>
             <div class="grid-body">
                 <table class='container-grid' id="tabela">
                     <thead>
@@ -253,7 +233,6 @@ $result = $conexao->query($sql);
                         var coluna2 = data[x].nome;
                         var coluna3 = data[x].email;
                         var coluna4 = data[x].telefone;
-                        var coluna5 = data[x].website;
 
                         $("#campo1").val(coluna1);
                         $('#campo2').val(coluna2);
@@ -287,7 +266,7 @@ $result = $conexao->query($sql);
                         "sLoadingRecords": "Carregando...",
                         "sProcessing": "Processando...",
                         "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "",
+                        "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
                         "oPaginate": {
                             "sNext": ">",
                             "sPrevious": "<",
@@ -306,6 +285,7 @@ $result = $conexao->query($sql);
                             }
                         }
                     },
+                    "dom": '<"grid-header"f>rt<"bottom"lp>',
                     lengthMenu: [5, 10, 15, 30],
                 });
             });
