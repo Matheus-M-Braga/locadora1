@@ -1,4 +1,4 @@
-# Sistema De Locadora de Livro 1
+# Sistema De Locadora de Livros 1
 O Sistema de Locadora de Livros apresentado é uma plataforma que faz uso de várias tecnologias contemporâneas para proporcionar uma experiência de locação de livros simplificada e agradável. Essa solução integra HTML, CSS, JavaScript, PHP, Bootstrap, SweetAlert e jQuery, demonstrando como essas tecnologias trabalham em conjunto para oferecer funcionalidades excepcionais aos usuários.
 
 
