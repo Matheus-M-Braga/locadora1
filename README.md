@@ -14,7 +14,7 @@ Aluguéis
 Para hospedar e rodar o projeto localmente, é necessário configurar programas como XAMPP ou EasyPHP para receberem a pasta.
 
 ## Sistema Hospedado na WEB
-<a href="https://projetolocadora.000webhostapp.com/" target="_blank">Clique</a>
+<a href="https://projetolocadora.000webhostapp.com/" target="_blank" style="color: red;">Clique</a>
 Usuário: admin
 Senha: senha123
 
