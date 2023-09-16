@@ -224,6 +224,7 @@ main::-webkit-scrollbar-thumb {
   width: 100%;
   padding: 4px;
   overflow: hidden;
+  position: sticky;
   margin-bottom: 20px;
 }
 

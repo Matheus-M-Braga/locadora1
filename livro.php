@@ -10,10 +10,8 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-
 $sql = "SELECT * FROM livros ORDER BY id ASC";
 $result = $conexao->query($sql);
-
 
 // Conexão tabela editoras
 $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
@@ -148,17 +146,17 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
                     </div>
                     <form action=".update/update-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
-                        <input type="hidden" name="id" id="campo1">
+                        <input type="hidden" name="id" class="id">
                         <div class="row-md-3">
                             <label for="campo2" class="form-label text-black bold">Nome</label>
-                            <input name="nome-livro" type="text" class="form-control" id="campo2" maxlength="45" required autocomplete="off">
+                            <input name="nome-livro" type="text" class="form-control nome" id="campo2" maxlength="45" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o nome
                             </div>
                         </div>
                         <div class="row-md-3">
                             <label for="campo3" class="form-label text-black">Autor</label>
-                            <input name="autor" type="text" class="form-control" id="campo3" maxlength="45" required autocomplete="off">
+                            <input name="autor" type="text" class="form-control autor" class="autor" id="campo3" maxlength="45" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o autor
                             </div>
@@ -181,14 +179,14 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         </div>
                         <div class="row-md-3">
                             <label for="campo5" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="text" class="form-control number" id="campo5" maxlength="4" required autocomplete="off">
+                            <input name="lancamento" type="text" class="form-control number lancamento" id="campo5" maxlength="4" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe o ano de lançamento
                             </div>
                         </div>
                         <div class="row-md-3">
                             <label for="campo6" class="form-label text-black">Quantidade</label>
-                            <input name="quantidade" type="number" class="form-control number" id="campo6" maxlength="4" required autocomplete="off">
+                            <input name="quantidade" type="number" class="form-control number quantidade" id="campo6" maxlength="4" required autocomplete="off">
                             <div class="invalid-feedback">
                                 • Informe a quantidade
                             </div>
@@ -269,90 +267,9 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
             </div>
         </main>
     </div>
-    <!-- scripts -->
+    <!-- scritps -->
+    <script type="module" src="js/module.js"></script>
     <script src="js/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/jquery.mask.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: 'php/getdataBook.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // console.log(data)
-                    $('.edit').click(function() {
-                        var recordId = $(this).data('id');
-                        x = recordId
-
-                        var coluna1 = data[x].id;
-                        var coluna2 = data[x].nome;
-                        var coluna3 = data[x].autor;
-                        var coluna4 = data[x].editora;
-                        var coluna5 = data[x].lancamento;
-                        var coluna6 = data[x].quantidade;
-
-                        $('#campo1').val(coluna1);
-                        $('#campo2').val(coluna2);
-                        $('#campo3').val(coluna3);
-                        $('#campo4').val(coluna4);
-                        $('#campo5').val(coluna5);
-                        $('#campo6').val(coluna6);
-                    })
-                    $('.exclu').click(function() {
-                        var btnID = $(this).data('id')
-
-                        $('.confirm_exclu').click(function() {
-                            window.location.href = ".delete/delet-livro.php" + "?id=" + btnID;
-                        })
-                    })
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
-                }
-            });
-            $(document).ready(function() {
-               var tabela = $('#tabela').DataTable({
-                    "language": {
-                        "sEmptyTable": "Nenhum registro encontrado",
-                        "sInfo": "",
-                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sInfoThousands": ".",
-                        "sLengthMenu": "Linhas por página: _MENU_",
-                        "sLoadingRecords": "Carregando...",
-                        "sProcessing": "Processando...",
-                        "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
-                        "oPaginate": {
-                            "sNext": ">",
-                            "sPrevious": "<",
-                            "sFirst": "<<",
-                            "sLast": ">>"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Ordenar colunas de forma ascendente",
-                            "sSortDescending": ": Ordenar colunas de forma descendente"
-                        },
-                        "select": {
-                            "rows": {
-                                "_": "Selecionado %d linhas",
-                                "0": "Nenhuma linha selecionada",
-                                "1": "Selecionado 1 linha"
-                            }
-                        },
-                    },
-                    "dom": '<"grid-header"f>rt<"bottom"lp>',
-                    lengthMenu: [5, 10, 15, 30],
-                });
-            });
-            // $('.number').mask('0000')
-        });
-    </script>
 </body>
-
 </html>

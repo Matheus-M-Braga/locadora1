@@ -240,76 +240,9 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
         </main>
     </div>
     <!-- scritps -->
+    <script type="module" src="js/module.js"></script>
     <script src="js/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/jquery.mask.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: 'php/getdataAlug.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('.exclu').click(function() {
-                        var btnID = $(this).data('id')
-
-                        $('.confirm_exclu').click(function() {
-                            window.location.href = ".delete/delet-aluguel.php" + "?id=" + btnID;
-                        })
-                    })
-                    $('.devol').click(function() {
-                        var btnID = $(this).data('id')
-
-                        $('.confirm_devol').click(function() {
-                            window.location.href = ".update/update-aluguel.php" + "?id=" + btnID;
-                        })
-                    })
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erro na solicitação AJAX: ' + status + ' - ' + error);
-                }
-            });
-            $(document).ready(function() {
-                $('#tabela').DataTable({
-                    "language": {
-                        "sEmptyTable": "Nenhum registro encontrado",
-                        "sInfo": "",
-                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sInfoThousands": ".",
-                        "sLengthMenu": "Linhas por página: _MENU_",
-                        "sLoadingRecords": "Carregando...",
-                        "sProcessing": "Processando...",
-                        "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "<span class='material-symbols-outlined' style='vertical-align: middle; color: grey;'>search</span>",
-                        "oPaginate": {
-                            "sNext": ">",
-                            "sPrevious": "<",
-                            "sFirst": "<<",
-                            "sLast": ">>"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Ordenar colunas de forma ascendente",
-                            "sSortDescending": ": Ordenar colunas de forma descendente"
-                        },
-                        "select": {
-                            "rows": {
-                                "_": "Selecionado %d linhas",
-                                "0": "Nenhuma linha selecionada",
-                                "1": "Selecionado 1 linha"
-                            }
-                        }
-                    },
-                    "dom": '<"grid-header"f>rt<"bottom"lp>',
-                    lengthMenu: [5, 10, 15, 30],
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

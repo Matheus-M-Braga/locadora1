@@ -1,4 +1,4 @@
-/* Script Modal */
+/* Modal */
 function abrirModal(carregarModal) {
   var modal = document.getElementById(carregarModal);
   modal.style.display = "block";
@@ -64,11 +64,13 @@ function resetForm(modalId) {
     form.reset();
   }
 }
+
 // Nome da página pra gerar o header
 function GetPageName() {
   var titulo = document.getElementById("pageTitle");
   return titulo.textContent;
 }
+
 // Monta o header da tabela
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var tituloPg = document.createElement("span");
       tituloPg.className = "titulo-pg";
-      tituloPg.textContent = this.GetPageName();
+      tituloPg.textContent = GetPageName();
 
       var novoBtn = document.createElement("div");
       novoBtn.className = "novobtn";
