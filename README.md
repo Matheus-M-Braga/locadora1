@@ -15,4 +15,6 @@ Para hospedar e rodar o projeto localmente, é necessário configurar programas 
 
 ## Sistema Hospedado na WEB
 <a href="https://projetolocadora.000webhostapp.com/" target="_blank">Clique</a>
+Usuário: admin
+Senha: senha123
 
