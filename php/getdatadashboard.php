@@ -1,11 +1,10 @@
-<?
+<?php
 include_once('config.php');
 
 $sqlAluguel = "SELECT livro FROM alugueis";
 
 $resultadolivro = $conexao->query($sqlAluguel);
 
-// mais alugados
 $sql_grafico = "SELECT livro, count(livro) as quantidade_aluguel FROM alugueis WHERE livro = livro GROUP BY livro ORDER BY COUNT(livro) DESC limit 3";
 $resultado_grafico = $conexao->query($sql_grafico);
 
@@ -13,40 +12,30 @@ while ($barra = $resultado_grafico->fetch_assoc()) {
     $nomes[] = $barra['livro'];
     $info[] = $barra['quantidade_aluguel'];
 }
+$mostRented = array(
+    'nomes' => $nomes,
+    'infos' => $info
+);
 
-// total de aluguéis
-$sql_total_alugueis = "SELECT COUNT(*) AS total_alugueis FROM alugueis";
-$resultado_total_alugueis = $conexao->query($sql_total_alugueis);
+$sql_status = "SELECT
+    COUNT(CASE WHEN status = 'Pendente' THEN 1 END) AS pendentes,
+    COUNT(CASE WHEN status = 'No prazo' THEN 1 END) AS noprazo,
+    COUNT(CASE WHEN status = 'Atrasado' THEN 1 END) AS atrasados
+FROM alugueis";
 
-$linha_total_alugueis = $resultado_total_alugueis->fetch_assoc();
+$resultado_status = $conexao->query($sql_status);
 
-if (isset($linha_total_alugueis['total_alugueis'])) {
-    $quantidade_alugueis = $linha_total_alugueis['total_alugueis'];
+if ($resultado_status) {
+    $row = $resultado_status->fetch_assoc();
+    $pendentes = $row['pendentes'] ?? 0;
+    $noprazo = $row['noprazo'] ?? 0;
+    $atrasados = $row['atrasados'] ?? 0;
 }
-
-// aluguéis pendentes
-$sql_pendentes = "SELECT count(status) as pendentes FROM alugueis where status = 'Pendente'";
-$resultado_pendentes = $conexao->query($sql_pendentes);
-$total_pendentes = $resultado_pendentes->fetch_assoc();
-if (isset($total_pendentes['pendentes'])) {
-    $pendentes = $total_pendentes['pendentes'];
-}
-
-// aluguéis entregues no prazo
-$sql_noprazo = "SELECT count(status) as noprazo FROM alugueis where status = 'No prazo'";
-$resultado_noprazo = $conexao->query($sql_noprazo);
-$total_noprazo = $resultado_noprazo->fetch_assoc();
-if (isset($total_noprazo['noprazo'])) {
-    $noprazo = $total_noprazo['noprazo'];
-}
-
-// aluguéis entregues com atraso
-$sql_atrasados = "SELECT count(status) as atrasados FROM alugueis where status = 'Atrasado'";
-$resultado_atrasados = $conexao->query($sql_atrasados);
-$total_atrasados = $resultado_atrasados->fetch_assoc();
-if (isset($total_atrasados['atrasados'])) {
-    $atrasados = $total_atrasados['atrasados'];
-}
+$rentalStatus = array(
+    "pendentes" => $pendentes,
+    "noprazo" => $noprazo,
+    "atrasados" => $atrasados
+);
 
 // último aluguel
 $sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY id DESC LIMIT 1";
@@ -55,6 +44,7 @@ $ultimo_alugado = $resultado_ultimo_aluguel->fetch_assoc();
 if (isset($ultimo_alugado['livro'])) {
     $ultimo_livro = $ultimo_alugado['livro'];
 }
+$lastRented = $ultimo_livro;
 
 // Total de usuários
 $sql_usuarios = "SELECT count(*) AS total_usuarios FROM usuarios";
@@ -63,6 +53,7 @@ $total_usuarios = $resultado_usuarios->fetch_assoc();
 if (isset($total_usuarios['total_usuarios'])) {
     $usuarios = $total_usuarios['total_usuarios'];
 }
+$usersCount = $usuarios;
 
 // total de livros
 $sql_total_livros = "SELECT sum(quantidade) AS total_livros FROM livros";
@@ -71,6 +62,7 @@ $total_livros = $resultado_total_livros->fetch_assoc();
 if (isset($total_livros['total_livros'])) {
     $livros = $total_livros['total_livros'];
 }
+$booksCount = $livros;
 
 // Total de editoras
 $sql_editoras = "SELECT count(*) AS total_editoras FROM editoras";
@@ -79,3 +71,15 @@ $total_editoras = $resultado_editoras->fetch_assoc();
 if (isset($total_editoras['total_editoras'])) {
     $editoras = $total_editoras['total_editoras'];
 }
+$publishersCount = $editoras;
+
+// Armazena todas as consultas
+$DashData = array(
+    "mostRented" => $mostRented,
+    "rentalStatus" => $rentalStatus,
+    "lastRented" => $lastRented,
+    "usersCount" => $usersCount,
+    "booksCount" => $booksCount,
+    "publishersCount" => $publishersCount
+);
+echo json_encode($DashData);

@@ -1,12 +1,10 @@
 <?php
 session_start();
-// teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
-$logado = $_SESSION['email'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,7 +19,6 @@ $logado = $_SESSION['email'];
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
     <title>WDA Livraria</title>
 </head>
 
@@ -90,39 +87,17 @@ $logado = $_SESSION['email'];
                 </div>
             </div>
             <div class="dash_father">
-                <div class="dash_container">
+                <div class="dash_container" id="lastRented">
                     <span class="title">Últmo livro alugado:</span>
-                    <?php
-                    if (isset($ultimo_alugado)) {
-                        echo "<span class='content'>" . $ultimo_livro . "</span>";
-                    } else {
-                        echo "<span class='content'>Aguardando dados...</span>";
-                    }
-                    ?>
                 </div>
-                <div class="dash_container">
+                <div class="dash_container" id="usersCount">
                     <span class="title">Usuários cadastrados</span>
-                    <div class="relat">
-                        <p>
-                            <?php echo "<span class='content number'> " . $usuarios . "</span>" ?>
-                        </p>
-                    </div>
                 </div>
-                <div class="dash_container">
+                <div class="dash_container" id="booksCount">
                     <span class="title">Livros cadastrados</span>
-                    <div class="relat">
-                        <p>
-                            <?php echo "<span class='content number'> " . $livros . "</span>" ?>
-                        </p>
-                    </div>
                 </div>
-                <div class="dash_container">
+                <div class="dash_container" id="publishersCount">
                     <span class="title">Editoras cadastradas</span>
-                    <div class="relat">
-                        <p>
-                            <?php echo "<span class='content number'> " . $editoras . "</span>" ?>
-                        </p>
-                    </div>
                 </div>
             </div>
         </main>
@@ -132,56 +107,8 @@ $logado = $_SESSION['email'];
         </footer>
     </div>
     <!-- scripts -->
-    <script>
-        const ctx = document.getElementById('grafico01');
-        const cty = document.getElementById('grafico02');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["<?php echo $nomes[0]; ?>", "<?php echo $nomes[1]; ?>", "<?php echo $nomes[2]; ?>"],
-                datasets: [{
-                    label: '',
-                    data: ["<?php echo $info[0]; ?>", "<?php echo $info[1]; ?>", "<?php echo $info[2]; ?>"],
-                    backgroundColor: ['rgba(128, 0, 0)', 'rgb(65, 69, 94)', 'rgb(182, 143, 43)'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        new Chart(cty, {
-            type: 'pie',
-            data: {
-                labels: ["Pendentes", "No prazo", "Atrasados"],
-                datasets: [{
-                    label: '',
-                    data: ["<?php echo $pendentes ?>", "<?php echo $noprazo ?>", "<?php echo $atrasados ?>"],
-                    backgroundColor: ['rgb(182, 143, 43)', 'rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
-                    borderColor: ['rgb(182, 143, 43)', 'rgb(0, 110, 0)', 'rgba(110, 0, 0)', ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        display: false
-                    }
-                }
-            }
-        });
-    </script>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <!-- <script src="js/script.js"></script> -->
 </body>
 
 </html>

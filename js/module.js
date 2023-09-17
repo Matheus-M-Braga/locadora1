@@ -12,18 +12,20 @@ import "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js";
 // Importar o arquivo dataTables.bootstrap5.min.js
 import "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js";
 
-// Consulta ajax
+// Consulta ajaz
+// Tabelas
 $(document).ready(function () {
   function loadDataFromServer() {
-    var currentPage = window.location.pathname.split("/").pop().replace(".php", "");
-    var baseUrl = "../php/";
-    var url = baseUrl + "getdata" + currentPage + ".php";
     $.ajax({
-      url: url,
+      url: "../php/getregistersdata.php",
       type: "GET",
       dataType: "json",
       success: function (data) {
-        setupEditAndDeleteEvents(data);
+        var entity = window.location.pathname
+          .split("/")
+          .pop()
+          .replace(".php", "");
+        setupEditAndDeleteEvents(data[entity]);
       },
       error: function (xhr, status, error) {
         console.error(
@@ -37,12 +39,7 @@ $(document).ready(function () {
     $("#tabela").off("click", ".exclu");
 
     $("#tabela").on("click", ".edit", function () {
-      var UserFields = new Array("id",
-        "nome",
-        "cidade",
-        "endereco",
-        "email"
-      );
+      var UserFields = new Array("id", "nome", "cidade", "endereco", "email");
       var BookFields = new Array(
         "id",
         "nome",
@@ -76,7 +73,7 @@ $(document).ready(function () {
         fields = RentalsFields;
       }
       var id = $(this).data("id");
-      var Entitydata = data[id]; 
+      var Entitydata = data[id];
       for (var i = 0; i < fields.length; i++) {
         var fieldName = fields[i];
         var fieldValue = Entitydata[fieldName];
