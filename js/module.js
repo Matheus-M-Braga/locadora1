@@ -25,7 +25,7 @@ $(document).ready(function () {
           .split("/")
           .pop()
           .replace(".php", "");
-        setupEditAndDeleteEvents(data[entity]);
+        setupEditAndDeleteEvents(data[entity], data);
       },
       error: function (xhr, status, error) {
         console.error(
@@ -34,7 +34,7 @@ $(document).ready(function () {
       },
     });
   }
-  function setupEditAndDeleteEvents(data) {
+  function setupEditAndDeleteEvents(data, data2) {
     $("#tabela").off("click", ".edit");
     $("#tabela").off("click", ".exclu");
 
@@ -72,12 +72,24 @@ $(document).ready(function () {
       } else if (window.location.pathname.includes("aluguel.php")) {
         fields = RentalsFields;
       }
+
       var id = $(this).data("id");
       var Entitydata = data[id];
       for (var i = 0; i < fields.length; i++) {
         var fieldName = fields[i];
         var fieldValue = Entitydata[fieldName];
-        $("." + fieldName).val(fieldValue);
+
+        // Exceção para o campo de editora, que é um select
+        if (
+          window.location.pathname.includes("livro.php") &&
+          fieldName == "editora"
+        ) {
+          $("." + fieldName).text(fieldValue); // Só preencher com texto ksjskksjksks
+          $("." + fieldName).val(fieldValue); 
+          fillPublisherSelectOptions(fieldValue, data2); // Lista as demais editoras, nos options
+        } else {
+          $("." + fieldName).val(fieldValue);
+        }
       }
     });
     $("#tabela").on("click", ".exclu", function () {
@@ -88,6 +100,21 @@ $(document).ready(function () {
           window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
         });
     });
+  }
+  function fillPublisherSelectOptions(fieldValue, data) {
+    var publishersList = data["editora"];
+    var select = document.getElementById("select");
+    var selected = fieldValue; // Esse parâmetro é passado pra pegar a editora do livro correspondente e comparar com a listagem pra não duplicar as opções (foda)
+    var keys = Object.keys(publishersList);
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      var option = document.createElement("option");
+      if (publishersList[key].nome === selected) {
+      } else {
+        option.textContent = publishersList[key].nome;
+        select.appendChild(option);
+      }
+    }
   }
   loadDataFromServer();
 });

@@ -163,18 +163,8 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         </div>
                         <div class="row-md-3">
                             <label for="campo4" class="form-label text-black">Editora</label>
-                            <!-- <input type="hidden" name="teste" id="campo4"> -->
-                            <select title="fodase" name="editora" class="form-select needs-validation is-invalid" required>
-                                <?php
-                                $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
-                                $resultado = $conexao->query($sqllivro);
-                                $sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
-                                $resultEditora_conect = $conexao->query($sqlEditoras_conect);
-
-                                while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                    echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
-                                }
-                                ?>
+                            <select title="fodase" name="editora" class="form-select needs-validation is-valid" id="select" required>
+                            <option value="" class="editora" id="selected" selected></option>
                             </select>
                         </div>
                         <div class="row-md-3">

@@ -7,6 +7,12 @@ function abrirModal(carregarModal) {
 function fecharModal(fecharModal) {
   var modal = document.getElementById(fecharModal);
   modal.style.display = "none";
+
+  // Conforme vai abrindo o modal de editar, os options da editora vão se multiplicando. Isso limpa todos com exceção do primeiro, que é correspondente ao livro. São adicionados quando o modal é aberto novamente.
+  var select = document.getElementById("select");
+  while (select.children.length > 1) {
+    select.removeChild(select.children[1]);
+  }
 }
 
 // Dropdown
