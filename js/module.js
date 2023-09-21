@@ -37,6 +37,7 @@ $(document).ready(function () {
   function setupEditAndDeleteEvents(data, data2) {
     $("#tabela").off("click", ".edit");
     $("#tabela").off("click", ".exclu");
+    $("#tabela").off("click", ".devol");
 
     $("#tabela").on("click", ".edit", function () {
       var UserFields = new Array("id", "nome", "cidade", "endereco", "email");
@@ -85,7 +86,7 @@ $(document).ready(function () {
           fieldName == "editora"
         ) {
           $("." + fieldName).text(fieldValue); // Só preencher com texto ksjskksjksks
-          $("." + fieldName).val(fieldValue); 
+          $("." + fieldName).val(fieldValue);
           fillPublisherSelectOptions(fieldValue, data2); // Lista as demais editoras, nos options
         } else {
           $("." + fieldName).val(fieldValue);
@@ -97,7 +98,26 @@ $(document).ready(function () {
       $(".confirm_exclu")
         .off("click")
         .on("click", function () {
-          window.location.href = ".delete/delet-user.php" + "?id=" + btnID;
+          var currentPage = window.location.pathname
+            .split("/")
+            .pop()
+            .replace(".php", "");
+          window.location.href =
+            ".delete/delet-" + currentPage + ".php" + "?id=" + btnID;
+        });
+    });
+    // Devolução (Aluguel)
+    $("#tabela").on("click", ".devol", function () {
+      var btnID = $(this).data("id");
+      $(".confirm_devol")
+        .off("click")
+        .on("click", function () {
+          var currentPage = window.location.pathname
+            .split("/")
+            .pop()
+            .replace(".php", "");
+          window.location.href =
+            ".update/update-" + currentPage + ".php" + "?id=" + btnID;
         });
     });
   }

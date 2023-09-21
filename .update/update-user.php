@@ -18,23 +18,28 @@
         $endereco = $_POST['endereco'];
         $email = $_POST['email'];
 
-
         // Conexão tabela aluguéis
         $sql_usuario = "SELECT * FROM usuarios WHERE id = $codUsuario";
-        $result_usuario = $conexao -> query($sql_usuario);
+        $result_usuario = $conexao->query($sql_usuario);
         $usuario_data = mysqli_fetch_assoc($result_usuario);
         $nome_old = $usuario_data['nome'];
-        
+
         $sql_aluguel = "SELECT * FROM alugueis WHERE usuario = '$nome_old' AND data_devolucao = 0";
         $result_aluguel = $conexao->query($sql_aluguel);
 
         if ($result_aluguel->num_rows > 0) {
+            $UpdateUsuarioName = "UPDATE alugueis SET usuario = '$nomeUsuario' WHERE usuario = '$nome_old'";
+            $result = $conexao->query($UpdateUsuarioName);
+
+            $sqlUpdate = "UPDATE usuarios SET Nome = '$nomeUsuario', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$codUsuario'";
+            $result = $conexao->query($sqlUpdate);
+
             echo "
             <script>
                 Swal.fire({
-                    title: 'Usuário possui aluguel ativo, não pode sofre alterações!',
+                    title: 'Usuário atualizado com sucesso!',
                     text: '',
-                    icon: 'error',
+                    icon: 'success',
                     showConfirmButton: false,
                     timer: 1700
                 })

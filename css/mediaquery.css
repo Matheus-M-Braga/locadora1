@@ -92,6 +92,10 @@
       flex-direction: column;
    }
 
+   .dataTables_filter{
+      width: 100% !important; 
+   }
+
    .wrapper {
       justify-content: space-between;
       width: 100%;

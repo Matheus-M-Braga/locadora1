@@ -430,7 +430,7 @@ div.dataTables_filter label {
   color: white;
   background: none;
   padding-left: 13px;
-  width: 85%;
+  width: 97%;
   height: 100%;
   margin: 0;
   vertical-align: middle;
@@ -615,7 +615,7 @@ table {
 .container-grid .itens {
   font-size: 16px;
   text-align: center;
-  padding: 15px;
+  padding: 15px 4px;
 }
 
 .itens img {

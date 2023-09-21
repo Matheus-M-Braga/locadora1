@@ -27,12 +27,16 @@
         $result_livro = $conexao->query($sql_livro);
 
         if ($result_livro->num_rows > 0) {
+            $UpdateEditoraName = "UPDATE livros SET editora = '$nomeEditora' WHERE editora = '$nome_old'";
+            $result = $conexao -> query($UpdateEditoraName);
+            $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', telefone = '$telefone' WHERE id = '$codEditora'";
+            $result = $conexao->query($sqlUpdate);
             echo "
             <script>
                 Swal.fire({
-                    title: 'Editora possui associação com livros, não pode sofrer alterações!',
+                    title: 'Editora atualizada com sucesso!',
                     text: '',
-                    icon: 'error',
+                    icon: 'success',
                     showConfirmButton: false,
                     timer: 1700
                 })
@@ -40,7 +44,6 @@
             </script>";
         } else {
             $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', telefone = '$telefone' WHERE id = '$codEditora'";
-
             $result = $conexao->query($sqlUpdate);
             echo "
             <script>

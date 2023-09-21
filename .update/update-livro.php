@@ -21,7 +21,7 @@
 
         // Conexão tabela aluguéis
         $sql_livro = "SELECT * FROM livros WHERE id = $codLivro";
-        $result_livro = $conexao -> query($sql_livro);
+        $result_livro = $conexao->query($sql_livro);
         $livro_data = mysqli_fetch_assoc($result_livro);
         $nome_old = $livro_data['nome'];
 
@@ -29,12 +29,18 @@
         $result_aluguel = $conexao->query($sql_aluguel);
 
         if ($result_aluguel->num_rows > 0) {
+            $UpdateLivroName = "UPDATE alugueis SET livro = '$nomeLivro' WHERE livro = '$nome_old'";
+            $result = $conexao->query($UpdateLivroName);
+
+            $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
+            $result = $conexao->query($sqlUpdate);
+
             echo "
             <script>
                 Swal.fire({
-                    title: 'Livro está alugado, não pode sofrer alterações!',
+                    title: 'Livro atualizado com sucesso!',
                     text: '',
-                    icon: 'error',
+                    icon: 'success',
                     showConfirmButton: false,
                     timer: 1700
                 })
@@ -42,7 +48,6 @@
             </script>";
         } else {
             $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
-
             $result = $conexao->query($sqlUpdate);
 
             echo "

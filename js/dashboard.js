@@ -64,7 +64,7 @@ $(document).ready(function () {
     var Piedata = [
       PieInfo["pendentes"],
       PieInfo["noprazo"],
-      PieInfo["atrasdos"],
+      PieInfo["atrasados"],
     ];
     new Chart(PieChart, {
       type: "pie",
