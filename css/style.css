@@ -497,6 +497,7 @@ li.disabled .page-link{
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 15px;
 }
 
 .graficos #grafico2 {
@@ -504,14 +505,30 @@ li.disabled .page-link{
 }
 
 .container.bg-light {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   margin-bottom: 23px;
   padding-bottom: 5px;
   border: 1px solid gray;
   border-radius: 5px;
+  min-height: 300px;
   width: 50%;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
 }
+
+.noDataChart{
+  display: none;
+  font-size: 19px;
+  text-decoration: underline;
+  color: rgb(87, 87, 87);
+}
+.noDataChart span{
+  font-weight: bold;
+  font-size: 19px;
+}
+
 .container.bg-light .title {
   font-weight: 500;
   color: rgb(87, 87, 87);
@@ -522,6 +539,7 @@ li.disabled .page-link{
   justify-content: space-around;
   /* gap: 15%; */
   width: 100%;
+  margin-top: 35px;
 }
 
 .dash_group {
@@ -538,7 +556,7 @@ li.disabled .page-link{
   border: 1px solid var(--cor3);
   border-radius: 5px;
   width: 23%;
-  padding: 10px;
+  padding: 20px 10px;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
 }
 

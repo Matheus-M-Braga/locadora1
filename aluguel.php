@@ -11,7 +11,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-$sql = "SELECT * FROM alugueis ORDER BY status ASC";
+$sql = "SELECT * FROM alugueis ORDER BY status DESC";
 $result = $conexao->query($sql);
 
 // Conexão tabela Livros

@@ -70,34 +70,34 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
         <main style="overflow-y: auto;">
             <div class="graficos">
                 <div id="grafico" class="container bg-light">
-                    <div style="text-align:center;">
-                        <h2 class="title">Livros mais alugados</h2>
-                    </div>
-                    <canvas id="grafico01" width="300"></canvas>
-                    <div>
-                    </div>
+                    <canvas id="grafico01" width="300"></canvas> 
+                    <div class="noDataChart" id="grafico1Warnning">Informações sobre <span>Livros mais alugados</span> indisponíveis.</div>
                 </div>
                 <div id="grafico2" class="container bg-light">
-                    <div style="text-align:center;">
-                        <h2 class="title">Status de Aluguéis</h2>
-                    </div>
                     <canvas id="grafico02" width="300" height="200"></canvas>
-                    <div>
-                    </div>
+                    <div class="noDataChart" id="grafico2Warnning">Informações sobre <span>Status de Aluguéis</span> indisponíveis.</div>
                 </div>
             </div>
             <div class="dash_father">
                 <div class="dash_container" id="lastRented">
                     <span class="title">Últmo livro alugado:</span>
-                </div>
+                    <span class="content"></span>
+                    <div class="aviso content" style="display: none;">Aguardando dados...</div>  
+                </div>              
                 <div class="dash_container" id="usersCount">
                     <span class="title">Usuários cadastrados</span>
-                </div>
+                    <span class="content"></span>
+                    <div class="aviso content" style="display: none;">Aguardando dados...</div>    
+                </div>            
                 <div class="dash_container" id="booksCount">
                     <span class="title">Livros cadastrados</span>
-                </div>
+                    <span class="content"></span>
+                    <div class="aviso content" style="display: none;">Aguardando dados...</div>     
+                </div>           
                 <div class="dash_container" id="publishersCount">
                     <span class="title">Editoras cadastradas</span>
+                    <span class="content"></span>
+                    <div class="aviso content" style="display: none;">Aguardando dados...</div>
                 </div>
             </div>
         </main>
@@ -108,7 +108,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     </div>
     <!-- scripts -->
     <script type="module" src="js/dashboard.js"></script>
-    <!-- <script src="js/script.js"></script> -->
+    <script src="js/script.js"></script>
 </body>
 
 </html>
