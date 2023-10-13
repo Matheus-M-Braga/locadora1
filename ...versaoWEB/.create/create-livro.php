@@ -10,40 +10,41 @@
    <?php
    // Insert
    if (isset($_POST['submit'])) {
-
       include_once('../php/config.php');
 
-      $nomeEditora = $_POST['nome-editora'];
-      $email = $_POST['email-editora'];
-      $cidade = $_POST['cidade-editora'];
+      $nomeLivro = $_POST['nome-livro'];
+      $autor = $_POST['autor'];
+      $editora = $_POST['editora'];
+      $lancamento = $_POST['lancamento'];
+      $quantidade = $_POST['quantidade'];
 
-      $sqleditora = "SELECT * FROM editoras WHERE nome = '$nomeEditora'";
-      $resultado = $conexao->query($sqleditora);
+      $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
+      $resultado = $conexao->query($sqllivro);
 
       if (mysqli_num_rows($resultado) == 1) {
          echo "
          <script>
             Swal.fire({
-               title: 'Editora já cadastrada!',
+               title: 'Livro já cadastrado!',
                text: '',
                icon: 'error',
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../editora.php';})
+            .then(() => {window.location.href = '../livro.php';})
          </script>";
       } else {
-         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nomeEditora', '$email', '$cidade')");
+         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nomeLivro', '$autor', '$editora', '$lancamento', '$quantidade')");
          echo "
          <script>
             Swal.fire({
-               title: 'Editora cadastrada com sucesso!',
+               title: 'Livro cadastrado com sucesso!',
                text: '',
                icon: 'success',
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../editora.php';})
+            .then(() => {window.location.href = '../livro.php';})
          </script>";
       }
    }

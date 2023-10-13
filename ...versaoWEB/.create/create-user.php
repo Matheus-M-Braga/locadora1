@@ -10,40 +10,40 @@
    <?php
    // Insert
    if (isset($_POST['submit'])) {
-
       include_once('../php/config.php');
 
-      $nomeEditora = $_POST['nome-editora'];
-      $email = $_POST['email-editora'];
-      $cidade = $_POST['cidade-editora'];
+      $nomeUsuario = $_POST['nome-user'];
+      $cidade = $_POST['cidade'];
+      $endereco = $_POST['endereco'];
+      $email = $_POST['email'];
 
-      $sqleditora = "SELECT * FROM editoras WHERE nome = '$nomeEditora'";
-      $resultado = $conexao->query($sqleditora);
+      $sqluser = "SELECT * FROM usuarios WHERE Nome = '$nomeUsuario'";
+      $resultado = $conexao->query($sqluser);
 
       if (mysqli_num_rows($resultado) == 1) {
          echo "
          <script>
             Swal.fire({
-               title: 'Editora já cadastrada!',
+               title: 'Usuário já cadastrado!',
                text: '',
                icon: 'error',
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../editora.php';})
+            .then(() => {window.location.href = '../user.php';})
          </script>";
       } else {
-         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nomeEditora', '$email', '$cidade')");
+         $result = mysqli_query($conexao, "INSERT INTO usuarios(Nome, Cidade, Endereco, Email) VALUES ('$nomeUsuario', '$cidade', '$endereco', '$email')");
          echo "
          <script>
             Swal.fire({
-               title: 'Editora cadastrada com sucesso!',
+               title: 'Usuário cadastrado com sucesso!',
                text: '',
                icon: 'success',
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../editora.php';})
+            .then(() => {window.location.href = '../user.php';})
          </script>";
       }
    }

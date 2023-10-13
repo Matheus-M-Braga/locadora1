@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once('php/config.php');
+include_once('./php/config.php');
 
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
@@ -10,7 +10,8 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-$sql = "SELECT * FROM editoras ORDER BY id ASC";
+// Select inicial
+$sql = "SELECT * FROM usuarios ORDER BY id ASC";
 $result = $conexao->query($sql);
 ?>
 <!DOCTYPE html>
@@ -26,9 +27,9 @@ $result = $conexao->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <!-- Strap -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
     <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <title>WDA Livraria</title>
 </head>
@@ -48,7 +49,7 @@ $result = $conexao->query($sql);
                 </div>
                 <div class="link">
                     <img src="img/usuarios.png" alt="" class="links_icons">
-                    <a href="user.php">Usuários</a>
+                    <a href="user.php" class="selected">Usuários</a>
                 </div>
                 <div class="link">
                     <img src="img/livros.png" alt="" class="links_icons">
@@ -56,7 +57,7 @@ $result = $conexao->query($sql);
                 </div>
                 <div class="link">
                     <img src="img/editoras.png" alt="" class="links_icons">
-                    <a href="editora.php" class="selected">Editoras</a>
+                    <a href="editora.php">Editoras</a>
                 </div>
                 <div class="link">
                     <img src="img/alugueis.png" alt="" class="links_icons">
@@ -67,9 +68,9 @@ $result = $conexao->query($sql);
                 <button onclick="toggleDropdown()">Menu</button>
                 <ul class="dropdown-content" id="dropdownContent">
                     <li><a href="inicio.php">Dashboard</a></li>
-                    <li><a href="user.php">Usuários</a></li>
+                    <li><a href="user.php" class="selected" id="pageTitle">Usuários</a></li>
                     <li><a href="livro.php">Livros</a></li>
-                    <li><a href="editora.php" class="selected" id="pageTitle">Editoras</a></li>
+                    <li><a href="editora.php">Edtioras</a></li>
                     <li><a href="aluguel.php">Aluguéis</a></li>
                 </ul>
             </div>
@@ -82,31 +83,37 @@ $result = $conexao->query($sql);
             <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro da Editora</h1>
+                        <h1 class="text-balck titulo_modal">Cadastro do Usuário</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    <form action=".create/create-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".create/create-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="input1" class="form-control" maxlength="45" required autocomplete="off">
+                                <input name="nome-user" type="text" id="input1" class="form-control" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="input2" class="form-control" maxlength="100" required autocomplete="off">
+                                <label for="input2" class="form-label text-black">Cidade</label>
+                                <input name="cidade" type="text" id="input2" class="form-control cidade" maxlength="45" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Informe o email
+                                    • Informe a cidade
                                 </div>
                             </div>
-
                             <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Cidade</label>
-                                <input name="cidade-editora" type="text" id="input3" class="form-control cidade" required autocomplete="off">
+                                <label for="input3" class="form-label text-black">Endereço</label>
+                                <input name="endereco" type="text" id="input3" class="form-control endereco" maxlength="75" required autocomplete="off">
                                 <div class="invalid-feedback">
-                                    • Informe o cidade
+                                    • Informe o endereço
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="email" class="form-label text-black">E-mail</label>
+                                <input name="email" type="email" id="email" class="form-control" maxlength="100" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    • Informe o email
                                 </div>
                             </div>
                             <div class="col-12" style="text-align: center;">
@@ -116,40 +123,46 @@ $result = $conexao->query($sql);
                     </form>
                 </div>
             </div>
-            <!-- Modal edit -->
+            <!-- Modal Edit -->
             <div id="edit-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Editora</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
+                        <h1 class="text-balck titulo_modal">Editar Usuário</h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
                     </div>
-                    <form action=".update/update-editora.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".update/update-user.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
-                            <input type="hidden" name="id" id="campo1" class="id">
+                            <input type="hidden" class="id" id="id" name="id">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="campo2" class="form-control nome" maxlength="45" required autocomplete="off">
+                                <input name="nome-user" type="text" id="nome" class="form-control nome" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="campo3" class="form-control email" maxlength="100" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Informe o e-mail
-                                </div>
-                            </div>
-
-                            <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Cidade</label>
-                                <input name="cidade-editora" type="text" id="campo4" class="form-control cidade" required autocomplete="off">
+                                <label for="input2" class="form-label text-black">Cidade</label>
+                                <input name="cidade" type="text" id="cidade" class="form-control cidade" maxlength="45" required autocomplete="off" value="">
                                 <div class="invalid-feedback">
                                     • Informe a cidade
                                 </div>
                             </div>
+                            <div class="row-md-3">
+                                <label for="input3" class="form-label text-black">Endereço</label>
+                                <input name="endereco" type="text" id="endereco" class="form-control endereco" maxlength="75" required autocomplete="off" value="">
+                                <div class="invalid-feedback">
+                                    • Informe o endereço
+                                </div>
+                            </div>
+                            <div class="row-md-3">
+                                <label for="validationCustom02" class="form-label text-black">E-mail</label>
+                                <input name="email" type="email" id="email" class="form-control email date" maxlength="100" required autocomplete="off" value="">
+                                <div class="invalid-feedback">
+                                    • Informe o email
+                                </div>
+                            </div>
                             <div class="col-12" style="text-align: center;">
-                                <button class="btn btn-success" type="submit" name="update">Cadastrar</button>
+                                <button class="btn btn-success" type="submit" name="update">Confirmar</button>
                             </div>
                         </div>
                     </form>
@@ -159,13 +172,13 @@ $result = $conexao->query($sql);
             <div id="exclu-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck titulo_modal">Excluir Editora</h1>
+                        <h1 class="text-balck titulo_modal">Excluir Usuário</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('exclu-modal')">
                     </div>
                     <div class="iconDel">
                         <img src="img/aviso.png" alt="">
                     </div>
-                    <p>Tem certeza que deseja excluir a editora selecionada?</p>
+                    <p>Tem certeza que deseja excluir o usuário selecionado?</p>
                     <div class="col-12" style="text-align: center;">
                         <button class="btn btn-success" type="reset" onclick="fecharModal('exclu-modal')">Cancelar</button>
                         <button class="btn btn-danger confirm_exclu" type="submit" name="delete" id="excluir">Excluir</button>
@@ -174,35 +187,37 @@ $result = $conexao->query($sql);
             </div>
             <!-- GRID -->
             <div class="grid-body">
-                <table class='container-grid' id="tabela">
+                <table class='container-grid ' id="tabela">
                     <thead>
                         <tr>
-                            <th class='titulos'>ID</th>
-                            <th class='titulos'>NOME</th>
-                            <th class='titulos'>CIDADE</th>
-                            <th class='titulos'>EMAIL</th>
-                            <th class='titulos'>AÇÕES</th>
+                            <th class='titulos' id='id'>ID</th>
+                            <th class='titulos' id='nome'>NOME</th>
+                            <th class='titulos' id='cidade'>CIDADE</th>
+                            <th class='titulos' id='endereco'>ENDEREÇO</th>
+                            <th class='titulos' id='mail'>EMAIL</th>
+                            <th class='titulos acoes'>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         if (mysqli_num_rows($result) > 0) {
-                            while ($editora_data = mysqli_fetch_assoc($result)) {
+                            while ($user_data = mysqli_fetch_assoc($result)) {
                                 echo "
-                        <tr>
-                            <td class='itens'>" . $editora_data['id'] . "</td>"
-                                    . "<td class='itens'>" . $editora_data['nome'] . "</td>"
-                                    . "<td class='itens'>" . $editora_data['cidade'] . "</td>"
-                                    . "<td class='itens'>" . $editora_data['email'] . "</td>"
+                                <tr>
+                                <td class='itens ID'>" . $user_data['id'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['nome'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['cidade'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['endereco'] . "</td>"
+                                    . "<td class='itens'>" . $user_data['email'] . "</td>"
                                     . "<td class='itens'>
-                                <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
-                                &nbsp;&nbsp;
-                                <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
-                            </td>
-                        </tr>";
+                                    <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                    &nbsp;&nbsp;
+                                    <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                                </td>
+                                </tr>";
                             }
                         } else {
-                            echo "<tr><td class='itens noresult' colspan='5'>Nenhum registro encontrado</td></tr>";
+                            echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -215,4 +230,5 @@ $result = $conexao->query($sql);
     <script src="js/script.js"></script>
     <script src="js/jquery.mask.min.js"></script>
 </body>
+
 </html>
