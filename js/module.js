@@ -1,18 +1,18 @@
 // Arquivo responsável pela consulta AJAX e DataTable.
 
-// Importar o arquivo jquery-3.1.0.js
+// Importa o arquivo jquery-3.1.0.js
 import "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js";
 
-// Importar o arquivo jquery-3.7.0.js
+// Importa o arquivo jquery-3.7.0.js
 import "https://code.jquery.com/jquery-3.7.0.js";
 
-// Importar o arquivo jquery.dataTables.min.js
+// Importa o arquivo jquery.dataTables.min.js
 import "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js";
 
-// Importar o arquivo dataTables.bootstrap5.min.js
+// Importa o arquivo dataTables.bootstrap5.min.js
 import "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js";
 
-// Consulta ajaz
+// Consulta ajax
 // Tabelas
 $(document).ready(function () {
   function loadDataFromServer() {
@@ -49,13 +49,7 @@ $(document).ready(function () {
         "lancamento",
         "quantidade"
       );
-      var PublisherFields = new Array(
-        "id",
-        "nome",
-        "cidade",
-        "email",
-        "telefone"
-      );
+      var PublisherFields = new Array("id", "nome", "cidade", "email");
       var RentalsFields = new Array(
         "id",
         "livro",
@@ -64,13 +58,13 @@ $(document).ready(function () {
         "data_previsao"
       );
       var fields;
-      if (window.location.pathname.includes("user.php")) {
+      if (window.location.pathname.includes("User.php")) {
         fields = UserFields;
-      } else if (window.location.pathname.includes("livro.php")) {
+      } else if (window.location.pathname.includes("Book.php")) {
         fields = BookFields;
-      } else if (window.location.pathname.includes("editora.php")) {
+      } else if (window.location.pathname.includes("Publisher.php")) {
         fields = PublisherFields;
-      } else if (window.location.pathname.includes("aluguel.php")) {
+      } else if (window.location.pathname.includes("Rental.php")) {
         fields = RentalsFields;
       }
 
@@ -82,7 +76,7 @@ $(document).ready(function () {
 
         // Exceção para o campo de editora, que é um select
         if (
-          window.location.pathname.includes("livro.php") &&
+          window.location.pathname.includes("Book.php") &&
           fieldName == "editora"
         ) {
           $("." + fieldName).text(fieldValue); // Só preencher com texto ksjskksjksks
@@ -103,7 +97,7 @@ $(document).ready(function () {
             .pop()
             .replace(".php", "");
           window.location.href =
-            ".delete/delet-" + currentPage + ".php" + "?id=" + btnID;
+            ".delete/delete" + currentPage + ".php" + "?id=" + btnID;
         });
     });
     // Devolução (Aluguel)
@@ -117,14 +111,15 @@ $(document).ready(function () {
             .pop()
             .replace(".php", "");
           window.location.href =
-            ".update/update-" + currentPage + ".php" + "?id=" + btnID;
+            ".update/update" + currentPage + ".php" + "?id=" + btnID;
         });
     });
   }
   function fillPublisherSelectOptions(fieldValue, data) {
-    var publishersList = data["editora"];
+    var publishersList = data["Publisher"];
     var select = document.getElementById("select");
     var selected = fieldValue; // Esse parâmetro é passado pra pegar a editora do livro correspondente e comparar com a listagem pra não duplicar as opções (foda)
+
     var keys = Object.keys(publishersList);
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];

@@ -21,66 +21,15 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Boot -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- Strap -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="css/style.css?<?php echo rand(1, 1000); ?>" media="all">
-    <link rel="stylesheet" href="css/mediaquery.css?<?php echo rand(1, 1000); ?>">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <title>WDA Livraria</title>
+    <?php
+    include("components/general/head.php");
+    ?>
 </head>
 
 <body>
-    <!-- header -->
-    <header>
-        <nav class="menubar">
-            <div class="logo">
-                <img src="img/favicon.ico" alt="">
-                <a class="title-link" href="inicio.php">WDA Livraria</a>
-            </div>
-            <div class="links">
-                <div class="link">
-                    <img src="img/dashboard.png" alt="" class="links_icons">
-                    <a href="inicio.php">Dashboard</a>
-                </div>
-                <div class="link">
-                    <img src="img/usuarios.png" alt="" class="links_icons">
-                    <a href="user.php">Usuários</a>
-                </div>
-                <div class="link">
-                    <img src="img/livros.png" alt="" class="links_icons">
-                    <a href="livro.php" class="selected">Livros</a>
-                </div>
-                <div class="link">
-                    <img src="img/editoras.png" alt="" class="links_icons">
-                    <a href="editora.php">Editoras</a>
-                </div>
-                <div class="link">
-                    <img src="img/alugueis.png" alt="" class="links_icons">
-                    <a href="aluguel.php">Aluguéis</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button onclick="toggleDropdown()">Menu</button>
-                <ul class="dropdown-content" id="dropdownContent">
-                    <li><a href="inicio.php">Dashboard</a></li>
-                    <li><a href="user.php">Usuários</a></li>
-                    <li><a href="livro.php" class="selected" id="pageTitle">Livros</a></li>
-                    <li><a href="editora.php">Edtioras</a></li>
-                    <li><a href="aluguel.php">Aluguéis</a></li>
-                </ul>
-            </div>
-            <a href="php/sair.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
-        </nav>
-    </header>
+    <?php
+    include("components/general/header.php");
+    ?>
     <div class="corpo">
         <main>
             <!-- Modal -->
@@ -90,7 +39,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Livro</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
                     </div>
-                    <form action=".create/create-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".create/createBook.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black bold">Nome</label>
@@ -145,7 +94,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
                     </div>
-                    <form action=".update/update-livro.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form action=".update/updateBook.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <input type="hidden" name="id" class="id">
                         <div class="row-md-3">
                             <label for="campo2" class="form-label text-black bold">Nome</label>
@@ -164,7 +113,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         <div class="row-md-3">
                             <label for="campo4" class="form-label text-black">Editora</label>
                             <select title="fodase" name="editora" class="form-select needs-validation is-valid" id="select" required>
-                            <option value="" class="editora" id="selected" selected></option>
+                                <option value="" class="editora" id="selected" selected></option>
                             </select>
                         </div>
                         <div class="row-md-3">
@@ -257,9 +206,9 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
             </div>
         </main>
     </div>
-    <!-- scritps -->
-    <script type="module" src="js/module.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/jquery.mask.min.js"></script>
+    <?php
+    include("components/general/scripts.php");
+    ?>
 </body>
+
 </html>

@@ -2,8 +2,8 @@
 
 <head>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <link rel="stylesheet" href="../css/style.css?<?php echo rand(1, 1000); ?>" media="all">
-   <link rel="stylesheet" href="../css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+   <link rel="stylesheet" href="../css/style.css" media="all">
+   <link rel="stylesheet" href="../css/mediaquery.css">
 </head>
 
 <body>
@@ -17,20 +17,20 @@
       $endereco = $_POST['endereco'];
       $email = $_POST['email'];
 
-      $sqluser = "SELECT * FROM usuarios WHERE Nome = '$nomeUsuario'";
+      $sqluser = "SELECT * FROM usuarios WHERE Email = '$email'";
       $resultado = $conexao->query($sqluser);
 
-      if (mysqli_num_rows($resultado) == 1) {
+      if (mysqli_num_rows($resultado) >= 1) {
          echo "
          <script>
             Swal.fire({
-               title: 'Usuário já cadastrado!',
+               title: 'Email já cadastrado!',
                text: '',
                icon: 'error',
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../user.php';})
+            .then(() => {window.location.href = '../User.php';})
          </script>";
       } else {
          $result = mysqli_query($conexao, "INSERT INTO usuarios(Nome, Cidade, Endereco, Email) VALUES ('$nomeUsuario', '$cidade', '$endereco', '$email')");
@@ -43,7 +43,7 @@
                showConfirmButton: false,
                timer: 1500
             })
-            .then(() => {window.location.href = '../user.php';})
+            .then(() => {window.location.href = '../User.php';})
          </script>";
       }
    }

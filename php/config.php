@@ -1,8 +1,7 @@
 <?php
-    $dbHost = 'localhost';
-    $dbUsername= 'root';
-    $dbPassword = 'admin';
-    $dbName = 'locadorabd';
+$conexao = new mysqli('localhost', 'root', 'admin', 'locadorabd', '3312');
 
-    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+if ($conexao->connect_error) {
+    die('Erro de conexão(' . $conexao->connect_errno . ') ' . $conexao->connect_error);
+}
 ?>

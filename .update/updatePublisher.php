@@ -2,8 +2,8 @@
 
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../css/style.css?<?php echo rand(1, 1000); ?>" media="all">
-    <link rel="stylesheet" href="../css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+    <link rel="stylesheet" href="../css/style.css" media="all">
+    <link rel="stylesheet" href="../css/mediaquery.css">
 </head>
 
 <body>
@@ -40,7 +40,7 @@
                     showConfirmButton: false,
                     timer: 1700
                 })
-                .then(() => {window.location.href = '../editora.php';})
+                .then(() => {window.location.href = '../Publisher.php';})
             </script>";
         } else {
             $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', cidade = '$cidade' WHERE id = '$codEditora'";
@@ -54,7 +54,7 @@
                     showConfirmButton: false,
                     timer: 1700
                 })
-                .then(() => {window.location.href = '../editora.php';})
+                .then(() => {window.location.href = '../Publisher.php';})
             </script>";
         }
     }

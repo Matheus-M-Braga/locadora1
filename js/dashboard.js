@@ -10,7 +10,6 @@ $(document).ready(function () {
       type: "GET",
       dataType: "json",
       success: function (DashData) {
-        console.log(DashData);
         GenerateCharts(DashData);
         GetCardsData(DashData);
       },

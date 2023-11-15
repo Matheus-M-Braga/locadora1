@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
       wrapper.appendChild(novoBtn);
       gridHeader.appendChild(wrapper);
     } else {
-      console.error("Elemento .grid-header não encontrado.");
+      // a classe .grid-header não foi achada (tenso)
     }
   }, 100);
 });
