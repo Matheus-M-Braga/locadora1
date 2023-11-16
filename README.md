@@ -3,10 +3,10 @@ O Sistema de Locadora de Livros apresentado é uma plataforma que faz uso de vá
 
 # Recursos
 Cadastrado, Visualização, Filtragem, Ordenação, Paginação, Atualização e Exclusão das seguintes entidades:
-Usuários
-Livros
-Editoras
-Aluguéis
+- Usuários
+- Livros
+- Editoras
+- Aluguéis
 
 # Aplicação
 ## Hospedagem Local
