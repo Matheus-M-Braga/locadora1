@@ -83,10 +83,11 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-                .then(() => {window.location.href = '../inicio.php';})
+                .then(() => {window.location.href = '../Home.php';})
             </script>";
         }
     }
     ?>
 </body>
+
 </html>

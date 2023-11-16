@@ -131,6 +131,7 @@ a.selected {
   transition: 300ms ease;
   color: #daa520;
 }
+
 .dropdown {
   display: none;
   position: relative;
@@ -167,13 +168,16 @@ a.selected {
   padding: 5px;
   text-align: center;
 }
+
 .dropdown-content li {
   margin-bottom: 12px;
 }
+
 .dropdown-content a {
   color: #daa520;
   text-decoration: none;
 }
+
 .dropdown-content a:hover {
   text-decoration: underline;
 }
@@ -325,6 +329,10 @@ main::-webkit-scrollbar-thumb {
   padding-bottom: 15px;
 }
 
+.form-label {
+  cursor: pointer;
+}
+
 .form-control,
 select {
   border: 0.5px solid gray;
@@ -343,10 +351,10 @@ select {
   margin: 0;
 }
 
-.is-invalid ~ .invalid-feedback,
-.is-invalid ~ .invalid-tooltip,
-.was-validated :invalid ~ .invalid-feedback,
-.was-validated :invalid ~ .invalid-tooltip {
+.is-invalid~.invalid-feedback,
+.is-invalid~.invalid-tooltip,
+.was-validated :invalid~.invalid-feedback,
+.was-validated :invalid~.invalid-tooltip {
   display: inherit;
 }
 
@@ -361,10 +369,12 @@ select {
   margin-top: 30px;
   font-weight: bold;
 }
+
 .btn:hover {
   background: #264347f2;
   border-color: #264347f2;
 }
+
 /* exclu modal */
 #exclu-modal,
 #devol-modal {
@@ -388,6 +398,7 @@ select {
 #devol-modal .col-12 button {
   width: 48%;
 }
+
 .col-12 .btn-danger {
   background: maroon;
   border: none;
@@ -420,9 +431,11 @@ div.dataTables_filter {
 .sbx-custom__wrapper .search {
   color: #ffffff63;
 }
+
 div.dataTables_filter label {
   width: 100%;
 }
+
 .grid-body div.dataTables_wrapper div.dataTables_filter input {
   outline: 0;
   box-shadow: none;
@@ -438,6 +451,7 @@ div.dataTables_filter label {
   font-size: inherit;
   border: none;
 }
+
 div.dataTables_wrapper div.dataTables_length select {
   color: goldenrod !important;
   background-color: #264347 !important;
@@ -445,9 +459,11 @@ div.dataTables_wrapper div.dataTables_length select {
   border: 1px solid goldenrod;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.7) !important;
 }
+
 .dataTables_length .form-select {
   width: 34%;
 }
+
 .dataTables_length label {
   display: flex;
   width: 36%;
@@ -455,37 +471,46 @@ div.dataTables_wrapper div.dataTables_length select {
   align-items: center;
   justify-content: space-between;
 }
+
 div.dataTables_wrapper div.dt-row {
   height: 400px !important;
   overflow-y: auto !important;
   margin-top: 7px !important;
   margin-bottom: -14px !important;
 }
+
 ul.pagination {
   justify-content: flex-end;
 }
+
 div.dataTables_wrapper div.dt-row::-webkit-scrollbar {
   width: 7px;
 }
+
 div.dataTables_wrapper div.dt-row::-webkit-scrollbar-thumb {
   background-color: #1e1e1e30;
   border-radius: 20px;
   height: 1px;
 }
+
 div.dataTables_wrapper div.dt-row::-webkit-scrollbar-track {
   background: none;
 }
-div.bottom{
+
+div.bottom {
   display: flex !important;
   justify-content: space-between !important;
-  align-items: center !important; 
+  align-items: center !important;
 }
-.bottom{
+
+.bottom {
   margin-top: 30px;
 }
-li.disabled .page-link{
+
+li.disabled .page-link {
   background-color: #1c4d4fb5 !important;
 }
+
 .col-md-6:last-child {
   display: flex;
   align-items: flex-end;
@@ -518,13 +543,14 @@ li.disabled .page-link{
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
 }
 
-.noDataChart{
+.noDataChart {
   display: none;
   font-size: 19px;
   text-decoration: underline;
   color: rgb(87, 87, 87);
 }
-.noDataChart span{
+
+.noDataChart span {
   font-weight: bold;
   font-size: 19px;
 }
@@ -610,6 +636,7 @@ table {
   transition: 300ms;
   height: 60px;
 }
+
 /* .container-grid .titulos:hover{
   font-size: larger;
   transition: 300ms;
@@ -622,9 +649,11 @@ table {
 .container-grid .titulos.acoes:hover {
   font-size: 18px;
 }
+
 .rotate180 {
   transform: rotate(180deg);
 }
+
 .titulos .order_arrow {
   vertical-align: middle;
   margin-left: 3px;
@@ -728,12 +757,12 @@ li.active .page-link {
   -webkit-transform: rotate(45deg);
 }
 
-.select select:hover ~ .select_arrow,
-.select select:focus ~ .select_arrow {
+.select select:hover~.select_arrow,
+.select select:focus~.select_arrow {
   border-color: #000000;
 }
 
-.select select:disabled ~ .select_arrow {
+.select select:disabled~.select_arrow {
   border-top-color: #cccccc;
 }
 

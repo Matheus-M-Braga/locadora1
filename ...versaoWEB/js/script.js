@@ -1,14 +1,76 @@
 /* Modal */
-function abrirModal(carregarModal) {
-  var modal = document.getElementById(carregarModal);
+function abrirModal(modalId, action) {
+  var modal = document.getElementById(modalId);
   modal.style.display = "block";
+
+  var title = document.getElementById("modalTitle");
+  title.textContent = action + " " + GetPageName().slice(0, -1);
+
+  var form = document.getElementById("form");
+  var currentPage = window.location.pathname.split("/").pop();
+  var select = document.getElementById("select");
+  var disabledOption = Object.assign(document.createElement("option"), {
+    value: "",
+    innerText: "Selecione:",
+    selected: true,
+    disabled: true,
+  });
+  var selectedOption = Object.assign(document.createElement("option"), {
+    selected: true,
+    className: "editora",
+  });
+  if (action === "Cadastrar") {
+    form.action = ".create/create" + currentPage;
+    if (select) {
+      select.classList.remove("is-valid");
+      select.classList.add("is-invalid");
+
+      $.ajax({
+        url: "../php/getregistersdata.php",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          var publishersList = data["Publisher"];
+
+          select.innerHTML = "";
+          select.appendChild(disabledOption);
+
+          var keys = Object.keys(publishersList);
+          for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            var option = document.createElement("option");
+
+            option.textContent = publishersList[key].nome;
+            select.appendChild(option);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(
+            "Erro na solicitação AJAX: " + status + " - " + error + " - " + xhr
+          );
+        },
+      });
+    }
+  } else if (action === "Editar") {
+    form.action = ".update/update" + currentPage;
+    if (select) {
+      select.classList.add("is-valid");
+      select.classList.remove("is-invalid");
+
+      select.innerHTML = "";
+      select.appendChild(selectedOption);
+    }
+  }
 }
 
-function fecharModal(fecharModal) {
-  var modal = document.getElementById(fecharModal);
+function fecharModal(modalId) {
+  var modal = document.getElementById(modalId);
   modal.style.display = "none";
+  this.resetForm(modalId);
 
-  // Conforme vai abrindo o modal de editar, os options da editora vão se multiplicando. Isso limpa todos com exceção do primeiro, que é correspondente ao livro. São adicionados quando o modal é aberto novamente.
+  // Conforme vai abrindo o modal de editar, os options da editora vão se multiplicando.
+  // Isso limpa todos com exceção do primeiro, que é correspondente ao livro.
+  // São adicionados quando o modal é aberto novamente.
   var select = document.getElementById("select");
   while (select.children.length > 1) {
     select.removeChild(select.children[1]);
@@ -66,7 +128,7 @@ tableRows.forEach((row) => {
 function resetForm(modalId) {
   var form = document.querySelector(`#${modalId} form`);
   form.classList.remove("was-validated");
-  if (modalId === "vis-modal") {
+  if (modalId === "modal") {
     form.reset();
   }
 }
@@ -94,8 +156,8 @@ document.addEventListener("DOMContentLoaded", function () {
       novoBtn.className = "novobtn";
       novoBtn.textContent = "NOVO";
       novoBtn.addEventListener("click", function () {
-        abrirModal("vis-modal");
-        resetForm("vis-modal");
+        abrirModal("modal", "Cadastrar");
+        resetForm("modal");
       });
 
       var plusIcon = document.createElement("span");
@@ -107,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
       wrapper.appendChild(novoBtn);
       gridHeader.appendChild(wrapper);
     } else {
-      console.error("Elemento .grid-header não encontrado.");
+      // a classe .grid-header não foi achada (tenso)
     }
   }, 100);
 });

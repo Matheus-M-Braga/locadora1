@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../css/style.css?<?php echo rand(1, 1000); ?>" media="all">
-    <link rel="stylesheet" href="../css/mediaquery.css?<?php echo rand(1, 1000); ?>">
+    <?php
+    $pageTitle = "Excluir Aluguel";
+    include("../components/crud/head.php");
+    ?>
 </head>
 
 <body>
@@ -11,14 +12,14 @@
     if (!empty($_GET['id'])) {
         include_once('../php/config.php');
 
-        $codAluguel = $_GET['id'];
+        $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM alugueis WHERE id = $codAluguel";
+        $sqlSelect = "SELECT * FROM alugueis WHERE id = $id";
 
         $result = $conexao->query($sqlSelect);
 
         if ($result->num_rows > 0) {
-            $sqlDelete = "DELETE FROM alugueis WHERE id = $codAluguel";
+            $sqlDelete = "DELETE FROM alugueis WHERE id = $id";
             $resultDelete = $conexao->query($sqlDelete);
             echo "
             <script>
@@ -29,7 +30,7 @@
                     showConfirmButton: false,
                     timer: 1700
                 })
-                .then(() => {window.location.href = '../aluguel.php';})
+                .then(() => {window.location.href = '../Rental.php';})
             </script>";
         }
         $sqlReset = "ALTER TABLE alugueis AUTO_INCREMENT = 1;";

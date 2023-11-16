@@ -10,7 +10,6 @@ $(document).ready(function () {
       type: "GET",
       dataType: "json",
       success: function (DashData) {
-        console.log(DashData);
         GenerateCharts(DashData);
         GetCardsData(DashData);
       },
@@ -31,6 +30,7 @@ $(document).ready(function () {
 
     if (Barlabels == null || Bardata == null) {
       noDataInfo.style.display = "block";
+      BarChart.style.display = "none";
     } else {
       new Chart(BarChart, {
         type: "bar",
@@ -56,12 +56,12 @@ $(document).ready(function () {
             },
             title: {
               display: true,
-              text: 'Livros Mais Alugados',
-              color: 'rgb(87, 87, 87)',
+              text: "Livros Mais Alugados",
+              color: "rgb(87, 87, 87)",
               font: {
-                size: 30, 
-                weight: 'bold', 
-                family: 'Arial, sans-serif', 
+                size: 30,
+                weight: "bold",
+                family: "Arial, sans-serif",
               },
             },
           },
@@ -76,16 +76,21 @@ $(document).ready(function () {
 
     // PieChart
     const PieChart = document.getElementById("grafico02");
-    const noDataInfo2 = document.getElementById("grafico1Warnning");
+    const noDataInfo2 = document.getElementById("grafico2Warnning");
     var PieInfo = DashData["rentalStatus"];
     var Piedata = [
       PieInfo["pendentes"],
       PieInfo["noprazo"],
       PieInfo["atrasados"],
     ];
-    
-    if (PieInfo == null || Piedata == null) {
+
+    if (
+      PieInfo["pendentes"] == 0 &&
+      PieInfo["noprazo"] == 0 &&
+      PieInfo["atrasados"] == 0
+    ) {
       noDataInfo2.style.display = "block";
+      PieChart.style.display = "none";
     } else {
       new Chart(PieChart, {
         type: "pie",
@@ -116,12 +121,12 @@ $(document).ready(function () {
             },
             title: {
               display: true,
-              text: 'Status De Aluguéis',
-              color: 'rgb(87, 87, 87)',
+              text: "Status De Aluguéis",
+              color: "rgb(87, 87, 87)",
               font: {
-                size: 30, 
-                weight: 'bold', 
-                family: 'Verdana, sans-serif', 
+                size: 30,
+                weight: "bold",
+                family: "Verdana, sans-serif",
               },
             },
           },

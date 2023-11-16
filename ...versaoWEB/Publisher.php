@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once('./php/config.php');
+include_once('php/config.php');
 
 // Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
@@ -10,8 +10,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-// Select inicial
-$sql = "SELECT * FROM usuarios ORDER BY id ASC";
+$sql = "SELECT * FROM editoras ORDER BY id ASC";
 $result = $conexao->query($sql);
 ?>
 <!DOCTYPE html>
@@ -32,15 +31,15 @@ $result = $conexao->query($sql);
             <div id="modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 id="modalTitle" class="text-balck titulo_modal"></h1>
+                        <h1 id="modalTitle" class="text-balck" style="font-size: 30px; margin-bottom: 5px;"></h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('modal')">
                     </div>
                     <form id="form" action="" method="POST" class="row g-3 needs-validation" novalidate>
                         <input type="hidden" name="id" class="id">
                         <div class="col">
                             <div class="row-md-3">
-                                <label for="nome" class="form-label text-black">Nome</label>
-                                <input type="text" name="nome" id="nome" class="form-control nome" autocomplete="off" maxlength="45" required>
+                                <label for="nome" class="form-label text-black bold">Nome</label>
+                                <input type="text" name="nome" id="nome" class="form-control nome" maxlength="45" autocomplete="off" required>
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
@@ -49,14 +48,7 @@ $result = $conexao->query($sql);
                                 <label for="cidade" class="form-label text-black">Cidade</label>
                                 <input type="text" name="cidade" id="cidade" class="form-control cidade" autocomplete="off" maxlength="45" required>
                                 <div class="invalid-feedback">
-                                    • Informe a cidade
-                                </div>
-                            </div>
-                            <div class="row-md-3">
-                                <label for="endereco" class="form-label text-black">Endereço</label>
-                                <input type="text" name="endereco" id="endereco" class="form-control endereco" autocomplete="off" maxlength="75" required>
-                                <div class="invalid-feedback">
-                                    • Informe o endereço
+                                    • Informe o cidade
                                 </div>
                             </div>
                             <div class="row-md-3">
@@ -77,13 +69,13 @@ $result = $conexao->query($sql);
             <div id="exclu-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck titulo_modal">Excluir Usuário</h1>
+                        <h1 class="text-balck titulo_modal">Excluir Editora</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('exclu-modal')">
                     </div>
                     <div class="iconDel">
                         <img src="img/aviso.png" alt="">
                     </div>
-                    <p>Tem certeza que deseja excluir o usuário selecionado?</p>
+                    <p>Tem certeza que deseja excluir a editora selecionada?</p>
                     <div class="col-12" style="text-align: center;">
                         <button class="btn btn-success" type="reset" onclick="fecharModal('exclu-modal')">Cancelar</button>
                         <button class="btn btn-danger confirm_exclu" type="submit" name="delete" id="excluir">Excluir</button>
@@ -92,37 +84,35 @@ $result = $conexao->query($sql);
             </div>
             <!-- GRID -->
             <div class="grid-body">
-                <table class='container-grid ' id="tabela">
+                <table class='container-grid' id="tabela">
                     <thead>
                         <tr>
-                            <th class='titulos' id='id'>ID</th>
-                            <th class='titulos' id='nome'>NOME</th>
-                            <th class='titulos' id='cidade'>CIDADE</th>
-                            <th class='titulos' id='endereco'>ENDEREÇO</th>
-                            <th class='titulos' id='mail'>EMAIL</th>
-                            <th class='titulos acoes'>AÇÕES</th>
+                            <th class='titulos'>ID</th>
+                            <th class='titulos'>NOME</th>
+                            <th class='titulos'>CIDADE</th>
+                            <th class='titulos'>EMAIL</th>
+                            <th class='titulos'>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         if (mysqli_num_rows($result) > 0) {
-                            while ($user_data = mysqli_fetch_assoc($result)) {
+                            while ($editora_data = mysqli_fetch_assoc($result)) {
                                 echo "
-                                <tr>
-                                <td class='itens ID'>" . $user_data['id'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['nome'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['cidade'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['endereco'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['email'] . "</td>"
+                        <tr>
+                            <td class='itens'>" . $editora_data['id'] . "</td>"
+                                    . "<td class='itens'>" . $editora_data['nome'] . "</td>"
+                                    . "<td class='itens'>" . $editora_data['cidade'] . "</td>"
+                                    . "<td class='itens'>" . $editora_data['email'] . "</td>"
                                     . "<td class='itens'>
-                                    <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
-                                    &nbsp;&nbsp;
-                                    <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal'," . "'Excluir')" . " alt='Bin' title='Deletar'>
-                                </td>
-                                </tr>";
+                                <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
+                                &nbsp;&nbsp;
+                                <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
+                            </td>
+                        </tr>";
                             }
                         } else {
-                            echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
+                            echo "<tr><td class='itens noresult' colspan='5'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
                     </tbody>
