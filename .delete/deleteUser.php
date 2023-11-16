@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../css/style.css" media="all">
-    <link rel="stylesheet" href="../css/mediaquery.css">
+    <?php
+    $pageTitle = "Excluir Usuário";
+    include("../components/crud/head.php");
+    ?>
 </head>
 
 <body>
@@ -31,7 +32,7 @@
             echo "
             <script>
                Swal.fire({
-                  title: 'O usuário possui um ou mais aluguéis associados!',
+                  title: 'Usuário possui associação com aluguéis!',
                   text: '',
                   icon: 'error',
                   showConfirmButton: false,

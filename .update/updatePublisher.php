@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../css/style.css" media="all">
-    <link rel="stylesheet" href="../css/mediaquery.css">
+    <?php
+    $pageTitle = "Atualizar Editora";
+    include("../components/crud/head.php");
+    ?>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 
         // Conexão tabela livros
         $sql_editora = "SELECT * FROM editoras WHERE id = $codEditora";
-        $result_editora = $conexao -> query($sql_editora);
+        $result_editora = $conexao->query($sql_editora);
         $editora_data = mysqli_fetch_assoc($result_editora);
         $nome_old = $editora_data['nome'];
 
@@ -28,7 +29,7 @@
 
         if ($result_livro->num_rows > 0) {
             $UpdateEditoraName = "UPDATE livros SET editora = '$nomeEditora' WHERE editora = '$nome_old'";
-            $result = $conexao -> query($UpdateEditoraName);
+            $result = $conexao->query($UpdateEditoraName);
             $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', cidade = '$cidade' WHERE id = '$codEditora'";
             $result = $conexao->query($sqlUpdate);
             echo "

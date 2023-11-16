@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <head>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <link rel="stylesheet" href="../css/style.css" media="all">
-   <link rel="stylesheet" href="../css/mediaquery.css">
+   <?php
+    $pageTitle = "Criar Editora";
+    include("../components/crud/head.php");
+   ?>
 </head>
 
 <body>

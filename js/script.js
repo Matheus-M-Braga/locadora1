@@ -1,14 +1,30 @@
 /* Modal */
-function abrirModal(carregarModal) {
-  var modal = document.getElementById(carregarModal);
+function abrirModal(modalId, action) {
+  var modal = document.getElementById(modalId);
   modal.style.display = "block";
+
+  var title = document.getElementById("modalTitle");
+  title.textContent = action + " " + GetPageName().slice(0, -1);
+
+  var form = document.getElementById("form");
+  var currentPage = window.location.pathname.split("/").pop();
+  if (action === "Criar") {
+    form.action = ".create/create" + currentPage;
+  } else if (action === "Editar") {
+    form.action = ".update/update" + currentPage;
+  } else {
+    // abóbora
+  }
 }
 
-function fecharModal(fecharModal) {
-  var modal = document.getElementById(fecharModal);
+function fecharModal(modalId) {
+  var modal = document.getElementById(modalId);
   modal.style.display = "none";
+  this.resetForm(modalId);
 
-  // Conforme vai abrindo o modal de editar, os options da editora vão se multiplicando. Isso limpa todos com exceção do primeiro, que é correspondente ao livro. São adicionados quando o modal é aberto novamente.
+  // Conforme vai abrindo o modal de editar, os options da editora vão se multiplicando.
+  // Isso limpa todos com exceção do primeiro, que é correspondente ao livro.
+  // São adicionados quando o modal é aberto novamente.
   var select = document.getElementById("select");
   while (select.children.length > 1) {
     select.removeChild(select.children[1]);
@@ -66,7 +82,7 @@ tableRows.forEach((row) => {
 function resetForm(modalId) {
   var form = document.querySelector(`#${modalId} form`);
   form.classList.remove("was-validated");
-  if (modalId === "vis-modal") {
+  if (modalId === "modal") {
     form.reset();
   }
 }
@@ -94,8 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
       novoBtn.className = "novobtn";
       novoBtn.textContent = "NOVO";
       novoBtn.addEventListener("click", function () {
-        abrirModal("vis-modal");
-        resetForm("vis-modal");
+        abrirModal("modal", "Criar");
+        resetForm("modal");
       });
 
       var plusIcon = document.createElement("span");
