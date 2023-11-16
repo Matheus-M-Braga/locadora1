@@ -8,12 +8,58 @@ function abrirModal(modalId, action) {
 
   var form = document.getElementById("form");
   var currentPage = window.location.pathname.split("/").pop();
-  if (action === "Criar") {
+  var select = document.getElementById("select");
+  var disabledOption = Object.assign(document.createElement("option"), {
+    value: "",
+    innerText: "Selecione:",
+    selected: true,
+    disabled: true,
+  });
+  var selectedOption = Object.assign(document.createElement("option"), {
+    selected: true,
+    className: "editora",
+  });
+  if (action === "Cadastrar") {
     form.action = ".create/create" + currentPage;
+    if (select) {
+      select.classList.remove("is-valid");
+      select.classList.add("is-invalid");
+
+      $.ajax({
+        url: "../php/getregistersdata.php",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          var publishersList = data["Publisher"];
+
+          select.innerHTML = "";
+          select.appendChild(disabledOption);
+
+          var keys = Object.keys(publishersList);
+          for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            var option = document.createElement("option");
+
+            option.textContent = publishersList[key].nome;
+            select.appendChild(option);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(
+            "Erro na solicitação AJAX: " + status + " - " + error + " - " + xhr
+          );
+        },
+      });
+    }
   } else if (action === "Editar") {
     form.action = ".update/update" + currentPage;
-  } else {
-    // abóbora
+    if (select) {
+      select.classList.add("is-valid");
+      select.classList.remove("is-invalid");
+
+      select.innerHTML = "";
+      select.appendChild(selectedOption);
+    }
   }
 }
 
@@ -110,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       novoBtn.className = "novobtn";
       novoBtn.textContent = "NOVO";
       novoBtn.addEventListener("click", function () {
-        abrirModal("modal", "Criar");
+        abrirModal("modal", "Cadastrar");
         resetForm("modal");
       });
 

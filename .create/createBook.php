@@ -9,20 +9,19 @@
 
 <body>
    <?php
-   // Insert
    if (isset($_POST['submit'])) {
       include_once('../php/config.php');
 
-      $nomeLivro = $_POST['nome-livro'];
+      $nome = $_POST['nome'];
       $autor = $_POST['autor'];
       $editora = $_POST['editora'];
       $lancamento = $_POST['lancamento'];
       $quantidade = $_POST['quantidade'];
 
-      $sqllivro = "SELECT * FROM livros WHERE nome = '$nomeLivro' AND autor = '$autor'";
+      $sqllivro = "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'";
       $resultado = $conexao->query($sqllivro);
 
-      if (mysqli_num_rows($resultado) == 1) {
+      if (mysqli_num_rows($resultado) >= 1) {
          echo "
          <script>
             Swal.fire({
@@ -35,7 +34,7 @@
             .then(() => {window.location.href = '../Book.php';})
          </script>";
       } else {
-         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nomeLivro', '$autor', '$editora', '$lancamento', '$quantidade')");
+         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nome', '$autor', '$editora', '$lancamento', '$quantidade')");
          echo "
          <script>
             Swal.fire({

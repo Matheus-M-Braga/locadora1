@@ -30,11 +30,11 @@
         $resultlivro_conect = $conexao->query($sqllivro_conect);
 
         $livro_data = mysqli_fetch_assoc($resultlivro_conect);
-        $nomeLivro_BD = $livro_data['nome'];
+        $livro_BD = $livro_data['nome'];
         $quantidade_BD = $livro_data['quantidade'];
         $quantidade_nova = $quantidade_BD + 1;
 
-        $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$nomeLivro_BD'";
+        $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$livro_BD'";
         $sqlResultAlterar = $conexao->query($sqlAlterar);
 
         if ($resultSelect->num_rows > 0) {

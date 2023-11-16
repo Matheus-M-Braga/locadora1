@@ -9,19 +9,18 @@
 
 <body>
    <?php
-   // Insert
    if (isset($_POST['submit'])) {
 
       include_once('../php/config.php');
 
-      $nomeEditora = $_POST['nome-editora'];
-      $email = $_POST['email-editora'];
-      $cidade = $_POST['cidade-editora'];
+      $nome = $_POST['nome'];
+      $email = $_POST['email'];
+      $cidade = $_POST['cidade'];
 
-      $sqleditora = "SELECT * FROM editoras WHERE nome = '$nomeEditora'";
+      $sqleditora = "SELECT * FROM editoras WHERE nome = '$nome'";
       $resultado = $conexao->query($sqleditora);
 
-      if (mysqli_num_rows($resultado) == 1) {
+      if (mysqli_num_rows($resultado) >= 1) {
          echo "
          <script>
             Swal.fire({
@@ -34,7 +33,7 @@
             .then(() => {window.location.href = '../Publisher.php';})
          </script>";
       } else {
-         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nomeEditora', '$email', '$cidade')");
+         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nome', '$email', '$cidade')");
          echo "
          <script>
             Swal.fire({

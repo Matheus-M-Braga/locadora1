@@ -11,15 +11,15 @@
     <?php
     include_once('../php/config.php');
 
-    if (isset($_POST['update'])) {
+    if (isset($_POST['submit'])) {
 
-        $codEditora = $_POST['id'];
-        $nomeEditora = $_POST['nome-editora'];
-        $email = $_POST['email-editora'];
-        $cidade = $_POST['cidade-editora'];
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $cidade = $_POST['cidade'];
 
         // Conexão tabela livros
-        $sql_editora = "SELECT * FROM editoras WHERE id = $codEditora";
+        $sql_editora = "SELECT * FROM editoras WHERE id = $id";
         $result_editora = $conexao->query($sql_editora);
         $editora_data = mysqli_fetch_assoc($result_editora);
         $nome_old = $editora_data['nome'];
@@ -28,9 +28,9 @@
         $result_livro = $conexao->query($sql_livro);
 
         if ($result_livro->num_rows > 0) {
-            $UpdateEditoraName = "UPDATE livros SET editora = '$nomeEditora' WHERE editora = '$nome_old'";
+            $UpdateEditoraName = "UPDATE livros SET editora = '$nome' WHERE editora = '$nome_old'";
             $result = $conexao->query($UpdateEditoraName);
-            $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', cidade = '$cidade' WHERE id = '$codEditora'";
+            $sqlUpdate = "UPDATE editoras SET nome = '$nome', email = '$email', cidade = '$cidade' WHERE id = '$id'";
             $result = $conexao->query($sqlUpdate);
             echo "
             <script>
@@ -44,7 +44,7 @@
                 .then(() => {window.location.href = '../Publisher.php';})
             </script>";
         } else {
-            $sqlUpdate = "UPDATE editoras SET nome = '$nomeEditora', email = '$email', cidade = '$cidade' WHERE id = '$codEditora'";
+            $sqlUpdate = "UPDATE editoras SET nome = '$nome', email = '$email', cidade = '$cidade' WHERE id = '$id'";
             $result = $conexao->query($sqlUpdate);
             echo "
             <script>

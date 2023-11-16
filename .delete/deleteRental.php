@@ -12,14 +12,14 @@
     if (!empty($_GET['id'])) {
         include_once('../php/config.php');
 
-        $codAluguel = $_GET['id'];
+        $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM alugueis WHERE id = $codAluguel";
+        $sqlSelect = "SELECT * FROM alugueis WHERE id = $id";
 
         $result = $conexao->query($sqlSelect);
 
         if ($result->num_rows > 0) {
-            $sqlDelete = "DELETE FROM alugueis WHERE id = $codAluguel";
+            $sqlDelete = "DELETE FROM alugueis WHERE id = $id";
             $resultDelete = $conexao->query($sqlDelete);
             echo "
             <script>

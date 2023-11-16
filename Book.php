@@ -12,10 +12,6 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
 
 $sql = "SELECT * FROM livros ORDER BY id ASC";
 $result = $conexao->query($sql);
-
-// Conexão tabela editoras
-$sqlEditoras_conect = "SELECT * FROM editoras ORDER BY id ASC";
-$resultEditora_conect = $conexao->query($sqlEditoras_conect);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,50 +28,44 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
     ?>
     <div class="corpo">
         <main>
-            <!-- Modal -->
-            <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
+            <div id="modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Livro</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
+                        <h1 id="modalTitle" class="text-balck" style="font-size: 30px; margin-bottom: 5px;"></h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('modal')">
                     </div>
-                    <form action=".create/createBook.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form id="form" action="" method="POST" class="row g-3 needs-validation" novalidate>
+                        <input type="hidden" name="id" class="id">
                         <div class="col">
                             <div class="row-md-3">
-                                <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-livro" type="text" class="form-control" id="input1" maxlength="45" required autocomplete="off">
+                                <label for="nome" class="form-label text-black bold">Nome</label>
+                                <input type="text" name="nome" id="nome" class="form-control nome" autocomplete="off" maxlength="45" required>
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">Autor</label>
-                                <input name="autor" type="text" class="form-control" id="input2" maxlength="45" required autocomplete="off">
+                                <label for="autor" class="form-label text-black">Autor</label>
+                                <input type="text" name="autor" id="autor" class="form-control autor" autocomplete="off" maxlength="45" required>
                                 <div class="invalid-feedback">
                                     • Informe o autor
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Editora</label>
-                                <select name="editora" class="form-select needs-validation is-invalid" id="input3" required>
-                                    <option value="" selected disabled>Selecione:</option>
-                                    <?php
-                                    while ($editora_data = mysqli_fetch_assoc($resultEditora_conect)) {
-                                        echo "<option value='{$editora_data['nome']}'>{$editora_data['nome']}</option>";
-                                    }
-                                    ?>
+                                <label for="select" class="form-label text-black">Editora</label>
+                                <select name="editora" id="select" class="form-select needs-validation is-invalid" required>
                                 </select>
                             </div>
                             <div class="row-md-3">
-                                <label for="input4" class="form-label text-black">Lançamento</label>
-                                <input name="lancamento" type="text" class="form-control number" id="input4" maxlength="4" required autocomplete="off">
+                                <label for="lancamento" class="form-label text-black">Lançamento</label>
+                                <input type="text" name="lancamento" id="lancamento" class="form-control number lancamento" maxlength="4" autocomplete="off" required>
                                 <div class="invalid-feedback">
                                     • Informe o ano de lançamento
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input5" class="form-label text-black">Quantidade</label>
-                                <input name="quantidade" type="number" class="form-control number" id="input5" maxlength="4" required autocomplete="off">
+                                <label for="quantidade" class="form-label text-black">Quantidade</label>
+                                <input type="number" name="quantidade" id="quantidade" class="form-control number quantidade" maxlength="4" autocomplete="off" required>
                                 <div class="invalid-feedback">
                                     • Informe a quantidade
                                 </div>
@@ -83,55 +73,6 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                         </div>
                         <div class="col-12" style="text-align: center;">
                             <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Modal edit -->
-            <div id="edit-modal" class="modal">
-                <div class="conteudo-modal">
-                    <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Livro</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal');">
-                    </div>
-                    <form action=".update/updateBook.php" method="POST" class="row g-3 needs-validation" novalidate>
-                        <input type="hidden" name="id" class="id">
-                        <div class="row-md-3">
-                            <label for="campo2" class="form-label text-black bold">Nome</label>
-                            <input name="nome-livro" type="text" class="form-control nome" id="campo2" maxlength="45" required autocomplete="off">
-                            <div class="invalid-feedback">
-                                • Informe o nome
-                            </div>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo3" class="form-label text-black">Autor</label>
-                            <input name="autor" type="text" class="form-control autor" class="autor" id="campo3" maxlength="45" required autocomplete="off">
-                            <div class="invalid-feedback">
-                                • Informe o autor
-                            </div>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo4" class="form-label text-black">Editora</label>
-                            <select title="fodase" name="editora" class="form-select needs-validation is-valid" id="select" required>
-                                <option value="" class="editora" id="selected" selected></option>
-                            </select>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo5" class="form-label text-black">Lançamento</label>
-                            <input name="lancamento" type="text" class="form-control number lancamento" id="campo5" maxlength="4" required autocomplete="off">
-                            <div class="invalid-feedback">
-                                • Informe o ano de lançamento
-                            </div>
-                        </div>
-                        <div class="row-md-3">
-                            <label for="campo6" class="form-label text-black">Quantidade</label>
-                            <input name="quantidade" type="number" class="form-control number quantidade" id="campo6" maxlength="4" required autocomplete="off">
-                            <div class="invalid-feedback">
-                                • Informe a quantidade
-                            </div>
-                        </div>
-                        <div class="col-12" style="text-align: center;">
-                            <button class="btn btn-success" type="submit" name="update">Confirmar</button>
                         </div>
                     </form>
                 </div>
@@ -191,7 +132,7 @@ $resultEditora_conect = $conexao->query($sqlEditoras_conect);
                                     . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
                                     . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
                                     . "<td class='itens'>
-                                        <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                        <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
                                         &nbsp;&nbsp;
                                         <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                                     </td>

@@ -44,17 +44,16 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
     ?>
     <div class="corpo">
         <main>
-            <!-- modal -->
-            <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
+            <div id="modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <class class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro do Aluguel</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
+                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastrar Aluguel</h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('modal')">
                     </class>
                     <form action=".create/createRental.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="row-md-3">
-                                <label for="input1" class="form-label text-black">Livro Alugado</label>
+                                <label for="input1" class="form-label text-black">Livro</label>
                                 <select name="nome-livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
                                     <option value="" selected disabled>Selecione:</option>
                                     <?php
@@ -177,7 +176,6 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                                     echo "<td class='itens'>" . $dev_dat . "</td>"
                                         . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
                                     echo "<td class='itens'></td></tr>";
-                                    //  <img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                                 }
                             }
                         } else {

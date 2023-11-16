@@ -12,17 +12,17 @@
     if (!empty($_GET['id'])) {
         include_once('../php/config.php');
 
-        $codLivro = $_GET['id'];
+        $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM livros WHERE id = $codLivro";
+        $sqlSelect = "SELECT * FROM livros WHERE id = $id";
 
         $result = $conexao->query($sqlSelect);
 
         $livro_data = mysqli_fetch_assoc($result);
-        $nomeLivro = $livro_data['nome'];
+        $nome = $livro_data['nome'];
 
         // Conexão tabela alugueis
-        $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nomeLivro' AND data_devolucao = 0";
+        $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome' AND data_devolucao = 0";
         $sqlAluguelConect_result = $conexao->query($sqlAluguelConect);
 
         while ($aluguel_data = mysqli_fetch_assoc($sqlAluguelConect_result)) {
@@ -33,7 +33,7 @@
             echo "
             <script>
                Swal.fire({
-                  title: 'Livro possui um ou mais aluguéis ativos!',
+                  title: 'Livro possui aluguéis ativos!',
                   text: '',
                   icon: 'error',
                   showConfirmButton: false,
@@ -43,7 +43,7 @@
             </script>";
         } else {
             if ($result->num_rows > 0) {
-                $sqlDelete = "DELETE FROM livros WHERE CodLivro = $codLivro";
+                $sqlDelete = "DELETE FROM livros WHERE id = $id";
                 $resultDelete = $conexao->query($sqlDelete);
             }
             $sqlReset = "ALTER TABLE livros AUTO_INCREMENT = 1;";

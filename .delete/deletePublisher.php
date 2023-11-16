@@ -12,17 +12,17 @@
     if (!empty($_GET['id'])) {
         include_once('../php/config.php');
 
-        $codEditora = $_GET['id'];
+        $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM editoras WHERE id = $codEditora";
+        $sqlSelect = "SELECT * FROM editoras WHERE id = $id";
 
         $result = $conexao->query($sqlSelect);
 
         $editora_data = mysqli_fetch_assoc($result);
-        $nomeEditora = $editora_data['nome'];
+        $nome = $editora_data['nome'];
 
         // Conexão tabela livros
-        $sqlLivro_conect = "SELECT * FROM livros WHERE editora = '$nomeEditora'";
+        $sqlLivro_conect = "SELECT * FROM livros WHERE editora = '$nome'";
         $sqlLivro_conect_result = $conexao->query($sqlLivro_conect);
 
         while ($livro_data = mysqli_fetch_assoc($sqlLivro_conect_result)) {
@@ -43,7 +43,7 @@
             </script>";
         } else {
             if ($result->num_rows > 0) {
-                $sqlDelete = "DELETE FROM editoras WHERE id = $codEditora";
+                $sqlDelete = "DELETE FROM editoras WHERE id = $id";
                 $resultDelete = $conexao->query($sqlDelete);
             }
             $sqlReset = "ALTER TABLE editoras AUTO_INCREMENT = 1;";

@@ -28,78 +28,38 @@ $result = $conexao->query($sql);
     ?>
     <div class="corpo">
         <main>
-            <!-- Modal -->
-            <div id="vis-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
+            <div id="modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastro da Editora</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('vis-modal')">
+                        <h1 id="modalTitle" class="text-balck" style="font-size: 30px; margin-bottom: 5px;"></h1>
+                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('modal')">
                     </div>
-                    <form action=".create/createPublisher.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form id="form" action="" method="POST" class="row g-3 needs-validation" novalidate>
+                        <input type="hidden" name="id" class="id">
                         <div class="col">
                             <div class="row-md-3">
-                                <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="input1" class="form-control" maxlength="45" required autocomplete="off">
+                                <label for="nome" class="form-label text-black bold">Nome</label>
+                                <input type="text" name="nome" id="nome" class="form-control nome" maxlength="45" autocomplete="off" required>
                                 <div class="invalid-feedback">
                                     • Informe o nome
                                 </div>
                             </div>
                             <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="input2" class="form-control" maxlength="100" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Informe o email
-                                </div>
-                            </div>
-
-                            <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Cidade</label>
-                                <input name="cidade-editora" type="text" id="input3" class="form-control cidade" required autocomplete="off">
+                                <label for="cidade" class="form-label text-black">Cidade</label>
+                                <input type="text" name="cidade" id="cidade" class="form-control cidade" autocomplete="off" maxlength="45" required>
                                 <div class="invalid-feedback">
                                     • Informe o cidade
                                 </div>
                             </div>
+                            <div class="row-md-3">
+                                <label for="email" class="form-label text-black">E-mail</label>
+                                <input type="email" name="email" id="email" class="form-control email" autocomplete="off" maxlength="100" required>
+                                <div class="invalid-feedback">
+                                    • Informe o email
+                                </div>
+                            </div>
                             <div class="col-12" style="text-align: center;">
                                 <button class="btn btn-success" type="submit" name="submit">Cadastrar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Modal edit -->
-            <div id="edit-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
-                <div class="conteudo-modal">
-                    <div class="top_modal">
-                        <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Editar Editora</h1>
-                        <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('edit-modal')">
-                    </div>
-                    <form action=".update/updatePublisher.php" method="POST" class="row g-3 needs-validation" novalidate>
-                        <div class="col">
-                            <input type="hidden" name="id" id="campo1" class="id">
-                            <div class="row-md-3">
-                                <label for="input1" class="form-label text-black bold">Nome</label>
-                                <input name="nome-editora" type="text" id="campo2" class="form-control nome" maxlength="45" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Informe o nome
-                                </div>
-                            </div>
-                            <div class="row-md-3">
-                                <label for="input2" class="form-label text-black">E-mail</label>
-                                <input name="email-editora" type="email" id="campo3" class="form-control email" maxlength="100" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Informe o e-mail
-                                </div>
-                            </div>
-
-                            <div class="row-md-3">
-                                <label for="input3" class="form-label text-black">Cidade</label>
-                                <input name="cidade-editora" type="text" id="campo4" class="form-control cidade" required autocomplete="off">
-                                <div class="invalid-feedback">
-                                    • Informe a cidade
-                                </div>
-                            </div>
-                            <div class="col-12" style="text-align: center;">
-                                <button class="btn btn-success" type="submit" name="update">Cadastrar</button>
                             </div>
                         </div>
                     </form>
@@ -145,7 +105,7 @@ $result = $conexao->query($sql);
                                     . "<td class='itens'>" . $editora_data['cidade'] . "</td>"
                                     . "<td class='itens'>" . $editora_data['email'] . "</td>"
                                     . "<td class='itens'>
-                                <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('edit-modal');resetForm('edit-modal');" . " alt='PencilEdit' title='Editar'>
+                                <img src='img/pencil.png' data-id='$editora_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
                                 &nbsp;&nbsp;
                                 <img src='img/bin.png' data-id='$editora_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                             </td>

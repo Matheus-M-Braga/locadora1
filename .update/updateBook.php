@@ -11,17 +11,17 @@
     <?php
     include_once('../php/config.php');
 
-    if (isset($_POST['update'])) {
+    if (isset($_POST['submit'])) {
 
-        $codLivro = $_POST['id'];
-        $nomeLivro = $_POST['nome-livro'];
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
         $autor = $_POST['autor'];
         $editora = $_POST['editora'];
         $lancamento = $_POST['lancamento'];
         $quantidade = $_POST['quantidade'];
 
         // Conexão tabela aluguéis
-        $sql_livro = "SELECT * FROM livros WHERE id = $codLivro";
+        $sql_livro = "SELECT * FROM livros WHERE id = $id";
         $result_livro = $conexao->query($sql_livro);
         $livro_data = mysqli_fetch_assoc($result_livro);
         $nome_old = $livro_data['nome'];
@@ -30,10 +30,10 @@
         $result_aluguel = $conexao->query($sql_aluguel);
 
         if ($result_aluguel->num_rows > 0) {
-            $UpdateLivroName = "UPDATE alugueis SET livro = '$nomeLivro' WHERE livro = '$nome_old'";
+            $UpdateLivroName = "UPDATE alugueis SET livro = '$nome' WHERE livro = '$nome_old'";
             $result = $conexao->query($UpdateLivroName);
 
-            $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
+            $sqlUpdate = "UPDATE livros SET nome = '$nome', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$id'";
             $result = $conexao->query($sqlUpdate);
 
             echo "
@@ -48,7 +48,7 @@
             .then(() => {window.location.href = '../Book.php';})
             </script>";
         } else {
-            $sqlUpdate = "UPDATE livros SET nome = '$nomeLivro', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$codLivro'";
+            $sqlUpdate = "UPDATE livros SET nome = '$nome', autor = '$autor', editora = '$editora', lancamento = '$lancamento', quantidade = '$quantidade' WHERE id = '$id'";
             $result = $conexao->query($sqlUpdate);
 
             echo "

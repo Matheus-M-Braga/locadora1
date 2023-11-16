@@ -33,7 +33,7 @@
             .then(() => {window.location.href = '../User.php';})
          </script>";
       } else {
-         $result = mysqli_query($conexao, "INSERT INTO usuarios(Nome, Cidade, Endereco, Email) VALUES ('$nome', '$cidade', '$endereco', '$email')");
+         $result = mysqli_query($conexao, "INSERT INTO usuarios(nome, cidade, endereco, email) VALUES ('$nome', '$cidade', '$endereco', '$email')");
          echo "
          <script>
             Swal.fire({
