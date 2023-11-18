@@ -61,13 +61,18 @@ $(document).ready(function () {
               font: {
                 size: 30,
                 weight: "bold",
-                family: "Arial, sans-serif",
+                family: "Roboto, sans-serif",
               },
             },
           },
           scales: {
+            x: {
+              grid: {
+                display: false
+              }
+            },
             y: {
-              beginAtZero: true,
+              display: false
             },
           },
         },
@@ -126,7 +131,7 @@ $(document).ready(function () {
               font: {
                 size: 30,
                 weight: "bold",
-                family: "Verdana, sans-serif",
+                family: "Roboto, sans-serif",
               },
             },
           },
