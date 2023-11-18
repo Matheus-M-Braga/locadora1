@@ -40,7 +40,6 @@ header {
   font-size: 20px;
 }
 
-/* navbar */
 .menubar {
   display: flex;
   flex-direction: row;
@@ -375,7 +374,7 @@ select {
   border-color: #264347f2;
 }
 
-/* exclu modal */
+/* DeleteModal */
 #exclu-modal,
 #devol-modal {
   text-align: center;
@@ -404,7 +403,7 @@ select {
   border: none;
 }
 
-/*Searchbar*/
+/* Searchbar */
 .sbx-custom {
   display: inline-block;
   position: relative;
@@ -563,14 +562,12 @@ li.disabled .page-link {
 .dash_father {
   display: flex;
   justify-content: space-around;
-  /* gap: 15%; */
   width: 100%;
   margin-top: 35px;
 }
 
 .dash_group {
   display: block;
-  /* flex-direction: column; */
   gap: 40px;
 }
 
@@ -637,11 +634,6 @@ table {
   height: 60px;
 }
 
-/* .container-grid .titulos:hover{
-  font-size: larger;
-  transition: 300ms;
-} */
-
 .container-grid .titulos.acoes {
   cursor: auto;
 }
@@ -704,7 +696,12 @@ li.active .page-link {
   margin: 0 auto;
 }
 
-/* Configs botao select */
+li.active .page-link {
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* Select */
 .select {
   position: relative;
   display: inline-block;
@@ -764,10 +761,4 @@ li.active .page-link {
 
 .select select:disabled~.select_arrow {
   border-top-color: #cccccc;
-}
-
-/* pagination */
-li.active .page-link {
-  z-index: 1;
-  cursor: pointer;
 }

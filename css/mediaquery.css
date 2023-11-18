@@ -1,5 +1,5 @@
 /* Header */
-@media screen and (min-width: 801px) and (max-width: 1200px) {
+@media (min-width: 801px) and (max-width: 1200px) {
    .logo a {
       font-size: 25px;
    }
@@ -10,7 +10,7 @@
 }
 
 /* Dashboard */
-@media screen and (max-width: 750px) {
+@media (max-width: 750px) {
    .graficos {
       flex-direction: column;
    }
@@ -34,7 +34,7 @@
    }
 }
 
-@media screen and (min-width: 751px) and (max-width: 1050px) {
+@media (min-width: 751px) and (max-width: 1050px) {
    .graficos #grafico {
       width: 55%;
    }
@@ -58,20 +58,20 @@
    }
 }
 
-@media screen and (min-width: 751px) and (max-width: 830px) {
+@media (min-width: 751px) and (max-width: 830px) {
    .graficos {
       height: 55%;
    }
 }
 
-@media screen and (min-width: 831px) and (max-width: 935px) {
+@media (min-width: 831px) and (max-width: 935px) {
    .graficos {
       height: 64%;
    }
 }
 
 /* Header table + Header page*/
-@media screen and (max-width: 840px) {
+@media (max-width: 840px) {
    .logo a {
       font-size: 25px;
    }
@@ -92,8 +92,8 @@
       flex-direction: column;
    }
 
-   .dataTables_filter{
-      width: 100% !important; 
+   .dataTables_filter {
+      width: 100% !important;
    }
 
    .wrapper {
@@ -107,7 +107,7 @@
 }
 
 /* Tabelas responsivas */
-@media screen and (max-width: 1090px) {
+@media (max-width: 1090px) {
    thead {
       display: none;
    }
@@ -151,7 +151,7 @@
 }
 
 /* modals */
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
    .conteudo-modal {
       width: 70%;
       max-height: max-content;
@@ -171,7 +171,7 @@
    }
 }
 
-@media screen and (min-width: 620px) and (max-width: 965px) {
+@media (min-width: 620px) and (max-width: 965px) {
    .input_row {
       align-items: stretch;
       flex-direction: column;
