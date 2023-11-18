@@ -1,6 +1,7 @@
 <?php
 include_once('config.php');
 
+// Mais alugados
 $sqlAluguel = "SELECT livro FROM alugueis";
 
 $resultadolivro = $conexao->query($sqlAluguel);
@@ -17,6 +18,7 @@ $mostRented = array(
     'infos' => $info
 );
 
+// Status
 $sql_status = "SELECT
     COUNT(CASE WHEN status = 'Pendente' THEN 1 END) AS pendentes,
     COUNT(CASE WHEN status = 'No prazo' THEN 1 END) AS noprazo,
@@ -37,7 +39,7 @@ $rentalStatus = array(
     "atrasados" => $atrasados
 );
 
-// último aluguel
+// Último aluguel
 $sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY id DESC LIMIT 1";
 $resultado_ultimo_aluguel = $conexao->query($sql_ultimo_aluguel);
 $ultimo_alugado = $resultado_ultimo_aluguel->fetch_assoc();
@@ -55,7 +57,7 @@ if (isset($total_usuarios['total_usuarios'])) {
 }
 $usersCount = $usuarios;
 
-// total de livros
+// Total de livros
 $sql_total_livros = "SELECT sum(quantidade) AS total_livros FROM livros";
 $resultado_total_livros = $conexao->query($sql_total_livros);
 $total_livros = $resultado_total_livros->fetch_assoc();

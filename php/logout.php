@@ -2,7 +2,7 @@
 
 <head>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <link rel="stylesheet" href="../css/login.css?<?php echo rand(1, 1000)?>">
+   <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>

@@ -10,8 +10,8 @@ $resultUser = $conexao->query($sqlUser);
 if ($resultUser->num_rows > 0) {
    $usuarios = array();
    while ($row = $resultUser->fetch_assoc()) {
-      $id = $row['id']; // Obtém o ID do registro
-      $usuarios[$id] = $row; // Usar o ID como índice
+      $id = $row['id'];
+      $usuarios[$id] = $row;
    }
    $data['User'] = $usuarios;
 } else {
@@ -25,8 +25,8 @@ $result = $conexao->query($sql);
 if ($result->num_rows > 0) {
    $livros = array();
    while ($row = $result->fetch_assoc()) {
-      $id = $row['id']; // Obtém o ID do registro
-      $livros[$id] = $row; // Usar o ID como índice
+      $id = $row['id'];
+      $livros[$id] = $row;
    }
    $data['Book'] = $livros;
 } else {
@@ -40,8 +40,8 @@ $result = $conexao->query($sql);
 if ($result->num_rows > 0) {
    $editoras = array();
    while ($row = $result->fetch_assoc()) {
-      $id = $row['id']; // Obtém o ID do registro
-      $editoras[$id] = $row; // Usar o ID como índice
+      $id = $row['id'];
+      $editoras[$id] = $row;
    }
    $data['Publisher'] = $editoras;
 } else {
@@ -55,8 +55,8 @@ $resultAlug = $conexao->query($sql);
 if ($result->num_rows > 0) {
    $alugueis = array();
    while ($row = $resultAlug->fetch_assoc()) {
-      $id = $row['id']; // Obtém o ID do registro
-      $alugueis[$id] = $row; // Usar o ID como índice
+      $id = $row['id'];
+      $alugueis[$id] = $row;
    }
    $data['Rental'] = $alugueis;
 } else {
