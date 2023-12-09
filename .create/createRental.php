@@ -17,11 +17,22 @@
       $usuario = $_POST['usuario'];
       $data_aluguel = date('Y-m-d');
       $prev_devolucao = $_POST['prev_devolucao'];
-      $data_devolucao = $_POST['data_devolucao'];
+      $data_devolucao = null;
       $status = "Pendente";
 
+      // Consulta do livro correspondente
+      $sqlLivro = "SELECT * FROM livros WHERE nome = '$livro'";
+      $resultLivro = $conexao -> query($sqlLivro);
+      $livro_data = mysqli_fetch_assoc($resultLivro);
+      $livro_id = $livro_data['id'];
 
-      $sqlSelect = "SELECT * FROM alugueis WHERE livro = '$livro' AND usuario = '$usuario' AND data_devolucao = 0";
+      // Consulta da editora correspondente
+      $sqlUsuario = "SELECT * FROM usuarios WHERE nome = '$usuario'";
+      $resultUsuario = $conexao -> query($sqlUsuario);
+      $usuario_data = mysqli_fetch_assoc($resultUsuario);
+      $usuario_id = $usuario_data['id'];
+
+      $sqlSelect = "SELECT * FROM alugueis WHERE livro_id = '$livro_id' AND usuario_id = '$usuario_id' AND data_devolucao = 0";
       $resultSelect = $conexao->query($sqlSelect);
 
       if (mysqli_num_rows($resultSelect) == 1) {
@@ -37,7 +48,7 @@
             .then(() => {window.location.href = '../Rental.php';})
          </script>";
       } else {
-         // Conexão tabela Livros
+         // Controle de estoque
          $sqllivro_conect = "SELECT * FROM livros WHERE nome = '$livro'";
          $resultlivro_conect = $conexao->query($sqllivro_conect);
 
@@ -50,7 +61,7 @@
             $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$livro'";
             $sqlResultAlterar = $conexao->query($sqlAlterar);
 
-            $result = mysqli_query($conexao, "INSERT INTO alugueis(livro, usuario, data_aluguel, prev_devolucao, data_devolucao, status) VALUES ('$livro', '$usuario', '$data_aluguel', '$prev_devolucao', '$data_devolucao', '$status')");
+            $result = mysqli_query($conexao, "INSERT INTO alugueis(livro_id, usuario_id, data_aluguel, prev_devolucao, data_devolucao, status) VALUES ('$livro_id', '$usuario_id', '$data_aluguel', '$prev_devolucao', '$data_devolucao', '$status')");
             echo "
             <script>
                Swal.fire({

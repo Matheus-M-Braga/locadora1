@@ -111,35 +111,35 @@ $result = $conexao->query($sql);
                     </thead>
                     <tbody>
                         <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($livro_data = mysqli_fetch_assoc($result)) {
-                                // Conexão tabela alugueis
-                                $nome_livro = $livro_data['nome'];
-                                $id = $livro_data['id'];
-                                $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro = '$nome_livro' AND data_devolucao = 0";
-                                $sqlAluguelResult = $conexao->query($sqlAluguelConect);
-                                $livro_data['alugados'] = $sqlAluguelResult->num_rows;
-                                $aluguel_quant = $livro_data['alugados'];
+                        while ($livro_data = mysqli_fetch_assoc($result)) {
+                            // Calculando a quantidade de alugados
+                            $id = $livro_data['id'];
+                            $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro_id = '$id' AND data_devolucao = 0";
+                            $sqlAluguelResult = $conexao->query($sqlAluguelConect);
+                            $livro_data['alugados'] = $sqlAluguelResult->num_rows;
+                            $aluguel_quant = $livro_data['alugados'];
 
-                                mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
-                                echo "
+                            // Select na tabela de editoras com base no 'editora_id'
+                            $sqlEditora = "SELECT nome FROM editoras WHERE id = ". $livro_data['editora_id']." ";
+                            $resultEditora = $conexao->query($sqlEditora);
+                            $editora_data = mysqli_fetch_assoc($resultEditora);
+
+                            mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
+                            echo "
                                 <tr>
                                     <td class='itens'>" . $livro_data['id'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['nome'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['autor'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['editora'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
-                                    . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
-                                    . "<td class='itens'>
+                                . "<td class='itens'>" . $livro_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['autor'] . "</td>"
+                                . "<td class='itens'>" . $editora_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['lancamento'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['quantidade'] . "</td>"
+                                . "<td class='itens'>" . $livro_data['alugados'] . "</td>"
+                                . "<td class='itens'>
                                         <img src='img/pencil.png' data-id='$livro_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
                                         &nbsp;&nbsp;
                                         <img src='img/bin.png' data-id='$livro_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                                     </td>
                                 </tr>";
-                            }
-                        } else {
-                            echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
                     </tbody>

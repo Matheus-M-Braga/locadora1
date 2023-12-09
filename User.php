@@ -105,24 +105,20 @@ $result = $conexao->query($sql);
                     </thead>
                     <tbody>
                         <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($user_data = mysqli_fetch_assoc($result)) {
-                                echo "
+                        while ($user_data = mysqli_fetch_assoc($result)) {
+                            echo "
                                 <tr>
                                 <td class='itens ID'>" . $user_data['id'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['nome'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['cidade'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['endereco'] . "</td>"
-                                    . "<td class='itens'>" . $user_data['email'] . "</td>"
-                                    . "<td class='itens'>
+                                . "<td class='itens'>" . $user_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $user_data['cidade'] . "</td>"
+                                . "<td class='itens'>" . $user_data['endereco'] . "</td>"
+                                . "<td class='itens'>" . $user_data['email'] . "</td>"
+                                . "<td class='itens'>
                                     <img src='img/pencil.png' data-id='$user_data[id]' class='edit' onclick=" . "abrirModal('modal'," . "'Editar');resetForm('modal');" . " alt='PencilEdit' title='Editar'>
                                     &nbsp;&nbsp;
                                     <img src='img/bin.png' data-id='$user_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal'," . "'Excluir')" . " alt='Bin' title='Deletar'>
                                 </td>
                                 </tr>";
-                            }
-                        } else {
-                            echo "<tr><td class='itens noresult' colspan='6'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
                     </tbody>

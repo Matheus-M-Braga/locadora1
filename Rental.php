@@ -54,7 +54,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black">Livro</label>
-                                <select name="nome-livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
+                                <select name="livro" class="form-control form-select needs-validation is-invalid" id="input1" required>
                                     <option value="" selected disabled>Selecione:</option>
                                     <?php
                                     while ($livro_data = mysqli_fetch_assoc($resultlivro_conect)) {
@@ -148,38 +148,44 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                     </thead>
                     <tbody>
                         <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($aluguel_data = mysqli_fetch_assoc($result)) {
-                                // Datas para serem exibidas no padrão d/m/Y na tabela
-                                $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
-                                $prev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
-                                $dev_dat = date("d/m/Y", strtotime($aluguel_data['data_devolucao']));
+                        while ($aluguel_data = mysqli_fetch_assoc($result)) {
+                            // Conversão dd/MM/yyyy
+                            $alug_dat = date("d/m/Y", strtotime($aluguel_data['data_aluguel']));
+                            $prev_dat = date("d/m/Y", strtotime($aluguel_data['prev_devolucao']));
+                            $dev_dat = date("d/m/Y", strtotime($aluguel_data['data_devolucao']));
 
-                                echo "
+                            // Select na tabela de livros com base no 'livro_id'
+                            $sqlLivro = "SELECT nome FROM livros WHERE id = " . $aluguel_data['livro_id'] . " ";
+                            $resultLivro = $conexao->query($sqlLivro);
+                            $livro_data = mysqli_fetch_assoc($resultLivro);
+
+                            // Select na tabela de usuarios com base no 'usuario_id'
+                            $sqlUsuario = "SELECT nome FROM usuarios WHERE id = " . $aluguel_data['usuario_id'] . " ";
+                            $resultUsuario = $conexao->query($sqlUsuario);
+                            $usuario_data = mysqli_fetch_assoc($resultUsuario);
+
+                            echo "
                                 <tr>
                                 <td class='itens'>" . $aluguel_data['id'] . "</td>"
-                                    . "<td class='itens'>" . $aluguel_data['livro'] . "</td>"
-                                    . "<td class='itens'>" . $aluguel_data['usuario'] . "</td>"
-                                    . "<td class='itens'>" . $alug_dat . "</td>"
-                                    . "<td class='itens'>" . $prev_dat . "</td>";
+                                . "<td class='itens'>" . $livro_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $usuario_data['nome'] . "</td>"
+                                . "<td class='itens'>" . $alug_dat . "</td>"
+                                . "<td class='itens'>" . $prev_dat . "</td>";
 
-                                if ($aluguel_data['data_devolucao'] == 0) {
-                                    echo "<td class='itens'>...</td>"
-                                        . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                                    echo "<td class='itens'>
+                            if ($aluguel_data['data_devolucao'] === "0000-00-00") {
+                                echo "<td class='itens'>...</td>"
+                                    . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
+                                echo "<td class='itens'>
                                     <img src='img/check.png' alt='Devolver' title='Devolver' data-id='$aluguel_data[id]'  class='devol' onclick=" . "abrirModal('devol-modal')" . ">
                                     <img src='img/bin.png' data-id='$aluguel_data[id]' class='exclu' onclick=" . "abrirModal('exclu-modal')" . " alt='Bin' title='Deletar'>
                                     </td></tr>";
-                                } else {
-                                    $hoje = date("Y/m/d");
-                                    $previsao = $aluguel_data['prev_devolucao'];
-                                    echo "<td class='itens'>" . $dev_dat . "</td>"
-                                        . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                                    echo "<td class='itens'></td></tr>";
-                                }
+                            } else {
+                                $hoje = date("Y/m/d");
+                                $previsao = $aluguel_data['prev_devolucao'];
+                                echo "<td class='itens'>" . $dev_dat . "</td>"
+                                    . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
+                                echo "<td class='itens'></td></tr>";
                             }
-                        } else {
-                            echo "<tr><td class='itens noresult' colspan='8'>Nenhum registro encontrado</td></tr>";
                         }
                         ?>
                     </tbody>

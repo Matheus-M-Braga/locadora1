@@ -20,13 +20,13 @@
         $resultSelect = $conexao->query($sqlSelect);
 
         $aluguel_data = mysqli_fetch_assoc($resultSelect);
-        $livro = $aluguel_data['livro'];
+        $livro_id = $aluguel_data['livro_id'];
         $comp_previsao = $aluguel_data['prev_devolucao'];
         $hoje = date('Y-m-d');
 
 
         // Conexão tabela Livros
-        $sqllivro_conect = "SELECT * FROM livros WHERE nome = '$livro'";
+        $sqllivro_conect = "SELECT * FROM livros WHERE id = '$livro_id'";
         $resultlivro_conect = $conexao->query($sqllivro_conect);
 
         $livro_data = mysqli_fetch_assoc($resultlivro_conect);

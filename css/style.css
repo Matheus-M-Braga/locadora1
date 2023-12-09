@@ -613,6 +613,10 @@ table {
   border-radius: 5px;
 }
 
+.dataTables_empty {
+  padding: 15px !important;
+}
+
 .container-grid {
   width: 100%;
   margin-bottom: 25px;
@@ -659,6 +663,11 @@ table {
 
 .itens img {
   cursor: pointer;
+}
+
+.itens img:hover {
+  transform: scale(1.05);
+  transition: 200ms ease-out;
 }
 
 .container-grid .itens.noresult {

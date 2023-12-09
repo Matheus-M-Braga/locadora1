@@ -21,6 +21,12 @@
       $sqllivro = "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'";
       $resultado = $conexao->query($sqllivro);
 
+      // Consulta da editora correspondente
+      $sqleditora = "SELECT * FROM editoras WHERE nome = '$editora'";
+      $resultEditora = $conexao -> query($sqleditora);
+      $editora_data = mysqli_fetch_assoc($resultEditora);
+      $editora_id = $editora_data['id'];
+
       if (mysqli_num_rows($resultado) >= 1) {
          echo "
          <script>
@@ -34,7 +40,7 @@
             .then(() => {window.location.href = '../Book.php';})
          </script>";
       } else {
-         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora, lancamento, quantidade) VALUES ('$nome', '$autor', '$editora', '$lancamento', '$quantidade')");
+         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora_id, lancamento, quantidade) VALUES ('$nome', '$autor', '$editora_id', '$lancamento', '$quantidade')");
          echo "
          <script>
             Swal.fire({
