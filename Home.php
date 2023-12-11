@@ -1,9 +1,11 @@
 <?php
 session_start();
+include_once('php/config.php');
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
+    $bosta = mysqli_query($conexao , "SELECT * FROM livros");
 }
 ?>
 <!DOCTYPE html>

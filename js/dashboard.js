@@ -68,11 +68,11 @@ $(document).ready(function () {
           scales: {
             x: {
               grid: {
-                display: false
-              }
+                display: false,
+              },
             },
             y: {
-              display: false
+              display: false,
             },
           },
         },

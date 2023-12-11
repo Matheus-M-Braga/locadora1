@@ -112,19 +112,10 @@ $result = $conexao->query($sql);
                     <tbody>
                         <?php
                         while ($livro_data = mysqli_fetch_assoc($result)) {
-                            // Calculando a quantidade de alugados
-                            $id = $livro_data['id'];
-                            $sqlAluguelConect = "SELECT * FROM alugueis WHERE livro_id = '$id' AND data_devolucao = 0";
-                            $sqlAluguelResult = $conexao->query($sqlAluguelConect);
-                            $livro_data['alugados'] = $sqlAluguelResult->num_rows;
-                            $aluguel_quant = $livro_data['alugados'];
-
-                            // Select na tabela de editoras com base no 'editora_id'
                             $sqlEditora = "SELECT nome FROM editoras WHERE id = ". $livro_data['editora_id']." ";
                             $resultEditora = $conexao->query($sqlEditora);
                             $editora_data = mysqli_fetch_assoc($resultEditora);
 
-                            mysqli_query($conexao, "UPDATE livros SET alugados = '$aluguel_quant' WHERE id = '$id' ");
                             echo "
                                 <tr>
                                     <td class='itens'>" . $livro_data['id'] . "</td>"

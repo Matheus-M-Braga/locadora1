@@ -15,36 +15,25 @@
         date_default_timezone_set('America/Sao_Paulo');
 
         $id = $_GET['id'];
+        $result = mysqli_query($conexao, "SELECT * FROM alugueis WHERE id = $id");
+        $aluguel = mysqli_fetch_assoc($result);
 
-        $sqlSelect = "SELECT * FROM alugueis WHERE id = $id";
-        $resultSelect = $conexao->query($sqlSelect);
-
-        $aluguel_data = mysqli_fetch_assoc($resultSelect);
-        $livro_id = $aluguel_data['livro_id'];
-        $comp_previsao = $aluguel_data['prev_devolucao'];
         $hoje = date('Y-m-d');
 
+        // Controle de estoque
+        $selectLivro = mysqli_query($conexao, "SELECT * FROM livros WHERE id = " . $aluguel['livro_id'] . "");
+        $livro = mysqli_fetch_assoc($selectLivro);
+        $quantidade = $livro['quantidade'] + 1;
+        $alugados = $livro['alugados'] - 1;
+        mysqli_query($conexao, "UPDATE livros SET quantidade = '$quantidade', alugados = '$alugados' WHERE id = " . $livro['id'] . "");
 
-        // Conexão tabela Livros
-        $sqllivro_conect = "SELECT * FROM livros WHERE id = '$livro_id'";
-        $resultlivro_conect = $conexao->query($sqllivro_conect);
-
-        $livro_data = mysqli_fetch_assoc($resultlivro_conect);
-        $livro_BD = $livro_data['nome'];
-        $quantidade_BD = $livro_data['quantidade'];
-        $quantidade_nova = $quantidade_BD + 1;
-
-        $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$livro_BD'";
-        $sqlResultAlterar = $conexao->query($sqlAlterar);
-
-        if ($resultSelect->num_rows > 0) {
-            if ($hoje <= $comp_previsao) {
+        if ($result->num_rows > 0) {
+            if ($hoje <= $aluguel['prev_devolucao']) {
                 $status = "No prazo";
-            } else if ($hoje > $comp_previsao) {
+            } else if ($hoje > $aluguel['prev_devolucao']) {
                 $status = "Atrasado";
             }
-            $sqlUpdate = "UPDATE alugueis SET data_devolucao = '$hoje', status = '$status' WHERE id = $id";
-            $resultUpdate = $conexao->query($sqlUpdate);
+            mysqli_query($conexao, "UPDATE alugueis SET data_devolucao = '$hoje', status = '$status' WHERE id = $id");
             echo "
             <script>
                Swal.fire({

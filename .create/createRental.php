@@ -21,14 +21,12 @@
       $status = "Pendente";
 
       // Consulta do livro correspondente
-      $sqlLivro = "SELECT * FROM livros WHERE nome = '$livro'";
-      $resultLivro = $conexao -> query($sqlLivro);
+      $resultLivro = mysqli_query($conexao, "SELECT * FROM livros WHERE nome = '$livro'");
       $livro_data = mysqli_fetch_assoc($resultLivro);
       $livro_id = $livro_data['id'];
 
-      // Consulta da editora correspondente
-      $sqlUsuario = "SELECT * FROM usuarios WHERE nome = '$usuario'";
-      $resultUsuario = $conexao -> query($sqlUsuario);
+      // Consulta do usuário correspondente
+      $resultUsuario = mysqli_query($conexao, "SELECT * FROM usuarios WHERE nome = '$usuario'");
       $usuario_data = mysqli_fetch_assoc($resultUsuario);
       $usuario_id = $usuario_data['id'];
 
@@ -48,20 +46,11 @@
             .then(() => {window.location.href = '../Rental.php';})
          </script>";
       } else {
-         // Controle de estoque
-         $sqllivro_conect = "SELECT * FROM livros WHERE nome = '$livro'";
-         $resultlivro_conect = $conexao->query($sqllivro_conect);
-
-         $livro_data = mysqli_fetch_assoc($resultlivro_conect);
-         $nomeLivro_BD = $livro_data['nome'];
-         $quantidade_BD = $livro_data['quantidade'];
-         $quantidade_nova = $quantidade_BD - 1;
-
-         if ($livro === $nomeLivro_BD && $quantidade_nova >= 0) {
-            $sqlAlterar = "UPDATE livros SET quantidade = '$quantidade_nova' WHERE nome = '$livro'";
-            $sqlResultAlterar = $conexao->query($sqlAlterar);
-
-            $result = mysqli_query($conexao, "INSERT INTO alugueis(livro_id, usuario_id, data_aluguel, prev_devolucao, data_devolucao, status) VALUES ('$livro_id', '$usuario_id', '$data_aluguel', '$prev_devolucao', '$data_devolucao', '$status')");
+         $quantidade = $livro_data['quantidade'] - 1;
+         if ($quantidade >= 0) {
+            $alugados = $livro_data['alugados'] + 1;
+            mysqli_query($conexao, "UPDATE livros SET quantidade = '$quantidade', alugados = '$alugados' WHERE id = '$livro_id'");
+            mysqli_query($conexao, "INSERT INTO alugueis(livro_id, usuario_id, data_aluguel, prev_devolucao, data_devolucao, status) VALUES ('$livro_id', '$usuario_id', '$data_aluguel', '$prev_devolucao', '$data_devolucao', '$status')");
             echo "
             <script>
                Swal.fire({
@@ -73,7 +62,7 @@
                })
                .then(() => {window.location.href = '../Rental.php';})
             </script>";
-         } else if ($quantidade_nova < 0) {
+         } else if ($quantidade < 0) {
             echo "
             <script>
                Swal.fire({

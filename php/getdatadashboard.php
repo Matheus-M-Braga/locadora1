@@ -2,21 +2,24 @@
 include_once('config.php');
 
 // Mais alugados
-$sqlAluguel = "SELECT livro FROM alugueis";
-
-$resultadolivro = $conexao->query($sqlAluguel);
-
-$sql_grafico = "SELECT livro, count(livro) as quantidade_aluguel FROM alugueis WHERE livro = livro GROUP BY livro ORDER BY COUNT(livro) DESC limit 3";
-$resultado_grafico = $conexao->query($sql_grafico);
+$resultado_grafico = mysqli_query($conexao, "SELECT * FROM livros WHERE alugados > 0 ORDER BY alugados DESC limit 3");
 
 while ($barra = $resultado_grafico->fetch_assoc()) {
-    $nomes[] = $barra['livro'];
-    $info[] = $barra['quantidade_aluguel'];
+    $nomes[] = $barra['nome'];
+    $info[] = $barra['alugados'];
 }
-$mostRented = array(
-    'nomes' => $nomes,
-    'infos' => $info
-);
+if(isset($nomes) && isset($info)){
+    $mostRented = array(
+        'nomes' => $nomes,
+        'infos' => $info
+    );
+} else {
+    $mostRented = array(
+        'nomes' => null,
+        'infos' => null
+    );
+}
+
 
 // Status
 $sql_status = "SELECT
@@ -42,11 +45,13 @@ $rentalStatus = array(
 // Último aluguel
 $sql_ultimo_aluguel = "SELECT * FROM alugueis ORDER BY id DESC LIMIT 1";
 $resultado_ultimo_aluguel = $conexao->query($sql_ultimo_aluguel);
-$ultimo_alugado = $resultado_ultimo_aluguel->fetch_assoc();
-if (isset($ultimo_alugado['livro'])) {
-    $ultimo_livro = $ultimo_alugado['livro'];
+$ultimo_aluguel = $resultado_ultimo_aluguel->fetch_assoc();
+if (isset($ultimo_aluguel['livro_id'])) {
+    $livro_id = $ultimo_aluguel['livro_id'];
+    $result_livro = mysqli_query($conexao, "SELECT nome FROM livros WHERE id = '$livro_id'");
+    $livro_data = mysqli_fetch_assoc($result_livro);
 }
-$lastRented = $ultimo_livro;
+$lastRented = $livro_data['nome'];
 
 // Total de usuários
 $sql_usuarios = "SELECT count(*) AS total_usuarios FROM usuarios";
