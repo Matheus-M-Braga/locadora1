@@ -1,31 +1,75 @@
 <?php
 session_start();
-
 include_once('php/config.php');
 
-// Teste da seção
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     echo "<script> window.location.href = 'index.php' </script>";
 }
 
-$sql = "SELECT * FROM livros ORDER BY id ASC";
-$result = $conexao->query($sql);
+$result = mysqli_query($conexao, "SELECT * FROM livros");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <?php
-    include("components/general/head.php");
-    ?>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <link rel="stylesheet" href="css/mediaquery.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>WDA Livraria</title>
 </head>
 
 <body>
-    <?php
-    include("components/general/header.php");
-    ?>
+    <header>
+        <nav class="menubar">
+            <div class="logo">
+                <img src="img/favicon.ico" alt="">
+                <a class="title-link" href="Home.php">WDA Livraria</a>
+            </div>
+            <div class="links">
+                <div class="link">
+                    <img src="img/dashboard.png" alt="" class="links_icons">
+                    <a href="Home.php" class="">Dashboard</a>
+                </div>
+                <div class="link">
+                    <img src="img/usuarios.png" alt="" class="links_icons">
+                    <a href="User.php" class="">Usuários</a>
+                </div>
+                <div class="link">
+                    <img src="img/livros.png" alt="" class="links_icons">
+                    <a href="Book.php" class="selected">Livros</a>
+                </div>
+                <div class="link">
+                    <img src="img/editoras.png" alt="" class="links_icons">
+                    <a href="Publisher.php" class="">Editoras</a>
+                </div>
+                <div class="link">
+                    <img src="img/alugueis.png" alt="" class="links_icons">
+                    <a href="Rental.php" class="">Aluguéis</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()">Menu</button>
+                <ul class="dropdown-content" id="dropdownContent">
+                    <li><a href="#" class="">Dashboard</a></li>
+                    <li><a href="User.php" class="" id="">Usuários</a></li>
+                    <li><a href="Book.php" class="selected" id="pageTitle">Livros</a></li>
+                    <li><a href="Publisher.php" class="" id="">Editoras</a></li>
+                    <li><a href="Rental.php" class="" id="">Aluguéis</a></li>
+                </ul>
+            </div>
+            <a href="php/logout.php" id="sair-btn"><button class="btn btn-outline-danger" id="botao-sair" type="submit">SAIR</button></a>
+        </nav>
+    </header>
     <div class="corpo">
         <main>
             <div id="modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
@@ -77,7 +121,6 @@ $result = $conexao->query($sql);
                     </form>
                 </div>
             </div>
-            <!-- Modal exclu -->
             <div id="exclu-modal" class="modal" style="font-family: 'Source Sans Pro',sans-serif;">
                 <div class="conteudo-modal">
                     <div class="top_modal">
@@ -94,7 +137,6 @@ $result = $conexao->query($sql);
                     </div>
                 </div>
             </div>
-            <!-- GRID -->
             <div class="grid-body">
                 <table class="container-grid" id="tabela">
                     <thead>
@@ -112,8 +154,7 @@ $result = $conexao->query($sql);
                     <tbody>
                         <?php
                         while ($livro_data = mysqli_fetch_assoc($result)) {
-                            $sqlEditora = "SELECT nome FROM editoras WHERE id = ". $livro_data['editora_id']." ";
-                            $resultEditora = $conexao->query($sqlEditora);
+                            $resultEditora = mysqli_query($conexao, "SELECT nome FROM editoras WHERE id = " . $livro_data['editora_id'] . " ");
                             $editora_data = mysqli_fetch_assoc($resultEditora);
 
                             echo "
@@ -138,9 +179,8 @@ $result = $conexao->query($sql);
             </div>
         </main>
     </div>
-    <?php
-    include("components/general/scripts.php");
-    ?>
+    <script type="module" src="js/module.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

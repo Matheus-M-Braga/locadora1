@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <head>
-   <?php
-    $pageTitle = "Criar Editora";
-    include("../components/crud/head.php");
-   ?>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel="stylesheet" href="../css/style.css" media="all">
+   <link rel="stylesheet" href="../css/mediaquery.css">
+   <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+   <title>WDA Livraria</title>
 </head>
 
 <body>
@@ -17,8 +18,7 @@
       $email = $_POST['email'];
       $cidade = $_POST['cidade'];
 
-      $sqleditora = "SELECT * FROM editoras WHERE nome = '$nome'";
-      $resultado = $conexao->query($sqleditora);
+      $resultado = mysqli_query($conexao, "SELECT * FROM editoras WHERE nome = '$nome'");
 
       if (mysqli_num_rows($resultado) >= 1) {
          echo "
@@ -33,7 +33,7 @@
             .then(() => {window.location.href = '../Publisher.php';})
          </script>";
       } else {
-         $resultI = mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nome', '$email', '$cidade')");
+         mysqli_query($conexao, "INSERT INTO editoras(nome, email, cidade) VALUES ('$nome', '$email', '$cidade')");
          echo "
          <script>
             Swal.fire({

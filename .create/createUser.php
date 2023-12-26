@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <head>
-   <?php
-    $pageTitle = "Criar Usuário";
-    include("../components/crud/head.php");
-   ?>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel="stylesheet" href="../css/style.css" media="all">
+   <link rel="stylesheet" href="../css/mediaquery.css">
+   <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+   <title>WDA Livraria</title>
 </head>
 
 <body>
@@ -17,8 +18,7 @@
       $endereco = $_POST['endereco'];
       $email = $_POST['email'];
 
-      $sqluser = "SELECT * FROM usuarios WHERE email = '$email'";
-      $resultado = $conexao->query($sqluser);
+      $resultado = mysqli_query($conexao, "SELECT * FROM usuarios WHERE email = '$email'");
 
       if (mysqli_num_rows($resultado) >= 1) {
          echo "
@@ -33,7 +33,7 @@
             .then(() => {window.location.href = '../User.php';})
          </script>";
       } else {
-         $result = mysqli_query($conexao, "INSERT INTO usuarios(nome, cidade, endereco, email) VALUES ('$nome', '$cidade', '$endereco', '$email')");
+         mysqli_query($conexao, "INSERT INTO usuarios(nome, cidade, endereco, email) VALUES ('$nome', '$cidade', '$endereco', '$email')");
          echo "
          <script>
             Swal.fire({

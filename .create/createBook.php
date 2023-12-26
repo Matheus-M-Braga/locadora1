@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <head>
-   <?php
-   $pageTitle = "Criar Livro";
-   include("../components/crud/head.php");
-   ?>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel="stylesheet" href="../css/style.css" media="all">
+   <link rel="stylesheet" href="../css/mediaquery.css">
+   <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+   <title>WDA Livraria</title>
 </head>
 
 <body>
@@ -18,12 +19,10 @@
       $lancamento = $_POST['lancamento'];
       $quantidade = $_POST['quantidade'];
 
-      $sqllivro = "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'";
-      $resultado = $conexao->query($sqllivro);
+      $resultado = mysqli_query($conexao, "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'");
 
       // Consulta da editora correspondente
-      $sqleditora = "SELECT * FROM editoras WHERE nome = '$editora'";
-      $resultEditora = $conexao -> query($sqleditora);
+      $resultEditora = mysqli_query($conexao, "SELECT * FROM editoras WHERE nome = '$editora'");
       $editora_data = mysqli_fetch_assoc($resultEditora);
       $editora_id = $editora_data['id'];
 
@@ -40,7 +39,7 @@
             .then(() => {window.location.href = '../Book.php';})
          </script>";
       } else {
-         $result = mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora_id, lancamento, quantidade) VALUES ('$nome', '$autor', '$editora_id', '$lancamento', '$quantidade')");
+         mysqli_query($conexao, "INSERT INTO livros(nome, autor, editora_id, lancamento, quantidade) VALUES ('$nome', '$autor', '$editora_id', '$lancamento', '$quantidade')");
          echo "
          <script>
             Swal.fire({
