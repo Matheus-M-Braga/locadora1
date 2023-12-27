@@ -14,23 +14,11 @@
         include_once('../php/config.php');
 
         $id = $_GET['id'];
+        $result = mysqli_query($conexao, "SELECT * FROM editoras WHERE id = $id");
 
-        $sqlSelect = "SELECT * FROM editoras WHERE id = $id";
+        $sqlLivro_conect_result = mysqli_query($conexao, "SELECT * FROM livros WHERE editora_id = '$id'");
 
-        $result = $conexao->query($sqlSelect);
-
-        $editora_data = mysqli_fetch_assoc($result);
-        $nome = $editora_data['nome'];
-
-        // Conexão tabela livros
-        $sqlLivro_conect = "SELECT * FROM livros WHERE editora = '$nome'";
-        $sqlLivro_conect_result = $conexao->query($sqlLivro_conect);
-
-        while ($livro_data = mysqli_fetch_assoc($sqlLivro_conect_result)) {
-            $livrosAssociados[] = $livro_data;
-        }
-
-        if ($livrosAssociados != null) {
+        if (mysqli_num_rows($sqlLivro_conect_result) == 1) {
             echo "
             <script>
                 Swal.fire({
@@ -43,23 +31,33 @@
                 .then(() => {window.location.href = '../Publisher.php';})
             </script>";
         } else {
-            if ($result->num_rows > 0) {
-                $sqlDelete = "DELETE FROM editoras WHERE id = $id";
-                $resultDelete = $conexao->query($sqlDelete);
+            if (mysqli_num_rows($result) == 1) {
+                mysqli_query($conexao, "DELETE FROM editoras WHERE id = $id");
+                echo "
+                <script>
+                    Swal.fire({
+                        title: 'Editora deletada com sucesso!',
+                        text: '',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1700
+                    })
+                    .then(() => {window.location.href = '../Publisher.php';})
+                </script>";
+            } else {
+                echo "
+                <script>
+                    Swal.fire({
+                        title: 'Erro ao deletar editora!',
+                        text: '',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1700
+                    })
+                    .then(() => {window.location.href = '../Publisher.php';})
+                </script>";
             }
-            $sqlReset = "ALTER TABLE editoras AUTO_INCREMENT = 1;";
-            $resultReset = $conexao->query($sqlReset);
-            echo "
-            <script>
-                Swal.fire({
-                    title: 'Editora deletada com sucesso!',
-                    text: '',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 1700
-                })
-                .then(() => {window.location.href = '../Publisher.php';})
-            </script>";
+            mysqli_query($conexao, "ALTER TABLE editoras AUTO_INCREMENT = 1");
         }
     }
     ?>

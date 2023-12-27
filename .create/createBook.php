@@ -19,14 +19,13 @@
       $lancamento = $_POST['lancamento'];
       $quantidade = $_POST['quantidade'];
 
-      $resultado = mysqli_query($conexao, "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'");
+      $result = mysqli_query($conexao, "SELECT * FROM livros WHERE nome = '$nome' AND autor = '$autor'");
 
-      // Consulta da editora correspondente
       $resultEditora = mysqli_query($conexao, "SELECT * FROM editoras WHERE nome = '$editora'");
       $editora_data = mysqli_fetch_assoc($resultEditora);
       $editora_id = $editora_data['id'];
 
-      if (mysqli_num_rows($resultado) >= 1) {
+      if (mysqli_num_rows($result) >= 1) {
          echo "
          <script>
             Swal.fire({

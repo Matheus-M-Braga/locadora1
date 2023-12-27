@@ -18,9 +18,9 @@
       $endereco = $_POST['endereco'];
       $email = $_POST['email'];
 
-      $resultado = mysqli_query($conexao, "SELECT * FROM usuarios WHERE email = '$email'");
+      $result = mysqli_query($conexao, "SELECT * FROM usuarios WHERE email = '$email'");
 
-      if (mysqli_num_rows($resultado) >= 1) {
+      if (mysqli_num_rows($result) >= 1) {
          echo "
          <script>
             Swal.fire({

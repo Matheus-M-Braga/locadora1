@@ -16,16 +16,9 @@
         $id = $_GET['id'];
         $result = mysqli_query($conexao, "SELECT * FROM livros WHERE id = $id");
 
-        $livro_data = mysqli_fetch_assoc($result);
-        $nome = $livro_data['nome'];
+        $sqlAluguelConect_result = mysqli_query($conexao, "SELECT * FROM alugueis WHERE livro_id = '$id' AND data_devolucao = '0000-00-00'");
 
-        $sqlAluguelConect_result = mysqli_query($conexao, "SELECT * FROM alugueis WHERE livro = '$nome' AND data_devolucao = 0");
-
-        while ($aluguel_data = mysqli_fetch_assoc($sqlAluguelConect_result)) {
-            $alugueisAssociados[] = $aluguel_data;
-        }
-
-        if ($alugueisAssociados != null) {
+        if (mysqli_num_rows($sqlAluguelConect_result) == 1) {
             echo "
             <script>
                Swal.fire({
@@ -38,8 +31,8 @@
                .then(() => {window.location.href = '../Book.php';})
             </script>";
         } else {
-            if ($result->num_rows > 0) {
-                $resultDelete = mysqli_query($conexao, "DELETE FROM livros WHERE id = $id");
+            if (mysqli_num_rows($result) == 1) {
+                mysqli_query($conexao, "DELETE FROM livros WHERE id = $id");
                 echo "
                 <script>
                 Swal.fire({
@@ -48,7 +41,8 @@
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1700
-                }).then(() => {window.location.href = '../Book.php';})
+                })
+                .then(() => {window.location.href = '../Book.php';})
                 </script>";
             } else {
                 echo "
@@ -59,7 +53,8 @@
                     icon: 'error',
                     showConfirmButton: false,
                     timer: 1700
-                }).then(() => {window.location.href = '../Book.php';})
+                })
+                .then(() => {window.location.href = '../Book.php';})
                 </script>";
             }
             mysqli_query($conexao, "ALTER TABLE livros AUTO_INCREMENT = 1");

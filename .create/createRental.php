@@ -31,8 +31,7 @@
       $usuario_data = mysqli_fetch_assoc($resultUsuario);
       $usuario_id = $usuario_data['id'];
 
-      $sqlSelect = "SELECT * FROM alugueis WHERE livro_id = '$livro_id' AND usuario_id = '$usuario_id' AND data_devolucao = 0";
-      $resultSelect = $conexao->query($sqlSelect);
+      $resultSelect = mysqli_query($conexao, "SELECT * FROM alugueis WHERE livro_id = '$livro_id' AND usuario_id = '$usuario_id' AND data_devolucao = 0");
 
       if (mysqli_num_rows($resultSelect) == 1) {
          echo "

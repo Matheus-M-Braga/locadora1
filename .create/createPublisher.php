@@ -18,9 +18,9 @@
       $email = $_POST['email'];
       $cidade = $_POST['cidade'];
 
-      $resultado = mysqli_query($conexao, "SELECT * FROM editoras WHERE nome = '$nome'");
+      $result = mysqli_query($conexao, "SELECT * FROM editoras WHERE nome = '$nome'");
 
-      if (mysqli_num_rows($resultado) >= 1) {
+      if (mysqli_num_rows($result) >= 1) {
          echo "
          <script>
             Swal.fire({

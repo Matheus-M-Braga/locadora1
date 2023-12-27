@@ -10,9 +10,8 @@
 
 <body>
     <?php
-    include_once('../php/config.php');
-
     if (isset($_POST['submit'])) {
+        include_once('../php/config.php');
 
         $id = $_POST['id'];
         $nome = $_POST['nome'];
@@ -20,21 +19,10 @@
         $endereco = $_POST['endereco'];
         $email = $_POST['email'];
 
-        // Conexão tabela aluguéis
-        $sql_usuario = "SELECT * FROM usuarios WHERE id = $id";
-        $result_usuario = $conexao->query($sql_usuario);
-        $usuario_data = mysqli_fetch_assoc($result_usuario);
-        $nome_old = $usuario_data['nome'];
+        $result = mysqli_query($conexao, "SELECT * FROM usuarios WHERE id = '$id'");
 
-        $sql_aluguel = "SELECT * FROM alugueis WHERE usuario = '$nome_old' AND data_devolucao = 0";
-        $result_aluguel = $conexao->query($sql_aluguel);
-
-        if ($result_aluguel->num_rows > 0) {
-            $UpdateUsuarioName = "UPDATE alugueis SET usuario = '$nome' WHERE usuario = '$nome_old'";
-            $result = $conexao->query($UpdateUsuarioName);
-
-            $sqlUpdate = "UPDATE usuarios SET Nome = '$nome', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$id'";
-            $result = $conexao->query($sqlUpdate);
+        if(mysqli_num_rows($result) == 1){
+            mysqli_query($conexao, "UPDATE usuarios SET Nome = '$nome', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$id'");
 
             echo "
             <script>
@@ -48,15 +36,12 @@
                 .then(() => {window.location.href = '../User.php';})
             </script>";
         } else {
-            $sqlUpdate = "UPDATE usuarios SET Nome = '$nome', Cidade = '$cidade', Endereco = '$endereco', Email = '$email' WHERE id = '$id'";
-            $result = $conexao->query($sqlUpdate);
-
             echo "
             <script>
                 Swal.fire({
-                    title: 'Usuário atualizado com sucesso!',
+                    title: 'Erro ao atualizar usuário!',
                     text: '',
-                    icon: 'success',
+                    icon: 'error',
                     showConfirmButton: false,
                     timer: 1700
                 })

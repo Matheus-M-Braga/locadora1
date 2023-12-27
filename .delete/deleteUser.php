@@ -15,21 +15,12 @@
 
         $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM usuarios WHERE id = $id";
-
-        $result = $conexao->query($sqlSelect);
+        $result = mysqli_query($conexao, "SELECT * FROM usuarios WHERE id = $id");
         $user_data = mysqli_fetch_assoc($result);
-        $nome = $user_data['nome'];
 
-        // Conexão tabela alugueis
-        $sqlAluguel_conect = "SELECT * FROM alugueis WHERE usuario = '$nome' AND data_devolucao = 0";
-        $sqlAluguel_conect_result = $conexao->query($sqlAluguel_conect);
+        $sqlAluguel_conect_result = mysqli_query($conexao, "SELECT * FROM alugueis WHERE usuario_id = '$id' AND data_devolucao = '0000-00-00'");
 
-        while ($aluguel_data = mysqli_fetch_assoc($sqlAluguel_conect_result)) {
-            $alugueis_associados[] = $aluguel_data;
-        }
-
-        if ($alugueis_associados != null) {
+        if (mysqli_num_rows($sqlAluguel_conect_result) == 1) {
             echo "
             <script>
                Swal.fire({
@@ -42,26 +33,34 @@
                .then(() => {window.location.href = '../User.php';})
             </script>";
         } else {
-            if ($result->num_rows > 0) {
-                $sqlDelete = "DELETE FROM usuarios WHERE id = $id";
-                $resultDelete = $conexao->query($sqlDelete);
+            if (mysqli_num_rows($result)) {
+                mysqli_query($conexao, "DELETE FROM usuarios WHERE id = $id");
+                echo "
+                <script>
+                Swal.fire({
+                    title: 'Usuário deletado com sucesso!',
+                    text: '',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+                .then(() => {window.location.href = '../User.php';})
+                </script>";
+            } else {
+                echo "
+                <script>
+                Swal.fire({
+                    title: 'Erro ao deletar usuário!',
+                    text: '',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1700
+                })
+                .then(() => {window.location.href = '../User.php';})
+                </script>";
             }
-            $sqlReset = "ALTER TABLE usuarios AUTO_INCREMENT = 1;";
-            $resultReset = $conexao->query($sqlReset);
-            echo "
-            <script>
-               Swal.fire({
-                  title: 'Usuário deletado com sucesso!',
-                  text: '',
-                  icon: 'success',
-                  showConfirmButton: false,
-                  timer: 1700
-               })
-               .then(() => {window.location.href = '../User.php';})
-            </script>";
+            mysqli_query($conexao, "ALTER TABLE usuarios AUTO_INCREMENT = 1");
         }
-    } else {
-        echo "Parece que este arquivo não foi acessado corretamente, verifique se o parâmetro de ID está definido na URL. Se não, não há utilidade em estar aqui!";
-    }
+    } 
     ?>
 </body>

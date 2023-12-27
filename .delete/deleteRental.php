@@ -17,7 +17,6 @@
         $result = mysqli_query($conexao, "SELECT * FROM alugueis WHERE id = $id");
         $aluguel = mysqli_fetch_assoc($result);
 
-        // Controle de estoque
         $selectLivro = mysqli_query($conexao, "SELECT * FROM livros WHERE id = " . $aluguel['livro_id'] . "");
         $livro = mysqli_fetch_assoc($selectLivro);
         $quantidade = $livro['quantidade'] + 1;
@@ -45,7 +44,7 @@
                 Swal.fire({
                     title: 'Erro ao deletar aluguel!',
                     text: '',
-                    icon: 'success',
+                    icon: 'error',
                     showConfirmButton: false,
                     timer: 1700
                 })
