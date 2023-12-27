@@ -26,7 +26,7 @@ function abrirModal(modalId, action) {
       select.classList.add("is-invalid");
 
       $.ajax({
-        url: "../php/getregistersdata.php",
+        url: "../php/getEntitiesData.php",
         type: "GET",
         dataType: "json",
         success: function (data) {

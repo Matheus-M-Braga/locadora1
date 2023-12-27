@@ -17,7 +17,7 @@ import "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js";
 $(document).ready(function () {
   function loadDataFromServer() {
     $.ajax({
-      url: "../php/getregistersdata.php",
+      url: "../php/getEntitiesData.php",
       type: "GET",
       dataType: "json",
       success: function (data) {
