@@ -1,15 +1,6 @@
-// Arquivo responsável pela consulta AJAX e DataTable.
-
-// Importa o arquivo jquery-3.1.0.js
 import "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js";
-
-// Importa o arquivo jquery-3.7.0.js
 import "https://code.jquery.com/jquery-3.7.0.js";
-
-// Importa o arquivo jquery.dataTables.min.js
 import "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js";
-
-// Importa o arquivo dataTables.bootstrap5.min.js
 import "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js";
 
 // Consulta ajax
@@ -45,7 +36,7 @@ $(document).ready(function () {
         "id",
         "nome",
         "autor",
-        "editora",
+        "editora_id",
         "lancamento",
         "quantidade"
       );
@@ -75,18 +66,34 @@ $(document).ready(function () {
         var fieldValue = Entitydata[fieldName];
 
         // Exceção para o campo de editora, que é um select
-        if (
-          window.location.pathname.includes("Book.php") &&
-          fieldName == "editora"
-        ) {
-          $("." + fieldName).text(fieldValue); // Só preencher com texto ksjskksjksks
-          $("." + fieldName).val(fieldValue);
-          fillPublisherSelectOptions(fieldValue, data2); // Lista as demais editoras, nos options
+        if (fieldName === "editora_id") {
+          (function (fieldName, fieldValue) {
+            // Criando uma função anônima para capturar o valor atual de fieldName
+            $.ajax({
+              url: "../php/getEntitiesData.php",
+              type: "GET",
+              dataType: "json",
+              success: function (data) {
+                fillPublisher(data.Publisher, fieldName, fieldValue);
+                fillPublisherSelectOptions(fieldValue, data2);
+              },
+              error: function (status, error) {
+                console.error(
+                  "Erro na solicitação AJAX: " + status + " - " + error
+                );
+              },
+            });
+          })(fieldName, fieldValue);
         } else {
           $("." + fieldName).val(fieldValue);
         }
       }
+      function fillPublisher(publisher, fieldName, fieldValue) {
+        $("." + fieldName).text(publisher[fieldValue]["nome"]);
+        $("." + fieldName).val(publisher[fieldValue]["nome"]);
+      }
     });
+
     $("#tabela").on("click", ".exclu", function () {
       var btnID = $(this).data("id");
       $(".confirm_exclu")
@@ -124,7 +131,7 @@ $(document).ready(function () {
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
       var option = document.createElement("option");
-      if (publishersList[key].nome === selected) {
+      if (publishersList[key].id === selected) {
       } else {
         option.textContent = publishersList[key].nome;
         select.appendChild(option);

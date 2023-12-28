@@ -18,7 +18,7 @@
 
         $sqlLivro_conect_result = mysqli_query($conexao, "SELECT * FROM livros WHERE editora_id = '$id'");
 
-        if (mysqli_num_rows($sqlLivro_conect_result) == 1) {
+        if (mysqli_num_rows($sqlLivro_conect_result) > 1) {
             echo "
             <script>
                 Swal.fire({

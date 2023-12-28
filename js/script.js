@@ -17,7 +17,7 @@ function abrirModal(modalId, action) {
   });
   var selectedOption = Object.assign(document.createElement("option"), {
     selected: true,
-    className: "editora",
+    className: "editora_id",
   });
   if (action === "Cadastrar") {
     form.action = ".create/create" + currentPage;
