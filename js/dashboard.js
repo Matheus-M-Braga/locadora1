@@ -6,7 +6,7 @@ import "https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js";
 $(document).ready(function () {
   function loadDataFromServer() {
     $.ajax({
-      url: "../php/getDashboardData.php",
+      url: "php/getDashboardData.php",
       type: "GET",
       dataType: "json",
       success: function (DashData) {
@@ -27,8 +27,7 @@ $(document).ready(function () {
     var BarInfo = DashData["mostRented"];
     var Barlabels = BarInfo["nomes"];
     var Bardata = BarInfo["infos"];
-
-    if (Barlabels == null || Bardata == null) {
+    if (Barlabels.length == 0 || Bardata.length == 0) {
       noDataInfo.style.display = "block";
       BarChart.style.display = "none";
     } else {
