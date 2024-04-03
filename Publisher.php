@@ -62,7 +62,7 @@ $result = mysqli_query($conexao, "SELECT * FROM editoras");
             <div class="dropdown">
                 <button onclick="toggleDropdown()">Menu</button>
                 <ul class="dropdown-content" id="dropdownContent">
-                    <li><a href="#" class="">Dashboard</a></li>
+                    <li><a href="Home.php" class="">Dashboard</a></li>
                     <li><a href="User.php" class="" id="">Usuários</a></li>
                     <li><a href="Book.php" class="" id="">Livros</a></li>
                     <li><a href="Publisher.php" class="selected" id="pageTitle">Editoras</a></li>

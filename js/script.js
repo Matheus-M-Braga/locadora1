@@ -4,8 +4,9 @@ function abrirModal(modalId, action) {
   modal.style.display = "block";
 
   var title = document.getElementById("modalTitle");
-  title.textContent = action + " " + GetPageName().slice(0, -1);
-
+  if (title) {
+    title.textContent = action + " " + GetPageName().slice(0, -1);
+  }
   var form = document.getElementById("form");
   var currentPage = window.location.pathname.split("/").pop();
   var select = document.getElementById("select");
@@ -26,7 +27,7 @@ function abrirModal(modalId, action) {
       select.classList.add("is-invalid");
 
       $.ajax({
-        url: "../php/getEntitiesData.php",
+        url: "php/getEntitiesData.php",
         type: "GET",
         dataType: "json",
         success: function (data) {

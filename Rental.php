@@ -68,7 +68,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
             <div class="dropdown">
                 <button onclick="toggleDropdown()">Menu</button>
                 <ul class="dropdown-content" id="dropdownContent">
-                    <li><a href="#" class="selected">Dashboard</a></li>
+                    <li><a href="Home.php" class="">Dashboard</a></li>
                     <li><a href="User.php" class="" id="">Usuários</a></li>
                     <li><a href="Book.php" class="" id="">Livros</a></li>
                     <li><a href="Publisher.php" class="" id="">Editoras</a></li>
@@ -86,7 +86,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                         <h1 class="text-balck" style="font-size: 30px; margin-bottom: 5px;">Cadastrar Aluguel</h1>
                         <img src="img/cross.png" alt="butão-fechar" class="fechar-modal" onclick="fecharModal('modal')">
                     </class>
-                    <form action=".create/createRental.php" method="POST" class="row g-3 needs-validation" novalidate>
+                    <form id="form" action=".create/createRental.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col">
                             <div class="row-md-3">
                                 <label for="input1" class="form-label text-black">Livro</label>
@@ -218,7 +218,7 @@ $hojeMais30Formatado = $hojeMais30->format('Y-m-d');
                                 $previsao = $aluguel_data['prev_devolucao'];
                                 echo "<td class='itens'>" . $dev_dat . "</td>"
                                     . "<td class='itens'>" . $aluguel_data['status'] . "</td>";
-                                echo "<td class='itens'></td></tr>";
+                                echo "<td class='itens'> </td></tr>";
                             }
                         }
                         ?>

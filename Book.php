@@ -60,7 +60,7 @@ $result = mysqli_query($conexao, "SELECT * FROM livros");
             <div class="dropdown">
                 <button onclick="toggleDropdown()">Menu</button>
                 <ul class="dropdown-content" id="dropdownContent">
-                    <li><a href="#" class="">Dashboard</a></li>
+                    <li><a href="Home.php" class="">Dashboard</a></li>
                     <li><a href="User.php" class="" id="">Usuários</a></li>
                     <li><a href="Book.php" class="selected" id="pageTitle">Livros</a></li>
                     <li><a href="Publisher.php" class="" id="">Editoras</a></li>

@@ -109,6 +109,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
         </footer>
     </div>
     <script type="module" src="js/dashboard.js"></script>
+    <script type="" src="js/script.js"></script>
 </body>
 
 </html>

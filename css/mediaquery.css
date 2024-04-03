@@ -48,7 +48,8 @@
       align-items: flex-start;
       justify-content: space-around;
       height: 210px;
-      row-gap: 4px;
+      row-gap: 13px;
+      margin-bottom: 25px;
    }
 
    .dash_father .dash_container {
@@ -60,7 +61,7 @@
 
 @media (min-width: 751px) and (max-width: 830px) {
    .graficos {
-      height: 55%;
+      height: 58%;
    }
 }
 

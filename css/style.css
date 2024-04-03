@@ -372,6 +372,13 @@ select {
 .btn:hover {
   background: #264347f2;
   border-color: #264347f2;
+  color: goldenrod;
+}
+
+.btn:focus {
+  background: #264347f2 !important;
+  border-color: #264347f2 !important;
+  color: goldenrod !important;
 }
 
 /* DeleteModal */
