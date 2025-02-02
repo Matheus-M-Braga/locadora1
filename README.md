@@ -13,7 +13,7 @@ Cadastrado, Visualização, Filtragem, Ordenação, Paginação, Atualização e
 Para hospedar e rodar o projeto localmente, é necessário configurar programas como XAMPP ou EasyPHP para receberem a pasta.
 
 ## Sistema Hospedado na WEB
-<a href="https://projetolocadora.000webhostapp.com/" target="_blank" style="color: red;">Clique</a>
+<a href="https://azraelenterpriseinf.free.nf/" target="_blank" style="color: red;">Clique</a>
 - Usuário: admin
 - Senha: senha123
 
